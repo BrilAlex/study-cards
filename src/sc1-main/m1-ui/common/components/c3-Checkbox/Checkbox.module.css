@@ -1,0 +1,24 @@
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.checkbox {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  background: #f6f6f6;
+  border: 1px solid #9f9f9f;
+}
+
+.checkbox:checked {
+  appearance: none;
+  background-image: url("check_img.png");
+}
+
+.spanClassName {
+  margin-left: 10px;
+}

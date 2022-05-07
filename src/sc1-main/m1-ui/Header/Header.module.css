@@ -1,0 +1,14 @@
+.navbar {
+  display: inline-block;
+}
+
+.item {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #373737;
+  color: white;
+}
+
+.item.active {
+  background: #00a495;
+}
