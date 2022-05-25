@@ -14,6 +14,7 @@ export const PATH = {
   PASSWORD_RECOVERY: "/password-recovery",
   CREATE_NEW_PASSWORD: "/create-new-password",
   TEST: "/test",
+  ERROR404: "/error404",
 };
 
 export const Pages = () => {
@@ -27,7 +28,8 @@ export const Pages = () => {
         <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
         <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>
-        <Route path={"/*"} element={<Error404/>}/>
+        <Route path={PATH.ERROR404} element={<Error404/>}/>
+        <Route path={"*"} element={<Navigate to={PATH.ERROR404}/>}/>
       </Routes>
     </div>
   );
