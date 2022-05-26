@@ -1,6 +1,6 @@
-import {InputText} from "../../../common/components/c1-InputText/InputText";
-import {Button} from "../../../common/components/c2-Button/Button";
-import {Checkbox} from "../../../common/components/c3-Checkbox/Checkbox";
+import {InputText} from "../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
+import {Button} from "../../sc1-main/m1-ui/common/components/c2-Button/Button";
+import {Checkbox} from "../../sc1-main/m1-ui/common/components/c3-Checkbox/Checkbox";
 import {useState} from "react";
 import s from "./Test.module.css";
 
