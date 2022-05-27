@@ -5,16 +5,14 @@ import {Provider} from "react-redux";
 import {store} from "../m2-bll/store";
 import {Main} from "./Main/Main";
 
-const App = () => {
-  return (
-    <div className={s.App}>
-      <Provider store={store}>
-        <HashRouter>
-          <Main/>
-        </HashRouter>
-      </Provider>
-    </div>
-  );
+export const App = () => {
+    return (
+        <div className={s.App}>
+            <Provider store={store}>
+                <HashRouter>
+                    <Main/>
+                </HashRouter>
+            </Provider>
+        </div>
+    );
 };
-
-export default App;
