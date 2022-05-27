@@ -16,5 +16,5 @@ const App = () => {
     </div>
   );
 };
-
+//some text, delete
 export default App;
