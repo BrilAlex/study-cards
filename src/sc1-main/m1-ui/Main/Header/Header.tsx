@@ -28,6 +28,7 @@ export const Header = () => {
         <NavLink to={PATH.TEST} className={(NavData) => getNavLinkStyle(NavData)}>
           Test
         </NavLink>
+        <button>POP</button>
       </div>
     </header>
   );
