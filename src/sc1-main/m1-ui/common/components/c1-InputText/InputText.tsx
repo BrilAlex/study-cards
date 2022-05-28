@@ -36,7 +36,7 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
   return (
     <>
       <input
-        type={'textarea'}
+        type={type}
         onChange={onChangeCallback}
         onKeyPress={onKeyPressCallback}
         className={finalInputClassName}
