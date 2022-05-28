@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {store} from "../m2-bll/store";
 import {Main} from "./Main/Main";
 
-const App = () => {
+export const App = () => {
   return (
     <div className={s.App}>
       <Provider store={store}>
@@ -16,5 +16,3 @@ const App = () => {
     </div>
   );
 };
-//some text, delete1
-export default App;
