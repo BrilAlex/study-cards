@@ -23,10 +23,15 @@ export const ProfileApi = {
   },
   updateUserData(name: string, avatar: string) {
     return instance.put<any>(`/auth/me`, {name, avatar})
+
       .then(res => res.data)
   },
   logOut() {
     return instance.delete<any>(`/auth/me`, {})
+      .then(res => res.data)
+  },
+  logIn() {
+    return instance.post<any>(`/auth/login`, {email: 'ipavka@ukr.net', password: 'ignat2022', rememberMe: true})
       .then(res => res.data)
   }
 
