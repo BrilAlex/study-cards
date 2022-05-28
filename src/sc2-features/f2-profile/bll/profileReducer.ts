@@ -1,4 +1,4 @@
-import {AppThunkType} from "../../sc1-main/m2-bll/store";
+import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 
 // Types
 type InitStateType = typeof initState;
@@ -6,7 +6,9 @@ type SomeActionType = ReturnType<typeof someActionAC>;
 export type ProfileActionsType = SomeActionType;
 
 // Initial state
-const initState = {};
+const initState = {
+  loading: false,
+};
 
 // Action creators
 export const someActionAC = () => ({type: "profile/SOME-ACTION"} as const);
