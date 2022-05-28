@@ -1,5 +1,10 @@
+import {LoginForm} from "./LoginForm";
+
 export const Login = () => {
+
   return (
-    <div>Login</div>
+    <div>
+      <LoginForm/>
+    </div>
   );
 };
