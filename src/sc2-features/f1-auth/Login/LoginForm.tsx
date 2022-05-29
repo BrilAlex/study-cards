@@ -56,10 +56,12 @@ export const LoginForm = () => {
         {...formik.getFieldProps('password')}
       />
       {formik.errors.password && formik.touched.password && <div style={{color: "red"}}>{formik.errors.password}</div>}
-      <Checkbox
 
-        {...formik.getFieldProps('rememberMe')}
-      />
+      <label style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
+        <Checkbox
+          {...formik.getFieldProps('rememberMe')}
+        />Remember me
+      </label>
       <Button type={'submit'}>
         Login
       </Button>
