@@ -4,7 +4,7 @@ import {
   RegistrationActionsType,
   registrationReducer
 } from "../../sc2-features/f1-auth/Registration/registrationReducer";
-import {ProfileActionsType, profileReducer} from "../../sc2-features/f2-profile/profileReducer";
+import {ProfileActionsType, profileReducer} from "../../sc2-features/f2-profile/bll/profileReducer";
 import {
   NewPasswordActionsType,
   newPasswordReducer
@@ -13,7 +13,8 @@ import {
   PasswordRecoveryActionsType,
   passwordRecoveryReducer
 } from "../../sc2-features/f1-auth/PasswordRecovery/passwordRecoveryReducer";
-import thunk, {ThunkAction} from "redux-thunk";
+import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type AppActionsType =
@@ -23,6 +24,7 @@ export type AppActionsType =
   | NewPasswordActionsType
   | PasswordRecoveryActionsType;
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>;
+export type AppDispatchType = ThunkDispatch<AppStateType, unknown, AppActionsType>;
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -31,6 +33,10 @@ const rootReducer = combineReducers({
   newPassword: newPasswordReducer,
   passwordRecovery: passwordRecoveryReducer,
 });
+
+// Custom `useDispatch` and `useSelector: Use throughout app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatchType>();
+export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector;
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
