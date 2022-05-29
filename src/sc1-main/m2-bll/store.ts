@@ -4,7 +4,7 @@ import {
   RegistrationActionsType,
   registrationReducer
 } from "../../sc2-features/f1-auth/Registration/registrationReducer";
-import {ProfileActionsType, profileReducer} from "../../sc2-features/f2-profile/profileReducer";
+import {ProfileActionsType, profileReducer} from "../../sc2-features/f2-profile/bll/profileReducer";
 import {
   NewPasswordActionsType,
   newPasswordReducer
