@@ -1,19 +1,5 @@
-import axios from "axios";
+import {instance} from "../../../../sc1-main/m3-dal/instance";
 
-let baseURL: string;
-let dev = true;
-//dev - в разработке. От этого зависит к какому серверу обращаемся
-
-if (dev) {
-  baseURL = 'http://localhost:7542/2.0/'
-} else {
-  baseURL = ' https://neko-back.herokuapp.com/2.0'
-}
-
-export const instance = axios.create({
-  baseURL: baseURL,
-  withCredentials: true,
-})
 
 export const authApi = {
   me() {
@@ -36,4 +22,3 @@ export const authApi = {
     // })
   }
 }
-

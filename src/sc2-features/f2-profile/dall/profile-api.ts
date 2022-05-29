@@ -1,4 +1,4 @@
-import {instance} from "../../../sc1-main/m3-dall/instance";
+import {instance} from "../../../sc1-main/m3-dal/instance";
 
 export type UserType = {
   _id: string;

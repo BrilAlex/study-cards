@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {authApi} from "../../../sc1-main/m3-dal/api";
+import {authApi} from "./dal/api";
 
 // Types
 type InitStateType = typeof initState;
