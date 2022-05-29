@@ -1,12 +1,8 @@
 import axios from "axios";
 
 // Types
-export type RegisterUserData = {
-  email: string
-  password: string
-};
 type ResponseType = {
-  error?: string
+  error: string
 }
 
 // Axios instance
@@ -16,7 +12,7 @@ const instance = axios.create({
 });
 
 export const authRegistrationAPI = {
-  register(userData: RegisterUserData) {
-    return instance.post<ResponseType>("auth/register", userData);
+  register(email: string, password: string) {
+    return instance.post<ResponseType>("auth/register", {email, password});
   },
 };
