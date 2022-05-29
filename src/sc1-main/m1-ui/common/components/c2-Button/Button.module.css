@@ -1,26 +1,34 @@
 .default {
-  margin: 5px 10px;
-  padding: 5px 15px;
-  background: orange;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+    background: #21268F;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 18px rgba(33, 38, 143, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    color: #ECECF9;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 19px;
+    margin: 5px 10px;
+    padding: 5px 45px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    }
 
 .default:hover {
-  background: darkorange;
-}
+    background: darkorange;
+    }
 
 .default:disabled {
-  background: lightgray;
-  cursor: auto;
-}
+    background: lightgray;
+    cursor: auto;
+    }
 
 .red {
-  background: red;
-  color: white;
-}
+    background: red;
+    color: white;
+    }
 
 .red:hover {
-  background: firebrick;
-}
+    background: firebrick;
+    }

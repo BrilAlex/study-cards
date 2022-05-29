@@ -10,6 +10,7 @@ export const Header = () => {
   return (
     <header>
       <div className={s.navbar}>
+        <h1 className={s.logo}>NINJAS</h1>
         <NavLink to={PATH.LOGIN} className={(NavData) => getNavLinkStyle(NavData)}>
           Login
         </NavLink>

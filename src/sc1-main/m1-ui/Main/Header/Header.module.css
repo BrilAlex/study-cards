@@ -1,14 +1,50 @@
 .navbar {
-  display: inline-block;
-}
+    background: #EBE0E9;
+    display: flex;
+    height: 60px;
+    margin-left: auto;
+    width: 100%;
+    }
+
+.logo {
+    display: inline;
+    }
+
+.item:nth-of-type(1) {
+    margin-left: auto;
+    }
+
+.item:nth-last-of-type(1) {
+    margin-right: auto;
+    }
 
 .item {
-  display: inline-block;
-  padding: 5px 10px;
-  background: #373737;
-  color: white;
-}
+    align-items: center;
+    background: #EBE0E9;
+    color: #2D2E46;
+    display: flex;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    line-height: 16px;
+    padding: 5px 20px;
+    position: relative;
+    text-align: center;
+    }
 
 .item.active {
-  background: #00a495;
-}
+    background: #DCCCDB;
+    position: relative;
+    text-align: center;
+    }
+
+.item.active::after {
+    background: #21268F;
+    bottom: 0;
+    content: '';
+    height: 3px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    }
