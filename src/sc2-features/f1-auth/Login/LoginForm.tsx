@@ -26,7 +26,7 @@ export const LoginForm = () => {
 
       if (!values.email) {
         errors.email = 'Required';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      } else if (!/^[A-Z\d._%+-]+@[A-Z\d.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address';
       }
 
@@ -40,6 +40,7 @@ export const LoginForm = () => {
 
     onSubmit: values => {
       // alert(JSON.stringify(values))
+      console.log(values)
       dispatch<any>(LoginThunkTC(values.email, values.password, values.rememberMe));
     },
   });
@@ -55,7 +56,10 @@ export const LoginForm = () => {
         {...formik.getFieldProps('password')}
       />
       {formik.errors.password && formik.touched.password && <div style={{color: "red"}}>{formik.errors.password}</div>}
-      <Checkbox/>
+      <Checkbox
+
+        {...formik.getFieldProps('rememberMe')}
+      />
       <Button type={'submit'}>
         Login
       </Button>
