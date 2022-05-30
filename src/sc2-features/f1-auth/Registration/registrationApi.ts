@@ -1,17 +1,11 @@
-import axios from "axios";
+import {instance} from "../../../sc1-main/m3-dal/instance";
 
 // Types
 type ResponseType = {
   error: string
 }
 
-// Axios instance
-const instance = axios.create({
-  baseURL: "http://localhost:7542/2.0/",
-  withCredentials: true,
-});
-
-export const authRegistrationAPI = {
+export const registrationAPI = {
   register(email: string, password: string) {
     return instance.post<ResponseType>("auth/register", {email, password});
   },

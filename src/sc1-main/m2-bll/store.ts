@@ -15,18 +15,21 @@ import {
 } from "../../sc2-features/f1-auth/PasswordRecovery/passwordRecoveryReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {AppActionsType, appReducer} from "./appReducer";
 
 export type AppStateType = ReturnType<typeof rootReducer>;
-export type AppActionsType =
+export type RootActionsType =
+  | AppActionsType
   | LoginActionsType
   | RegistrationActionsType
   | ProfileActionsType
   | NewPasswordActionsType
   | PasswordRecoveryActionsType;
-export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>;
-export type AppDispatchType = ThunkDispatch<AppStateType, unknown, AppActionsType>;
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, RootActionsType>;
+export type AppDispatchType = ThunkDispatch<AppStateType, unknown, RootActionsType>;
 
 const rootReducer = combineReducers({
+  app: appReducer,
   login: loginReducer,
   registration: registrationReducer,
   profile: profileReducer,

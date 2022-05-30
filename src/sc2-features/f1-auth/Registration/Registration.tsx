@@ -5,13 +5,14 @@ import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {registerTC} from "./registrationReducer";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
+import s from "../../../sc1-main/m1-ui/App.module.css";
 
 export const Registration = () => {
   const [email, setEmail] = useState("mail@mail.com");
   const [password, setPassword] = useState("123456789");
   const [passwordConfirm, setPasswordConfirm] = useState("123456789");
 
-  const isLoading = useAppSelector<boolean>(state => state.registration.isLoading);
+  const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading);
   const success = useAppSelector<boolean>(state => state.registration.success);
   const error = useAppSelector<null | string>(state => state.registration.error);
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ export const Registration = () => {
   }
 
   return (
-    <div>
+    <div className={s.smallContainer}>
       <p>Study Cards</p>
       <h1>Registration</h1>
       <div>
