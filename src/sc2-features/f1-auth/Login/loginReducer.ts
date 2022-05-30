@@ -1,7 +1,7 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {authApi} from "./dal/login-api";
 import {getAuthThunk, setAuthDataAC} from "../../f2-profile/bll/profileReducer";
-import {setAppErrorAC} from "../../../sc1-main/m2-bll/appReducer";
+import {setAppErrorAC, setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 
 // Types
 type InitStateType = typeof initState;
@@ -36,11 +36,10 @@ export const setErrorMessagesAC = (payload: string) => ({type: "login/SET_ERROR_
 // Thunk creators
 
 export const LoginThunkTC = (email: string, password: string, remember: boolean): AppThunkType => (dispatch) => {
+  dispatch(setAppIsLoadingAC(true))
   authApi.login(email, password, remember)
     .then(res => {
-      // dispatch(loginAC({...res}))
-      // dispatch(getAuthThunk())
-      dispatch(setAuthDataAC(res))
+      dispatch(setAuthDataAC(res));
     })
     .catch(e => {
       const error = e.response
@@ -50,7 +49,10 @@ export const LoginThunkTC = (email: string, password: string, remember: boolean)
       console.log('Error: ', error);
       dispatch(setErrorMessagesAC("some Error. More info in console"))
       ;
-    });
+    })
+    .finally(() => {
+      dispatch(setAppIsLoadingAC(false))
+    })
 };
 export const LogoutThunkTC = (): AppThunkType => (dispatch) => {
   authApi.logout()
