@@ -1,62 +1,46 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {ProfileApi} from "../dall/profile-api";
-import {AppStateType, useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {getAuthThunk} from "../bll/profileReducer";
-
+import {ProfileApi, UserType} from "../dal/profile-api";
+import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
+import {updateNameThunk} from "../bll/profileReducer";
 
 
 type ProfilePropsType = {
-  name: string
+  name?: string
 }
-export const ProfileContainer:React.FC<ProfilePropsType> = ({name}) => {
+export const ProfileContainer: React.FC<ProfilePropsType> = () => {
   const dispatch = useAppDispatch();
-  // const name = useAppSelector<string>(store => store.profile.user.name);
+  const userNameStore = useAppSelector<string>(store => store.profile.user.name);
+  const userData = useAppSelector<UserType>(store => store.profile.user);
 
-  // useEffect(() => {
-  //   // dispatch(getAuthThunk())
-  //   setName(name)
-  // }, [])
+  const [name, setName] = useState<string>('');
+  const [authData, setAuthData] = useState<UserType | null>(null);
 
-
-  const [state, setState] = useState<any>(null);
-  const [state1, setState1] = useState<any>(null);
-  const [state2, setState2] = useState<any>(null);
-  const [nweName, setName] = useState<string>('');
-
-
+  const onFocusHandler = () => {
+    name ? setName(name) : setName(userNameStore)
+  }
   const getTasksHandler = () => {
     ProfileApi.me().then(res => {
-      console.log(res)
-      setState(res);
-    })
-  }
-  const loginHandler = () => {
-    ProfileApi.logIn().then(res => {
-      console.log(res)
-      setState1(res);
+      setAuthData(res);
     })
   }
   const putHandler = () => {
-    ProfileApi.updateUserData(nweName, '').then(res => {
-      console.log(res)
-      setState2(res);
-    })
+    dispatch(updateNameThunk(name, ''));
   }
-
-  console.log(name)
-
+  
   return (
     <div>
-      <InputText value={nweName} onChangeText={setName} placeholder={name} onFocus={()=> setName(name)}/>
-      <Button onClick={getTasksHandler}>Save</Button>
-      <Button onClick={loginHandler}>Login</Button>
-      <Button onClick={putHandler}>PUT</Button>
-      <Button onClick={() => setName(name)}>name</Button>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-      <pre>{JSON.stringify(state1, null, 2)}</pre>
-      <pre>{JSON.stringify(state2, null, 2)}</pre>
+      <InputText value={name}
+                 onChangeText={setName}
+                 placeholder={userNameStore}
+                 onFocus={onFocusHandler}/>
+      <Button onClick={getTasksHandler}>Me Data</Button>
+      <Button onClick={putHandler}>Save</Button>
+      <Button onClick={() => {
+      }}>Cancel</Button>
+      <pre>Get me Data: {JSON.stringify(authData, null, 2)}</pre>
+      <pre>Data: {JSON.stringify(userData, null, 2)}</pre>
     </div>
 
   );

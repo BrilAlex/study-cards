@@ -12,10 +12,10 @@ export const Profile = () => {
     // setName(name)
   }, [])
 
-  const name = useSelector<AppStateType, string>(store => store.profile.user.name);
+  // const name = useSelector<AppStateType, string>(store => store.profile.user.name);
   return (
     <div>
-      <ProfileContainer name={name}/>
+      <ProfileContainer />
     </div>
   );
 };

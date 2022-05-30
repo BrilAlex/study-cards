@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {ProfileApi, UserType} from "../dall/profile-api";
+import {ProfileApi, UserType} from "../dal/profile-api";
 
 // Types
 type InitStateType = typeof initState;
@@ -21,7 +21,11 @@ export const getAuthThunk = (): AppThunkType => (dispatch) => {
     dispatch(setAuthDataAC(res));
   })
 };
-
+export const updateNameThunk = (name: string, avatar: string): AppThunkType => (dispatch) => {
+  ProfileApi.updateUserData(name, avatar).then(res => {
+    dispatch(setAuthDataAC(res.updatedUser));
+  })
+};
 export const profileReducer = (state: InitStateType = initState, action: ProfileActionsType): InitStateType => {
   switch (action.type) {
     case "profile/SET-AUTH-DATA":
