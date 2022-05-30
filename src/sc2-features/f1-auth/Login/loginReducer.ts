@@ -1,6 +1,7 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {authApi} from "./dal/api";
-import {getAuthThunk} from "../../f2-profile/bll/profileReducer";
+import {authApi} from "./dal/login-api";
+import {getAuthThunk, setAuthDataAC} from "../../f2-profile/bll/profileReducer";
+import {setAppErrorAC} from "../../../sc1-main/m2-bll/appReducer";
 
 // Types
 type InitStateType = typeof initState;
@@ -37,8 +38,9 @@ export const setErrorMessagesAC = (payload: string) => ({type: "login/SET_ERROR_
 export const LoginThunkTC = (email: string, password: string, remember: boolean): AppThunkType => (dispatch) => {
   authApi.login(email, password, remember)
     .then(res => {
-      dispatch(loginAC({...res}))
-      dispatch(getAuthThunk())
+      // dispatch(loginAC({...res}))
+      // dispatch(getAuthThunk())
+      dispatch(setAuthDataAC(res))
     })
     .catch(e => {
       const error = e.response
@@ -52,15 +54,17 @@ export const LoginThunkTC = (email: string, password: string, remember: boolean)
 };
 export const LogoutThunkTC = (): AppThunkType => (dispatch) => {
   authApi.logout()
-    .then(() => dispatch(getAuthThunk())) //тут получаем те же данные что и в аусМи, можно не делать вторую санку а сразу экшен вызывать и пинать респонс в стор
+    .then((res) => {
+      dispatch(setAuthDataAC(res))
+      dispatch(getAuthThunk())
+    })
     .catch(e => {
       const error = e.response
         ? e.response.data.error
         : (e.message + ', more details in the console');
 
       console.log('Error: ', error);
-      dispatch(setErrorMessagesAC("some Error. More info in console"))
-      ;
+      dispatch(setAppErrorAC(error));
     });
 };
 

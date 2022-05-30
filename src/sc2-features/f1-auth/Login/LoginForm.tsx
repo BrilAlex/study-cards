@@ -4,9 +4,9 @@ import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {Checkbox} from "../../../sc1-main/m1-ui/common/components/c3-Checkbox/Checkbox";
 import {LoginThunkTC} from "./loginReducer";
-import {useDispatch} from "react-redux";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
+import {useAppDispatch} from "../../../sc1-main/m2-bll/store";
 
 type FormikErrorType = {
   email?: string
@@ -16,7 +16,7 @@ type FormikErrorType = {
 
 export const LoginForm = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
       email: '',

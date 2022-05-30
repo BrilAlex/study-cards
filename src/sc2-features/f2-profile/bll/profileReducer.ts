@@ -1,5 +1,6 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {ProfileApi, UserType} from "../dal/profile-api";
+import {setAppErrorAC} from "../../../sc1-main/m2-bll/appReducer";
 
 // Types
 type InitStateType = typeof initState;
@@ -17,14 +18,32 @@ export const setAuthDataAC = (user: UserType) => ({type: "profile/SET-AUTH-DATA"
 
 // Thunk creators
 export const getAuthThunk = (): AppThunkType => (dispatch) => {
-  ProfileApi.me().then(res => {
-    dispatch(setAuthDataAC(res));
-  })
+  ProfileApi.me()
+    .then(res => {
+      dispatch(setAuthDataAC(res));
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+    });
 };
 export const updateNameThunk = (name: string, avatar: string): AppThunkType => (dispatch) => {
-  ProfileApi.updateUserData(name, avatar).then(res => {
-    dispatch(setAuthDataAC(res.updatedUser));
-  })
+  ProfileApi.updateUserData(name, avatar)
+    .then(res => {
+      dispatch(setAuthDataAC(res.updatedUser));
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+    });
 };
 export const profileReducer = (state: InitStateType = initState, action: ProfileActionsType): InitStateType => {
   switch (action.type) {
