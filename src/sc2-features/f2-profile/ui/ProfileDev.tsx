@@ -5,17 +5,14 @@ import {ProfileApi, UserType} from "../dal/profile-api";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {updateNameThunk} from "../bll/profileReducer";
 
-
-type ProfilePropsType = {
-  name?: string
-}
-export const ProfileContainer: React.FC<ProfilePropsType> = () => {
-  const dispatch = useAppDispatch();
-  const userNameStore = useAppSelector<string>(store => store.profile.user.name);
-  const userData = useAppSelector<UserType>(store => store.profile.user);
+export const ProfileDev = () => {
 
   const [name, setName] = useState<string>('');
   const [authData, setAuthData] = useState<UserType | null>(null);
+
+  const dispatch = useAppDispatch();
+  const userNameStore = useAppSelector<string>(store => store.profile.user.name);
+  const userData = useAppSelector<UserType>(store => store.profile.user);
 
   const onFocusHandler = () => {
     name ? setName(name) : setName(userNameStore)
@@ -28,7 +25,7 @@ export const ProfileContainer: React.FC<ProfilePropsType> = () => {
   const putHandler = () => {
     dispatch(updateNameThunk(name, ''));
   }
-  
+
   return (
     <div>
       <InputText value={name}
@@ -42,7 +39,5 @@ export const ProfileContainer: React.FC<ProfilePropsType> = () => {
       <pre>Get me Data: {JSON.stringify(authData, null, 2)}</pre>
       <pre>Data: {JSON.stringify(userData, null, 2)}</pre>
     </div>
-
   );
 };
-

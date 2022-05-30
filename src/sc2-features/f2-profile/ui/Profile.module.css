@@ -1,0 +1,58 @@
+.mainBlock {
+    display: flex;
+    width: 80%;
+    max-width: 800px;
+    height: 85vh;
+    margin: auto;
+    /*border: 1px solid #070101;*/
+    /*border-radius: 15px;*/
+    /*box-shadow: 0 1px 15px 0 rgb(51 51 51 / 20%);*/
+}
+
+.editBlock {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+}
+
+.profileAva {
+
+}
+
+.profileAva img {
+    border: 1px solid #070101;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.profileInfo {
+
+}
+
+.edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 40%;
+    border: 1px solid #070101;
+    /*border-radius: 15px;*/
+    background-color: #b5b9f3;
+}
+
+.numberCards {
+    height: 60%;
+    border: 1px solid #070101;
+    /*border-radius: 15px;*/
+    background-color: #e1e2f3;
+}
+
+.packs {
+    width: 70%;
+    height: 100%;
+    border: 1px solid #070101;
+    /*border-radius: 15px;*/
+}
+
