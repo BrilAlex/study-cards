@@ -13,6 +13,11 @@ export type UserType = {
   rememberMe: boolean;
   error?: string;
 }
+export type UpdatedUser = {
+  token: string
+  tokenDeathTime: Date
+  updatedUser: UserType
+}
 
 
 export const ProfileApi = {
@@ -22,17 +27,11 @@ export const ProfileApi = {
       .then(res => res.data)
   },
   updateUserData(name: string, avatar: string) {
-    return instance.put<any>(`/auth/me`, {name, avatar})
-
+    return instance.put<UpdatedUser>(`/auth/me`, {name, avatar})
       .then(res => res.data)
   },
-  logOut() {
+  logOut() { // где он должен быть?
     return instance.delete<any>(`/auth/me`, {})
       .then(res => res.data)
   },
-  logIn() {
-    return instance.post<any>(`/auth/login`, {email: 'ipavka@ukr.net', password: 'ignat2022', rememberMe: true})
-      .then(res => res.data)
-  }
-
 }
