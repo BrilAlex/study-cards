@@ -5,6 +5,8 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button
 import {Checkbox} from "../../../sc1-main/m1-ui/common/components/c3-Checkbox/Checkbox";
 import {LoginThunkTC} from "./loginReducer";
 import {useDispatch} from "react-redux";
+import {NavLink} from "react-router-dom";
+import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 
 type FormikErrorType = {
   email?: string
@@ -45,26 +47,42 @@ export const LoginForm = () => {
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <InputText
-        type="email"
-        {...formik.getFieldProps('email')}
-      />
-      {formik.errors.email && formik.touched.email && <div style={{color: "red"}}>{formik.errors.email}</div>}
-      <InputText
-        type="password"
-        {...formik.getFieldProps('password')}
-      />
-      {formik.errors.password && formik.touched.password && <div style={{color: "red"}}>{formik.errors.password}</div>}
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <InputText
+          type="email"
+          {...formik.getFieldProps('email')}
+        />
+        {formik.errors.email && formik.touched.email && <div style={{color: "red"}}>{formik.errors.email}</div>}
+        <InputText
+          type="password"
+          {...formik.getFieldProps('password')}
+        />
+        {formik.errors.password && formik.touched.password &&
+			<div style={{color: "red"}}>{formik.errors.password}</div>}
 
-      <label style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
-        <Checkbox
-          {...formik.getFieldProps('rememberMe')}
-        />Remember me
-      </label>
-      <Button type={'submit'}>
-        Login
-      </Button>
-    </form>)
+        <label style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
+          <Checkbox
+            {...formik.getFieldProps('rememberMe')}
+          />Remember me
+        </label>
+        <NavLink
+          to={PATH.PASSWORD_RECOVERY}
+          className={""}
+          style={{margin: "20px auto", display: "block", color: "#2D2E46"}}>
+          Forget password?
+        </NavLink>
+        <Button type={'submit'} style={{margin: '40px auto 30px'}}>
+          Login
+        </Button>
+      </form>
+      <span
+        style={{color: "#2D2E46", opacity: 0.5, display: "block", paddingBottom: "20px"}}>Don’t have an account?</span>
+      <NavLink
+        to={PATH.REGISTRATION}
+        style={{color: "#21268F", fontSize: "16px", fontWeight: 600}}
+      >Sign Up</NavLink>
+    </>
+  )
 }
 

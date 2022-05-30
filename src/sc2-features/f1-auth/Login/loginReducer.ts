@@ -33,20 +33,7 @@ export const authMeAC = (payload: InitStateType) => ({type: "login/AUTH_ME", pay
 export const setErrorMessagesAC = (payload: string) => ({type: "login/SET_ERROR_MESSAGE", payload} as const);
 
 // Thunk creators
-export const AuthMeThunkTC = (): AppThunkType => (dispatch) => {
-  authApi.me()
-    .then(res => dispatch(authMeAC({...res})))
-    .catch(e => {
-      const error = e.response
-        ? e.response.data.error
-        : (e.message + ', more details in the console');
 
-      //чтобы посмотреть объект ошибки:
-      console.log('Error: ', error);
-      dispatch(setErrorMessagesAC("some Error. More info in console"))
-      ;
-    })
-}
 export const LoginThunkTC = (email: string, password: string, remember: boolean): AppThunkType => (dispatch) => {
   authApi.login(email, password, remember)
     .then(res => {
