@@ -3,7 +3,8 @@ import {instance} from "../../../../sc1-main/m3-dal/instance";
 // Types
 type ResponseType = {
     info: string
-    error: string
+    error: string | null
+    success: false
 }
 
 export const passwordAPI = {
