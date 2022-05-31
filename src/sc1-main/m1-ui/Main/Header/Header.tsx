@@ -39,7 +39,7 @@ export const Header = () => {
         <NavLink to={PATH.TEST} className={(NavData) => getNavLinkStyle(NavData)}>
           Test
         </NavLink>
-        {user_ID && <Button onClick={logoutHandler}>Logout</Button>}
+        {user_ID && <Button onClick={logoutHandler} style={{margin: "15px 15px", padding: "5px 10px"}}>Logout</Button>}
       </div>
     </header>
   );

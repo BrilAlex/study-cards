@@ -1,5 +1,6 @@
 .navbar {
     background: #EBE0E9;
+    border-radius: 5px;
     display: flex;
     height: 60px;
     margin-left: auto;
@@ -8,6 +9,7 @@
 
 .logo {
     display: inline;
+    margin-left: 10px;
     }
 
 .item:nth-of-type(1) {
