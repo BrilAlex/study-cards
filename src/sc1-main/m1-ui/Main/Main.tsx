@@ -5,6 +5,7 @@ import {ProgressBar} from "../common/components/ProgressBar/ProgressBar";
 import {Snackbar} from "../common/components/Snackbar/Snackbar";
 import {useEffect} from "react";
 import {initializeAppTC} from "../../m2-bll/appReducer";
+import {Spinner} from "../common/components/Spinner/Spinner";
 
 export const Main = () => {
   const appIsInitialized = useAppSelector<boolean>(state => state.app.appIsInitialized);
@@ -16,7 +17,7 @@ export const Main = () => {
   }, [dispatch]);
 
   if (!appIsInitialized) {
-    return <h1 style={{textAlign: "center"}}>App is initializing</h1>
+    return <Spinner/>
   }
 
   return (
