@@ -1,11 +1,21 @@
 import {NavLink} from "react-router-dom";
 import {PATH} from "../Pages";
 import s from "./Header.module.css";
+import {LogoutThunkTC} from "../../../../sc2-features/f1-auth/Login/loginReducer";
+import {useAppDispatch, useAppSelector} from "../../../m2-bll/store";
+import {Button} from "../../common/components/c2-Button/Button";
 
 export const Header = () => {
+  const user_ID = useAppSelector<string>(state => state.profile.user._id);
+  const dispatch = useAppDispatch();
+
   const getNavLinkStyle = (NavData: { isActive: boolean }) => {
     return NavData.isActive ? `${s.item} ${s.active}` : s.item;
   };
+
+  const logoutHandler = () => {
+    dispatch(LogoutThunkTC());
+  }
 
   return (
     <header>
@@ -29,6 +39,7 @@ export const Header = () => {
         <NavLink to={PATH.TEST} className={(NavData) => getNavLinkStyle(NavData)}>
           Test
         </NavLink>
+        {user_ID && <Button onClick={logoutHandler}>Logout</Button>}
       </div>
     </header>
   );

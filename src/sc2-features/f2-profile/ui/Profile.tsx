@@ -5,6 +5,8 @@ import {updateNameThunk} from "../bll/profileReducer";
 import {EditModal} from "./EditModal/EditModal";
 import {Spinner} from "../../../sc1-main/m1-ui/common/components/Spinner/Spinner";
 import s from './Profile.module.css'
+import {Navigate} from "react-router-dom";
+import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 
 export const Profile = () => {
 
@@ -24,6 +26,10 @@ export const Profile = () => {
   }
   const onFocusHandler = () => {
     name ? setName(name) : setName(userNameStore)
+  }
+
+  if (!userNameStore) {
+    return <Navigate to={PATH.LOGIN}/>;
   }
 
   return (
