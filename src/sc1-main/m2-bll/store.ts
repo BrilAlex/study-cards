@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import {LoginActionsType, loginReducer} from "../../sc2-features/f1-auth/Login/loginReducer";
+import {LoginActionsType, loginReducer} from "../../sc2-features/f1-auth/Login/bll/loginReducer";
 import {
   RegistrationActionsType,
   registrationReducer

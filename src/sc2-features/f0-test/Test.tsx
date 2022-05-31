@@ -4,7 +4,7 @@ import {Checkbox} from "../../sc1-main/m1-ui/common/components/c3-Checkbox/Check
 import {useState} from "react";
 import s from "./Test.module.css";
 import {useAppDispatch} from "../../sc1-main/m2-bll/store";
-import {LogoutThunkTC} from "../f1-auth/Login/loginReducer";
+import {LogoutThunkTC} from "../f1-auth/Login/bll/loginReducer";
 
 export const Test = () => {
   const [text, setText] = useState<string>("");

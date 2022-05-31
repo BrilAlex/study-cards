@@ -53,3 +53,12 @@ h2 {
     transform: translateX(-50%);
     width: 413px;
     }
+
+.bigContainer {
+    background: #FEFEFF;
+    border-radius: 8px;
+    left: 50%;
+    margin: 0 136px;
+    position: relative;
+    transform: translateX(-50%);
+    }

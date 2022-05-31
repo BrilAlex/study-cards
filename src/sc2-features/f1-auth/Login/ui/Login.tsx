@@ -1,9 +1,9 @@
 import {LoginForm} from "./LoginForm";
-import s from "../../../sc1-main/m1-ui/App.module.css";
-import {ProgressBar} from "../../../sc1-main/m1-ui/common/components/ProgressBar/ProgressBar";
-import {useAppSelector} from "../../../sc1-main/m2-bll/store";
+import s from "../../../../sc1-main/m1-ui/App.module.css";
+import {ProgressBar} from "../../../../sc1-main/m1-ui/common/components/ProgressBar/ProgressBar";
+import {useAppSelector} from "../../../../sc1-main/m2-bll/store";
 import {Navigate} from "react-router-dom";
-import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
+import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 
 export const Login = () => {
 

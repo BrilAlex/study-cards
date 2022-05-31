@@ -1,7 +1,7 @@
-import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {authApi} from "./dal/login-api";
-import {getAuthThunk, setAuthDataAC} from "../../f2-profile/bll/profileReducer";
-import {setAppErrorAC, setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
+import {AppThunkType} from "../../../../sc1-main/m2-bll/store";
+import {authApi} from "../dal/login-api";
+import {getAuthThunk, setAuthDataAC} from "../../../f2-profile/bll/profileReducer";
+import {setAppErrorAC, setAppIsLoadingAC} from "../../../../sc1-main/m2-bll/appReducer";
 
 // Types
 type InitStateType = typeof initState;

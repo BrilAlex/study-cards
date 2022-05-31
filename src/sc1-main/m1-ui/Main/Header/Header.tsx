@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import {PATH} from "../Pages";
 import s from "./Header.module.css";
-import {LogoutThunkTC} from "../../../../sc2-features/f1-auth/Login/loginReducer";
+import {LogoutThunkTC} from "../../../../sc2-features/f1-auth/Login/bll/loginReducer";
 import {useAppDispatch, useAppSelector} from "../../../m2-bll/store";
 import {Button} from "../../common/components/c2-Button/Button";
 

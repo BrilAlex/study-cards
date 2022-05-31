@@ -1,12 +1,12 @@
 import React from 'react';
 import {useFormik} from 'formik';
-import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
-import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {Checkbox} from "../../../sc1-main/m1-ui/common/components/c3-Checkbox/Checkbox";
-import {LoginThunkTC} from "./loginReducer";
+import {InputText} from "../../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
+import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
+import {Checkbox} from "../../../../sc1-main/m1-ui/common/components/c3-Checkbox/Checkbox";
+import {LoginThunkTC} from "../bll/loginReducer";
 import {NavLink} from "react-router-dom";
-import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
-import {useAppDispatch} from "../../../sc1-main/m2-bll/store";
+import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
+import {useAppDispatch} from "../../../../sc1-main/m2-bll/store";
 
 type FormikErrorType = {
   email?: string
