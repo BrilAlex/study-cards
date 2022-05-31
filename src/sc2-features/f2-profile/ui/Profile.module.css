@@ -30,6 +30,12 @@
 
 }
 
+.profileInfo h3 {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .edit {
     display: flex;
     flex-direction: column;
@@ -40,6 +46,19 @@
     border: 1px solid #070101;
     /*border-radius: 15px;*/
     background-color: #b5b9f3;
+}
+
+/* Custom style for Spinner */
+.spinnerBlock {
+    height: auto;
+}
+.spinnerSize {
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgb(7, 1, 1);
+    border-radius: 50%;
+    border-left-color: transparent;
+    border-right-color: transparent;
 }
 
 .numberCards {
