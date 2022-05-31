@@ -1,10 +1,7 @@
 .mainBlock {
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/
-    height: 100%;
-    width: 100%;
-    margin: 15px;
+    margin: 25% 15px 15px 15px;
 }
 
 .container {

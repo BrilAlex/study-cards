@@ -51,6 +51,8 @@
 /* Custom style for Spinner */
 .spinnerBlock {
     height: auto;
+    width: 100%;
+    margin: 15px;
 }
 .spinnerSize {
     width: 30px;
