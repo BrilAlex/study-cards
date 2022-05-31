@@ -1,45 +1,72 @@
 .mainBlock {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    margin: 25% 15px 15px 15px;
-}
+    justify-content: center;
+    position: relative;
+    }
 
 .container {
-    width: 100%;
-    height: 60px;
+    align-items: center;
+    display: flex;
+    height: 99vh;
+    justify-content: center;
     text-align: center;
-}
+    width: 100vw;
+    }
 
 .speedingWheel {
-    width: 60px;
+    -moz-animation: my_spinner 800ms infinite linear;
+    -webkit-animation: my_spinner 800ms infinite linear;
+    animation: my_spinner 800ms infinite linear;
+    border: 4px solid rgb(7, 1, 1);
+    border-left-color: transparent;
+    border-radius: 50%;
+    border-right-color: transparent;
     height: 60px;
     margin: 0 auto;
-    border: 4px solid rgb(7, 1, 1);
-    border-radius: 50%;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    animation: my_spinner 800ms infinite linear;
-    -webkit-animation: my_spinner 800ms infinite linear;
-    -moz-animation: my_spinner 800ms infinite linear;
-}
+    width: 60px;
+    }
 
 
 @keyframes my_spinner {
+    0% {
+        transform: rotate(0deg) scale(1);
+        }
+    50% {
+        transform: rotate(180deg) scale(1.3);
+        }
     100% {
-        transform: rotate(360deg);
+        transform: rotate(360deg) scale(1);
+        }
     }
-}
 
 @-webkit-keyframes my_spinner {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1);
+        transform: rotate(0deg) scale(1);
+        }
+    50% {
+        -webkit-transform: rotate(180deg) scale(1.3);
+        transform: rotate(180deg) scale(1.3);
+        }
     100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg) scale(1);
+        transform: rotate(360deg) scale(1);
+        }
     }
-}
 
 @-moz-keyframes my_spinner {
+    0% {
+        -moz-transform: rotate(0deg) scale(1);
+        transform: rotate(0deg) scale(1);
+        }
     100% {
-        -moz-transform: rotate(360deg);
-        transform: rotate(360deg);
+        -moz-transform: rotate(180deg) scale(1.3);
+        transform: rotate(180deg) scale(1.3);
+        }
+    100% {
+        -moz-transform: rotate(360deg) scale(1);
+        transform: rotate(360deg) scale(1);
+        }
     }
-}
