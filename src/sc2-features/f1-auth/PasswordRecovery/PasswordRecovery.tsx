@@ -18,7 +18,7 @@ export const PasswordRecovery = () => {
     }
 
     const onClickHandler = () => {
-        const message = `<div style="background-color: lime; padding: 15px">password recovery link: <a href='https://neko-back.herokuapp.com/2.0/study-cards#/create-new-password/$token$'>link</a></div>`;
+        const message = `<div style="background-color: lime; padding: 15px">password recovery link: <a href='https://brilalex.github.io/study-cards/#/create-new-password/$token$'>link</a></div>`;
         dispatch(recoveryPasswordTC(email, message))
     }
     return (
