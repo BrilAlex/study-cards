@@ -3,7 +3,7 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {updateNameThunk} from "../bll/profileReducer";
 import {EditModal} from "./EditModal/EditModal";
-import {Spinner} from "../../../sc1-main/m1-ui/common/components/Spinner/Spinner";
+import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import s from './Profile.module.css'
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
@@ -41,7 +41,7 @@ export const Profile = () => {
             <img src='https://clck.ru/WQq57' alt="user-ava"/>
           </div>
           {isLoading
-            ? <Spinner customMainStyle={s.spinnerBlock} customSizeStyle={s.spinnerSize}/>
+            ? <MiniSpinner/>
             : <>
               <div className={s.profileInfo}>
                 <h3>{userNameStore}</h3>

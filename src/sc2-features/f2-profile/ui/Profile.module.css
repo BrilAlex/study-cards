@@ -48,21 +48,6 @@
     background-color: #b5b9f3;
 }
 
-/* Custom style for Spinner */
-.spinnerBlock {
-    height: auto;
-    width: 100%;
-    margin: 15px;
-}
-.spinnerSize {
-    width: 30px;
-    height: 30px;
-    border: 2px solid rgb(7, 1, 1);
-    border-radius: 50%;
-    border-left-color: transparent;
-    border-right-color: transparent;
-}
-
 .numberCards {
     height: 60%;
     border: 1px solid #070101;

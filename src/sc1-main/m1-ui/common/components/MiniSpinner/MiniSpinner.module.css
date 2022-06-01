@@ -1,0 +1,44 @@
+.mainBlock {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.container {
+    width: 100%;
+    height: 60px;
+}
+
+.speedingWheel {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    border: 2px solid rgb(7, 1, 1);
+    border-radius: 50%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation: my_spinner 800ms infinite linear;
+    -webkit-animation: my_spinner 800ms infinite linear;
+    -moz-animation: my_spinner 800ms infinite linear;
+}
+
+
+@keyframes my_spinner {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes my_spinner {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes my_spinner {
+    100% {
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
