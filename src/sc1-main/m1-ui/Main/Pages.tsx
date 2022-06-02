@@ -1,6 +1,6 @@
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../../../sc2-features/f1-auth/Login/ui/Login";
-import {Registration} from "../../../sc2-features/f1-auth/Registration/Registration";
+import {Registration} from "../../../sc2-features/f1-auth/Registration/ui/Registration";
 import {Profile} from "../../../sc2-features/f2-profile/ui/Profile";
 import {PasswordRecovery} from "../../../sc2-features/f1-auth/PasswordRecovery/PasswordRecovery";
 import {NewPassword} from "../../../sc2-features/f1-auth/NewPassword/NewPassword";

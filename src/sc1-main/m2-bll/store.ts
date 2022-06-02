@@ -3,7 +3,7 @@ import {LoginActionsType, loginReducer} from "../../sc2-features/f1-auth/Login/b
 import {
   RegistrationActionsType,
   registrationReducer
-} from "../../sc2-features/f1-auth/Registration/registrationReducer";
+} from "../../sc2-features/f1-auth/Registration/bll/registrationReducer";
 import {ProfileActionsType, profileReducer} from "../../sc2-features/f2-profile/bll/profileReducer";
 import {
   NewPasswordActionsType,

@@ -1,6 +1,6 @@
-import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {registrationAPI} from "./registrationApi";
-import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
+import {AppThunkType} from "../../../../sc1-main/m2-bll/store";
+import {registrationAPI} from "../dal/registrationApi";
+import {setAppIsLoadingAC} from "../../../../sc1-main/m2-bll/appReducer";
 
 // Types
 type InitStateType = typeof initState;
@@ -42,7 +42,12 @@ export const registerTC = (formData: SignUpFormDataType): AppThunkType => (dispa
       dispatch(setSuccessAC(true));
     })
     .catch(error => {
-      dispatch(setErrorAC(error.response.data.error));
+      const errorMessage = error.response
+        ? error.response.data.error
+        : (error.message + ', more details in the console');
+
+      console.log('Error: ', errorMessage);
+      dispatch(setErrorAC(errorMessage));
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
