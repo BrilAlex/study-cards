@@ -1,8 +1,8 @@
-// Types
 import {AppThunkType} from "./store";
 import {ProfileApi} from "../../sc2-features/f2-profile/dal/profile-api";
 import {setAuthDataAC} from "../../sc2-features/f2-profile/bll/profileReducer";
 
+// Types
 type InitStateType = typeof initState;
 
 // Initial state
@@ -31,14 +31,15 @@ export const setAppErrorAC = (value: null | string) =>
 export const initializeAppTC = (): AppThunkType => (dispatch) => {
   ProfileApi.me()
     .then(data => {
-      console.log("me Success");
-      console.log(data);
       dispatch(setAuthDataAC(data));
     })
     .catch(error => {
-      console.log("me Error");
-      console.log(error);
-      dispatch(setAppErrorAC(error.response.data.error));
+      const errorMessage = error.response
+        ? error.response.data.error
+        : (error.message + ', more details in the console');
+
+      console.log('Error: ', errorMessage);
+      dispatch(setAppErrorAC(errorMessage));
     })
     .finally(() => {
       dispatch(setAppIsInitializedAC(true));
