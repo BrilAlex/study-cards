@@ -36,9 +36,6 @@ export const Header = () => {
         <NavLink to={PATH.CREATE_NEW_PASSWORD} className={(NavData) => getNavLinkStyle(NavData)}>
           Create new password
         </NavLink>
-        <NavLink to={PATH.TEST} className={(NavData) => getNavLinkStyle(NavData)}>
-          Test
-        </NavLink>
         {user_ID && <Button onClick={logoutHandler} style={{margin: "15px 15px", padding: "5px 10px"}}>Logout</Button>}
       </div>
     </header>

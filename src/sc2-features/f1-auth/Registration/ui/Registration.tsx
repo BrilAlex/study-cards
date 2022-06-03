@@ -2,8 +2,8 @@ import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/But
 import {InputText} from "../../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store";
-import {registerTC, setSuccessAC} from "../bll/registrationReducer";
-import {Navigate} from "react-router-dom";
+import {registerTC, setErrorAC, setSuccessAC} from "../bll/registrationReducer";
+import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import s from "../../../../sc1-main/m1-ui/App.module.css";
 
@@ -16,6 +16,11 @@ export const Registration = () => {
   const success = useAppSelector<boolean>(state => state.registration.success);
   const error = useAppSelector<null | string>(state => state.registration.error);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const cancelHandler = useCallback(() => {
+    navigate(PATH.LOGIN);
+  }, [navigate]);
 
   const registerHandler = useCallback(() => {
     dispatch(registerTC({email, password, passwordConfirm}));
@@ -23,9 +28,10 @@ export const Registration = () => {
 
   useEffect(() => {
     return () => {
+      dispatch(setErrorAC(null));
       dispatch(setSuccessAC(false));
     };
-  });
+  }, [dispatch]);
 
   if (success) {
     return <Navigate to={PATH.LOGIN}/>;
@@ -49,10 +55,10 @@ export const Registration = () => {
           onChangeText={setPasswordConfirm}
           placeholder={"Confirm password"}
         />
-        <Button>Cancel</Button>
+        <Button onClick={cancelHandler}>Cancel</Button>
         <Button onClick={registerHandler} disabled={isLoading}>Register</Button>
       </div>
-      {error && <p>{error}</p>}
+      {error && <p style={{color: "red"}}>{error}</p>}
     </div>
   );
 };
