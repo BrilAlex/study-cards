@@ -49,10 +49,18 @@
 }
 
 .numberCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
     height: 60%;
     border: 1px solid #070101;
     /*border-radius: 15px;*/
     background-color: #e1e2f3;
+}
+.numberCards h2 {
+    color: red;
+    font-weight: 600;
 }
 
 .packs {

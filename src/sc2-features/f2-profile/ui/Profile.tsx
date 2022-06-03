@@ -7,11 +7,14 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import s from './Profile.module.css'
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
+import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
 
 export const Profile = () => {
 
   const [name, setName] = useState<string>('');
   const [activeModal, setActiveModal] = useState(false);
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(100);
   const dispatch = useAppDispatch();
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
   const userAva = useAppSelector<string | undefined>(store => store.profile.user.avatar);
@@ -54,6 +57,14 @@ export const Profile = () => {
 
         <div className={s.numberCards}>
           <h3>Number of cards</h3>
+
+          <DoubleRange min={0}
+                       max={100}
+                       value1={value1}
+                       value2={value2}
+                       setValue1={setValue1}
+                       setValue2={setValue2}/>
+          <h2>{value1 > 50 || value2 < 50 ? 'Хватит уже крутить!!!' : ''}</h2>
         </div>
 
       </div>
