@@ -14,6 +14,7 @@ export const Profile = () => {
   const [activeModal, setActiveModal] = useState(false);
   const dispatch = useAppDispatch();
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
+  const userAva = useAppSelector<string | undefined>(store => store.profile.user.avatar);
   const isLoading = useAppSelector<boolean>(state => state.profile.loading);
 
 
@@ -38,7 +39,7 @@ export const Profile = () => {
       <div className={s.editBlock}>
         <div className={s.edit}>
           <div className={s.profileAva}>
-            <img src='https://clck.ru/WQq57' alt="user-ava"/>
+            <img src={userAva ? userAva : 'https://clck.ru/WQq57'} alt="user-ava"/>
           </div>
           {isLoading
             ? <MiniSpinner/>

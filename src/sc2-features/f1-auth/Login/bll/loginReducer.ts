@@ -57,8 +57,8 @@ export const LoginThunkTC = (email: string, password: string, remember: boolean)
 export const LogoutThunkTC = (): AppThunkType => (dispatch) => {
   authApi.logout()
     .then((res) => {
-      dispatch(setAuthDataAC(res))
-      dispatch(getAuthThunk())
+      dispatch(setAuthDataAC(res)); // ?!
+      dispatch(getAuthThunk()); // ?!
     })
     .catch(e => {
       const error = e.response
