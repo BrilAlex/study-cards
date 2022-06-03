@@ -8,8 +8,16 @@
     }
 
 .logo {
+    border: 1px solid black;
+    border-radius: 5px 0 5px;
     display: inline;
+    font-weight: bold;
+    height: fit-content;
     margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
     }
 
 .item:nth-of-type(1) {
@@ -49,4 +57,26 @@
     left: 0;
     position: absolute;
     width: 100%;
+    }
+
+@media (max-width: 1004px) {
+    .logo {
+        font-size: 20px;
+        }
+
+    .item {
+        font-size: 14px;
+        padding: 10px;
+        }
+    }
+
+@media (max-width: 510px) {
+    .logo {
+        font-size: 16px;
+        }
+
+    .item {
+        font-size: 13px;
+        padding: 0 5px;
+        }
     }

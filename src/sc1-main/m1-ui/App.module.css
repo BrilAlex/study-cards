@@ -62,3 +62,9 @@ h2 {
     position: relative;
     transform: translateX(-50%);
     }
+
+@media (max-width: 413px) {
+    .smallContainer {
+        width: 90vw;
+        }
+    }
