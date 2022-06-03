@@ -39,7 +39,6 @@ export const initializeAppTC = (): AppThunkType => (dispatch) => {
         : (error.message + ', more details in the console');
 
       console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
     })
     .finally(() => {
       dispatch(setAppIsInitializedAC(true));
