@@ -5,22 +5,17 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 type SuperDoubleRangePropsType = DefaultInputPropsType & {
   min: number
   max: number
-  value1: number
-  value2: number
-  setValue1: (value: number) => void
-  setValue2: (value: number) => void
+  valueArr: number[]
+  setValueArr: (value: number[]) => void
 }
 
 export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
   {
     min,
     max,
-    value1,
-    value2,
-    setValue1,
-    setValue2,
+    valueArr,
+    setValueArr,
     step,
-    // min, max, step, disable, ...
   }
 ) => {
 
@@ -36,24 +31,24 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
 
   // Диапазон для уменьшения с левой стороны
   useEffect(() => {
-    const minPercent = getPercent(value1);
+    const minPercent = getPercent(valueArr[0]);
     const maxPercent = getPercent(maxValRef.current);
 
     if (range.current) {
       range.current.style.left = `${minPercent}%`;
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [value1, getPercent]);
+  }, [valueArr[0], getPercent]);
 
   // Диапазон для уменьшения с правой стороны
   useEffect(() => {
     const minPercent = getPercent(minValRef.current);
-    const maxPercent = getPercent(value2);
+    const maxPercent = getPercent(valueArr[1]);
 
     if (range.current) {
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [value2, getPercent]);
+  }, [valueArr[1], getPercent]);
 
   return (
     <div className={s.container}>
@@ -62,25 +57,25 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
         min={min}
         max={max}
         step={step ? step : 1}
-        value={value1}
+        value={valueArr[0]}
         onChange={(event) => {
-          const value = Math.min(Number(event.target.value), value2 - 1);
-          setValue1(value);
+          const value = Math.min(Number(event.target.value), valueArr[1] - 1);
+          setValueArr([value, valueArr[1]]);
           minValRef.current = value;
         }}
         className={`${s.range} ${s.rangeLeft}`}
 
-        style={{zIndex: value1 > max - 100 ? "5": undefined}}
+        style={{zIndex: valueArr[0] > max - 100 ? "5": undefined}}
       />
       <input
         type="range"
         min={min}
         max={max}
         step={step ? step : 1}
-        value={value2}
+        value={valueArr[1]}
         onChange={(event) => {
-          const value = Math.max(Number(event.target.value), value1 + 1);
-          setValue2(value);
+          const value = Math.max(Number(event.target.value), valueArr[0] + 1);
+          setValueArr([valueArr[0], value]);
           maxValRef.current = value;
         }}
         className={`${s.range} ${s.rangeRight}`}
@@ -89,8 +84,8 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
       <div className={s.slider}>
         <div className={s.sliderTrack}/>
         <div ref={range} className={s.sliderRange}/>
-        <div className={s.sliderLeftValue}>{value1}</div>
-        <div className={s.sliderRightValue}>{value2}</div>
+        <div className={s.sliderLeftValue}>{valueArr[0]}</div>
+        <div className={s.sliderRightValue}>{valueArr[1]}</div>
       </div>
     </div>
   );

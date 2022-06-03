@@ -8,18 +8,18 @@ import s from './Profile.module.css'
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
+import {Debounce} from "../../../sc1-main/m1-ui/common/components/Debounce/Debounce";
 
 export const Profile = () => {
 
   const [name, setName] = useState<string>('');
   const [activeModal, setActiveModal] = useState(false);
-  const [value1, setValue1] = useState(0);
-  const [value2, setValue2] = useState(100);
+  const [valueArr, setValueArr] = useState([0, 100]);
+
   const dispatch = useAppDispatch();
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
   const userAva = useAppSelector<string | undefined>(store => store.profile.user.avatar);
   const isLoading = useAppSelector<boolean>(state => state.profile.loading);
-
 
   const changeName = () => {
     dispatch(updateNameThunk(name, ''));
@@ -60,17 +60,16 @@ export const Profile = () => {
 
           <DoubleRange min={0}
                        max={100}
-                       value1={value1}
-                       value2={value2}
-                       setValue1={setValue1}
-                       setValue2={setValue2}/>
-          <h2>{value1 > 50 || value2 < 50 ? 'Хватит уже крутить!!!' : ''}</h2>
+                       valueArr={valueArr}
+                       setValueArr={setValueArr}/>
+          <h2>{valueArr[0] > 50 || valueArr[1] < 50 ? 'Хватит уже крутить!!!' : ''}</h2>
         </div>
 
       </div>
 
       <div className={s.packs}>
         <h1>My packs list</h1>
+        <Debounce props={valueArr}/>
       </div>
 
       <EditModal active={activeModal}
