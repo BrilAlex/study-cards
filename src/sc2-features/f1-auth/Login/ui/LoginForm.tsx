@@ -59,7 +59,7 @@ export const LoginForm = () => {
           {...formik.getFieldProps('password')}
         />
         {formik.errors.password && formik.touched.password &&
-			<div style={{color: "red"}}>{formik.errors.password}</div>}
+        <div style={{color: "red"}}>{formik.errors.password}</div>}
 
         <label style={{display: 'flex', justifyContent: "center", alignItems: "center"}}>
           <Checkbox
