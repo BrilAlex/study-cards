@@ -5,8 +5,8 @@ import {passwordAPI} from "../../../sc1-main/m3-dal/passwordApi";
 // Types
 type InitStateType = typeof initState;
 type redirectActionType = ReturnType<typeof redirectAC>;
-type setErrorActionType = ReturnType<typeof setErrorAC>;
-export type PasswordRecoveryActionsType = redirectActionType | setErrorActionType;
+type setPasswordErrorActionType = ReturnType<typeof setPasswordErrorAC>;
+export type PasswordRecoveryActionsType = redirectActionType | setPasswordErrorActionType;
 
 // Variables
 const REDIRECT_TO_CHECK_EMAIL_SUCCESS_PAGE = "passwordRecovery/REDIRECT-TO-CHECK-EMAIL-SUCCESS-PAGE"
@@ -19,7 +19,7 @@ const initState = {
 };
 
 // Action creators
-export const setErrorAC = (value: null | string) => ({type: "passwordRecovery/SET-ERROR", value} as const);
+export const setPasswordErrorAC = (value: null | string) => ({type: "passwordRecovery/SET-ERROR", value} as const);
 export const redirectAC = (enteredEmail: string) => ({
     type: REDIRECT_TO_CHECK_EMAIL_SUCCESS_PAGE,
     enteredEmail
@@ -36,7 +36,7 @@ export const recoveryPasswordTC = (email: string, message: string): AppThunkType
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            dispatch(setErrorAC(error));
+            dispatch(setPasswordErrorAC(error));
         })
         .finally(() => {
             dispatch(setAppIsLoadingAC(false));

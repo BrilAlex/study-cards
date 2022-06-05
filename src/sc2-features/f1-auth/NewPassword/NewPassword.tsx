@@ -3,16 +3,15 @@ import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {useEffect, useState} from "react";
 import {Navigate, useParams} from "react-router-dom";
-import {setNewPasswordTC} from "./newPasswordReducer";
+import {setNewPasswordErrorAC, setNewPasswordSuccessAC, setNewPasswordTC} from "./newPasswordReducer";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
-import {setErrorAC, setSuccessAC} from "../Registration/bll/registrationReducer";
 
 export const NewPassword = () => {
     const dispatch = useAppDispatch();
     const [password, setPassword] = useState("");
     const success = useAppSelector<boolean>(state => state.newPassword.success)
-    const error = useAppSelector<null | string>(state => state.registration.error)
+    const error = useAppSelector<null | string>(state => state.newPassword.error)
     const params = useParams<'token'>();
     const token = params.token;
 
@@ -23,14 +22,15 @@ export const NewPassword = () => {
     }
     useEffect(() => {
         return () => {
-            dispatch(setErrorAC(null));
-            dispatch(setSuccessAC(false));
+            dispatch(setNewPasswordErrorAC(null));
+            dispatch(setNewPasswordSuccessAC(false));
         };
     }, [dispatch]);
 
     if (success) {
         return <Navigate to={PATH.LOGIN}/>
     }
+
     return (
         <div className={s.smallContainer}>
             <h1>It-incubator</h1>

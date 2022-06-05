@@ -1,12 +1,16 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {passwordAPI} from "../../../sc1-main/m3-dal/passwordApi";
-import {setErrorAC} from "../Registration/bll/registrationReducer";
 
 // Types
 type InitStateType = typeof initState;
-type setNewPasswordActionType = ReturnType<typeof setNewPasswordAC>;
-export type NewPasswordActionsType = setNewPasswordActionType;
+type setNewPasswordSuccessActionType = ReturnType<typeof setNewPasswordSuccessAC>;
+type setNewPasswordErrorActionType = ReturnType<typeof setNewPasswordErrorAC>;
+export type NewPasswordActionsType = setNewPasswordSuccessActionType | setNewPasswordErrorActionType;
+
+// Variables
+const SET_NEW_PASSWORD_SUCCESS = "newPassword/SET-NEW-PASSWORD-SUCCESS";
+const SET_NEW_PASSWORD_ERROR = "newPassword/SET-NEW-PASSWORD-ERROR";
 
 // Initial state
 const initState = {
@@ -16,20 +20,21 @@ const initState = {
 };
 
 // Action creators
-export const setNewPasswordAC = (success: boolean) => ({type: "newPassword/SET-NEW-PASSWORD", success} as const);
+export const setNewPasswordSuccessAC = (success: boolean) => ({type: SET_NEW_PASSWORD_SUCCESS, success} as const);
+export const setNewPasswordErrorAC = (error: string | null) => ({type: SET_NEW_PASSWORD_ERROR, error} as const);
 
 // Thunk creators
 export const setNewPasswordTC = (password: string, token: string): AppThunkType => (dispatch) => {
     dispatch(setAppIsLoadingAC(true));
     passwordAPI.setNewPassword(password, token)
         .then(() => {
-            dispatch(setNewPasswordAC(true))
+            dispatch(setNewPasswordSuccessAC(true))
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            dispatch(setErrorAC(error));
+            dispatch(setNewPasswordErrorAC(error));
         })
         .finally(() => {
             dispatch(setAppIsLoadingAC(false));
@@ -38,8 +43,10 @@ export const setNewPasswordTC = (password: string, token: string): AppThunkType 
 
 export const newPasswordReducer = (state: InitStateType = initState, action: NewPasswordActionsType): InitStateType => {
     switch (action.type) {
-        case "newPassword/SET-NEW-PASSWORD":
+        case SET_NEW_PASSWORD_SUCCESS:
             return {...state, success: action.success};
+        case SET_NEW_PASSWORD_ERROR:
+            return {...state, error: action.error};
         default:
             return state;
     }
