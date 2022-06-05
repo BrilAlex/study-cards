@@ -1,0 +1,9 @@
+.mainBlock {
+    display: flex;
+    width: 800px;
+    height: 600px;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 16px;
+    background-color: #c7d3e8;
+}

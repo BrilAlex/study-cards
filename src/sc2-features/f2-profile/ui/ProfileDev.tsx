@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {ProfileApi, UserType} from "../dal/profile-api";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {updateNameThunk} from "../bll/profileReducer";
+import {UserType} from "../../../sc1-main/m3-dal/profile-api";
+import {packCardsApi} from "../../../sc1-main/m3-dal/packCards-api";
 
 export const ProfileDev = () => {
 
@@ -18,7 +19,7 @@ export const ProfileDev = () => {
     name ? setName(name) : setName(userNameStore)
   }
   const getTasksHandler = () => {
-    ProfileApi.getAllCards().then(res => {
+    packCardsApi.getAllCards().then(res => {
       setAuthData(res);
     })
   }

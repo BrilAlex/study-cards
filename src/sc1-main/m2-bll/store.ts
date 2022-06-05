@@ -16,6 +16,7 @@ import {
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppActionsType, appReducer} from "./appReducer";
+import {PacksListActionsType, packsListReducer} from "../../sc2-features/f3-packsList/bll/packsListReducer";
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type RootActionsType =
@@ -24,7 +25,8 @@ export type RootActionsType =
   | RegistrationActionsType
   | ProfileActionsType
   | NewPasswordActionsType
-  | PasswordRecoveryActionsType;
+  | PasswordRecoveryActionsType
+  | PacksListActionsType;
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, RootActionsType>;
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, RootActionsType>;
 
@@ -35,6 +37,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   newPassword: newPasswordReducer,
   passwordRecovery: passwordRecoveryReducer,
+  packsList: packsListReducer,
 });
 
 // Custom `useDispatch` and `useSelector: Use throughout app instead of plain `useDispatch` and `useSelector`

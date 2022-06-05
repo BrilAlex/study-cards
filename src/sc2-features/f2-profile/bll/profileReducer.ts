@@ -1,6 +1,6 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {ProfileApi, UserType} from "../dal/profile-api";
 import {setAppErrorAC} from "../../../sc1-main/m2-bll/appReducer";
+import {ProfileApi, UserType} from "../../../sc1-main/m3-dal/profile-api";
 
 // Types
 type InitStateType = typeof initState;
