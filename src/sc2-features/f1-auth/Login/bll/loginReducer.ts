@@ -1,6 +1,6 @@
 import {AppThunkType} from "../../../../sc1-main/m2-bll/store";
 import {authApi} from "../dal/login-api";
-import {getAuthThunk, setAuthDataAC} from "../../../f2-profile/bll/profileReducer";
+import {setAuthDataAC} from "../../../f2-profile/bll/profileReducer";
 import {setAppErrorAC, setAppIsLoadingAC} from "../../../../sc1-main/m2-bll/appReducer";
 
 // Types
@@ -9,7 +9,6 @@ export type LoginActionsType =
   ReturnType<typeof loginAC>
   | ReturnType<typeof logoutAC>
   | ReturnType<typeof authMeAC>
-  | ReturnType<typeof setErrorMessagesAC>;
 
 // Initial state
 const initState = {
@@ -31,7 +30,6 @@ const initState = {
 export const loginAC = (payload: InitStateType) => ({type: "login/LOGIN", payload} as const);
 export const logoutAC = () => ({type: "login/LOGOUT"} as const);
 export const authMeAC = (payload: InitStateType) => ({type: "login/AUTH_ME", payload} as const);
-export const setErrorMessagesAC = (payload: string) => ({type: "login/SET_ERROR_MESSAGE", payload} as const);
 
 // Thunk creators
 
@@ -46,9 +44,7 @@ export const LoginThunkTC = (email: string, password: string, remember: boolean)
         ? e.response.data.error
         : (e.message + ', more details in the console');
 
-      console.log('Error: ', error);
-      dispatch(setErrorMessagesAC("some Error. More info in console"))
-      ;
+      dispatch(setAppErrorAC(error));
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false))
@@ -57,15 +53,14 @@ export const LoginThunkTC = (email: string, password: string, remember: boolean)
 export const LogoutThunkTC = (): AppThunkType => (dispatch) => {
   authApi.logout()
     .then((res) => {
-      dispatch(setAuthDataAC(res)); // ?!
-      dispatch(getAuthThunk()); // ?!
+      dispatch(setAppErrorAC(res.info))
+      dispatch(setAuthDataAC(res));
     })
     .catch(e => {
       const error = e.response
         ? e.response.data.error
         : (e.message + ', more details in the console');
 
-      console.log('Error: ', error);
       dispatch(setAppErrorAC(error));
     });
 };
@@ -81,9 +76,7 @@ export const loginReducer = (state: InitStateType = initState, action: LoginActi
     case "login/LOGOUT": {
       return {...initState}
     }
-    case "login/SET_ERROR_MESSAGE": {
-      return {...state, error: action.payload}
-    }
+
     default:
       return state;
   }
