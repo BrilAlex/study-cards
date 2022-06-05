@@ -9,6 +9,7 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
 import {Debounce} from "../../../sc1-main/m1-ui/common/components/Debounce/Debounce";
+import {ProfileDev} from "./ProfileDev";
 
 export const Profile = () => {
 
@@ -63,6 +64,7 @@ export const Profile = () => {
                        valueArr={valueArr}
                        setValueArr={setValueArr}/>
           <h2>{valueArr[0] > 50 || valueArr[1] < 50 ? 'Хватит уже крутить!!!' : ''}</h2>
+
         </div>
 
       </div>
@@ -70,6 +72,7 @@ export const Profile = () => {
       <div className={s.packs}>
         <h1>My packs list</h1>
         <Debounce props={valueArr}/>
+        <ProfileDev/>
       </div>
 
       <EditModal active={activeModal}

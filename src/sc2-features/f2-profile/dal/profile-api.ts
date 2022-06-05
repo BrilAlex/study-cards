@@ -34,4 +34,8 @@ export const ProfileApi = {
     return instance.delete<any>(`/auth/me`, {})
       .then(res => res.data)
   },
+  getAllCards() {
+    return instance.get<any>(`/cards/pack`)
+      .then(res => res.data)
+  },
 }
