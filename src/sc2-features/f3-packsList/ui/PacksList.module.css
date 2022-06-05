@@ -1,11 +1,80 @@
 .mainBlock {
-    /*display: flex;*/
-    width: 800px;
-    min-height: 800px;
-    height: 100%;
-    margin: auto;
-    border: 1px solid black;
-    border-radius: 16px;
-    background-color: #c7d3e8;
-    padding: 15px;
-}
+    background: #FEFEFF;
+    border-radius: 8px;
+    display: flex;
+    margin: 24px 136px;
+    min-height: 300px;
+    overflow: hidden;
+    position: relative;
+    }
+
+.settingsSide {
+    background: #ECECF9;
+    padding: 0 24px;
+    }
+
+.userChooseButton {
+    display: flex;
+    font-size: 14px;
+    font-weight: 400;
+    height: 36px;
+    justify-content: center;
+    line-height: 17px;
+    margin: 20px 0 45px;
+    text-align: center;
+    width: 196px;
+    }
+
+.active {
+    align-items: center;
+    background: #9A91C8;
+    border-radius: 0 2px 2px 0;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    }
+
+.inactive {
+    align-items: center;
+    background: #FFFFFF;
+    border-radius: 2px;
+    color: #2D2E46;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    }
+
+.cardsPackTable {
+    filter: drop-shadow(0px 4px 14px rgba(45, 46, 70, 0.15));
+    }
+
+.packList {
+    margin: 24px 48px;
+    width: 100%;
+    }
+
+.tableHeader {
+    background: #ECECF9;
+    color: #2D2E46;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    margin: 24px 0 0;
+    padding: 16px 24px;
+    }
+
+.tableString {
+    background: #FFFFFF;
+    color: #000000;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    padding: 16px 24px;
+    }
+
+.tableString:nth-of-type(2n+1) {
+    background: #F8F7FD;
+    }

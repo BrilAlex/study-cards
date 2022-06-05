@@ -13,8 +13,8 @@ export type PacksType = {
   cardsCount: number
   type: string
   rating: number // useless o_O
-  created: string
-  updated: string
+  created: Date
+  updated: Date
   more_id: string
 }
 export type cardPacksDataType = {
@@ -28,7 +28,7 @@ export type cardPacksDataType = {
   pageCount: number
   token: string
   tokenDeathTime: Date
- }
+}
 
 
 export const packCardsApi = {

@@ -52,15 +52,6 @@ h2 {
     width: 413px;
     }
 
-.bigContainer {
-    background: #FEFEFF;
-    border-radius: 8px;
-    left: 50%;
-    margin: 0 136px;
-    position: relative;
-    transform: translateX(-50%);
-    }
-
 @media (max-width: 413px) {
     .smallContainer {
         width: 90vw;
