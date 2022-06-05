@@ -6,6 +6,7 @@ import {registerTC, setErrorAC, setSuccessAC} from "../bll/registrationReducer";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import s from "../../../../sc1-main/m1-ui/App.module.css";
+import {InputPassword} from "../../../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
 
 export const Registration = () => {
   const [email, setEmail] = useState("");
@@ -43,14 +44,12 @@ export const Registration = () => {
       <h1>Registration</h1>
       <div>
         <InputText value={email} onChangeText={setEmail} placeholder={"Email"}/>
-        <InputText
-          type={"password"}
+        <InputPassword
           value={password}
           onChangeText={setPassword}
           placeholder={"Password"}
         />
-        <InputText
-          type={"password"}
+        <InputPassword
           value={passwordConfirm}
           onChangeText={setPasswordConfirm}
           placeholder={"Confirm password"}

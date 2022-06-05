@@ -5,6 +5,7 @@ import {useState} from "react";
 import s from "./Test.module.css";
 import {useAppDispatch} from "../../sc1-main/m2-bll/store";
 import {LogoutThunkTC} from "../f1-auth/Login/bll/loginReducer";
+import {InputPassword} from "../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
 
 export const Test = () => {
   const [text, setText] = useState<string>("");
@@ -23,6 +24,11 @@ export const Test = () => {
       <h1>Test</h1>
       <div className={s.column}>
         <InputText
+          value={text}
+          onChangeText={setText}
+          onEnter={showAlert}
+        />
+        <InputPassword
           value={text}
           onChangeText={setText}
           onEnter={showAlert}
