@@ -1,6 +1,6 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
-import {passwordAPI} from "./dal/api";
+import {passwordAPI} from "../../../sc1-main/m3-dal/passwordApi";
 
 // Types
 type InitStateType = typeof initState;
