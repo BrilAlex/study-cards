@@ -10,11 +10,11 @@ import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 export const PasswordRecovery = () => {
   const [email, setEmail] = useState<string>("");
   const dispatch = useAppDispatch()
-  const success = useAppSelector<boolean>(state => state.passwordRecovery.success)
+  const enteredEmail = useAppSelector<string>(state => state.passwordRecovery.enteredEmail)
   const error = useAppSelector<null | string>(state => state.passwordRecovery.error);
 
-  if (success) {
-    return <Navigate to={PATH.CREATE_NEW_PASSWORD}/>;
+  if (enteredEmail) {
+    return <Navigate to={PATH.CHECK_EMAIL_SUCCESS}/>;
   }
 
   const onClickHandler = () => {

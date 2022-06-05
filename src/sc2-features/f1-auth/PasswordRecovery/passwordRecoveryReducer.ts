@@ -8,34 +8,34 @@ type redirectActionType = ReturnType<typeof redirectAC>;
 type setErrorActionType = ReturnType<typeof setErrorAC>;
 export type PasswordRecoveryActionsType = redirectActionType | setErrorActionType;
 
+// Variables
+const REDIRECT_TO_CHECK_EMAIL_SUCCESS_PAGE = "passwordRecovery/REDIRECT-TO-CHECK-EMAIL-SUCCESS-PAGE"
+
 // Initial state
 const initState = {
     info: '',
     error: null as null | string,
-    success: false,
+    enteredEmail: '',
 };
 
 // Action creators
 export const setErrorAC = (value: null | string) => ({type: "passwordRecovery/SET-ERROR", value} as const);
-export const redirectAC = (success: boolean) => ({
-    type: "passwordRecovery/REDIRECT-TO-CREATE-NEW-PASSWORD-PAGE",
-    success
+export const redirectAC = (enteredEmail: string) => ({
+    type: REDIRECT_TO_CHECK_EMAIL_SUCCESS_PAGE,
+    enteredEmail
 } as const);
 
 // Thunk creators
 export const recoveryPasswordTC = (email: string, message: string): AppThunkType => (dispatch) => {
     dispatch(setAppIsLoadingAC(true));
-
     passwordAPI.forgot(email, message)
-        .then((res) => {
-            console.log(res)
-            dispatch(redirectAC(res.data.success))
+        .then(() => {
+            dispatch(redirectAC(email))
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            console.log('Error: ', {...e})
             dispatch(setErrorAC(error));
         })
         .finally(() => {
@@ -45,8 +45,8 @@ export const recoveryPasswordTC = (email: string, message: string): AppThunkType
 
 export const passwordRecoveryReducer = (state: InitStateType = initState, action: PasswordRecoveryActionsType): InitStateType => {
     switch (action.type) {
-        case "passwordRecovery/REDIRECT-TO-CREATE-NEW-PASSWORD-PAGE":
-            return {...state, success: action.success};
+        case REDIRECT_TO_CHECK_EMAIL_SUCCESS_PAGE:
+            return {...state, enteredEmail: action.enteredEmail};
         case "passwordRecovery/SET-ERROR":
             return {...state, error: action.value};
         default:
