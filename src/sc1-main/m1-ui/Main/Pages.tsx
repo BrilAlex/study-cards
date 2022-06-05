@@ -7,6 +7,7 @@ import {NewPassword} from "../../../sc2-features/f1-auth/NewPassword/NewPassword
 import {Test} from "../../../sc2-features/f0-test/Test";
 import {Error404} from "./pages/Error404/Error404";
 import {CheckEmailSuccess} from "../../../sc2-features/f1-auth/PasswordRecovery/CheckEmailSuccess/CheckEmailSuccess";
+import {PacksList} from "../../../sc2-features/f3-packsList/ui/PacksList";
 
 export const PATH = {
   LOGIN: "/login",
@@ -15,6 +16,7 @@ export const PATH = {
   PASSWORD_RECOVERY: "/password-recovery",
   CREATE_NEW_PASSWORD: "/create-new-password/:token",
   CHECK_EMAIL_SUCCESS: "/check-email-success",
+  PACKS_LIST: "/packs-list",
   TEST: "/test",
   ERROR404: "/error404",
 };
@@ -29,6 +31,7 @@ export const Pages = () => {
         <Route path={PATH.PROFILE} element={<Profile/>}/>
         <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
         <Route path={PATH.CREATE_NEW_PASSWORD} element={<NewPassword/>}/>
+        <Route path={PATH.PACKS_LIST} element={<PacksList/>}/>
         <Route path={PATH.CHECK_EMAIL_SUCCESS} element={<CheckEmailSuccess/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>
         <Route path={PATH.ERROR404} element={<Error404/>}/>

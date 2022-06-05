@@ -1,4 +1,4 @@
-import {instance} from "../../../sc1-main/m3-dal/instance";
+import {instance} from "./instance";
 
 export type UserType = {
   _id: string;
@@ -21,7 +21,6 @@ export type UpdatedUser = {
 
 
 export const ProfileApi = {
-
   me() {
     return instance.post<UserType>(`/auth/me`, {})
       .then(res => res.data)
@@ -30,8 +29,6 @@ export const ProfileApi = {
     return instance.put<UpdatedUser>(`/auth/me`, {name, avatar})
       .then(res => res.data)
   },
-  logOut() { // где он должен быть?
-    return instance.delete<any>(`/auth/me`, {})
-      .then(res => res.data)
-  },
 }
+
+

@@ -1,0 +1,11 @@
+.mainBlock {
+    /*display: flex;*/
+    width: 800px;
+    min-height: 800px;
+    height: 100%;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 16px;
+    background-color: #c7d3e8;
+    padding: 15px;
+}
