@@ -16,20 +16,19 @@ const initState = {
 };
 
 // Action creators
-export const setNewPasswordAC = () => ({type: "newPassword/SET-NEW-PASSWORD"} as const);
+export const setNewPasswordAC = (success: boolean) => ({type: "newPassword/SET-NEW-PASSWORD", success} as const);
 
 // Thunk creators
 export const setNewPasswordTC = (password: string, token: string): AppThunkType => (dispatch) => {
     dispatch(setAppIsLoadingAC(true));
     passwordAPI.setNewPassword(password, token)
-        .then((res) => {
-            console.log(res)
+        .then(() => {
+            dispatch(setNewPasswordAC(true))
         })
         .catch((e) => {
             const error = e.response
                 ? e.response.data.error
                 : (e.message + ', more details in the console');
-            console.log('Error: ', {...e})
             dispatch(setErrorAC(error));
         })
         .finally(() => {
@@ -40,7 +39,7 @@ export const setNewPasswordTC = (password: string, token: string): AppThunkType 
 export const newPasswordReducer = (state: InitStateType = initState, action: NewPasswordActionsType): InitStateType => {
     switch (action.type) {
         case "newPassword/SET-NEW-PASSWORD":
-            return {...state};
+            return {...state, success: action.success};
         default:
             return state;
     }
