@@ -13,8 +13,8 @@ export type PacksType = {
   cardsCount: number
   type: string
   rating: number // useless o_O
-  created: Date
-  updated: Date
+  created: string // Лёха, тут нужна строка!!!
+  updated: string // Лёха, тут нужна строка!!!
   more_id: string
 }
 export type cardPacksDataType = {

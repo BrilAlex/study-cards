@@ -1,22 +1,34 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './PacksList.module.css'
-import {cardPacksDataType, packCardsApi} from "../../../sc1-main/m3-dal/packCards-api";
+import {PacksType} from "../../../sc1-main/m3-dal/packCards-api";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
+import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
+import {getCardsPackThunk} from "../bll/packsListReducer";
+import {Packs} from "./Packs/Packs";
+import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
+import {Navigate} from "react-router-dom";
+import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 
 export const PacksList = () => {
 
-  const [packData, setPackData] = useState<cardPacksDataType>();
-  const [value, setValue] = useState([0, 10])
+  const dispatch = useAppDispatch();
+  const [value, setValue] = useState([0, 10]);
+  const packData = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
+  const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
+  const userNameStore = useAppSelector<string>(store => store.profile.user.name);
 
-  const getTasksHandler = () => {
-    packCardsApi.getAllCards().then(res => {
-      setPackData(res);
-    })
-  }
+  useEffect(() => {
+    dispatch(getCardsPackThunk());
+  }, [dispatch]);
+
   const AddCardsPackHandler = () => {
     console.log("hardcoded pack should be added")
+  }
+
+  if (!userNameStore) {
+    return <Navigate to={PATH.LOGIN}/>;
   }
 
   return (<>
@@ -33,7 +45,6 @@ export const PacksList = () => {
         <section className={s.packList}>
           <h1>PacksList</h1>
           <InputText placeholder={"Search..."}/>
-          <Button onClick={getTasksHandler}>Get PackData</Button>
           <Button onClick={AddCardsPackHandler}>Add new pack</Button>
           <div className={s.cardsPackTable}>
             <div className={s.tableHeader}>
@@ -43,15 +54,10 @@ export const PacksList = () => {
               <div style={{width: "18%"}}>Created by</div>
               <div style={{width: "30%"}}>Actions</div>
             </div>
-            {packData?.cardPacks.map(el => {
+            {isLoading ? <MiniSpinner customSizeStyle={s.spinnerSize}/> : packData.map(el => {
               return (
                 <div key={el._id} className={s.tableString}>
-                  <div style={{width: "20%"}}>{el.name}</div>
-                  <div style={{width: "12%"}}>{el.cardsCount}</div>
-                  <div style={{width: "20%"}}>{el.updated.toLocaleString()}
-                  </div>
-                  <div style={{width: "18%"}}>{el.user_name}</div>
-                  <div style={{width: "30%"}}>*Action buttons*</div>
+                  <Packs dataPack={el}/>
                 </div>
               )
             })}

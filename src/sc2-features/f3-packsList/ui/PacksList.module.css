@@ -2,7 +2,7 @@
     background: #FEFEFF;
     border-radius: 8px;
     display: flex;
-    margin: 24px 136px;
+    /*margin: 24px 136px;*/
     min-height: 300px;
     overflow: hidden;
     position: relative;
@@ -78,3 +78,8 @@
 .tableString:nth-of-type(2n+1) {
     background: #F8F7FD;
     }
+
+.spinnerSize {
+    width: 50px;
+    height: 50px;
+}

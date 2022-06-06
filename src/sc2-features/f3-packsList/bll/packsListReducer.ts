@@ -1,30 +1,33 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {packCardsApi} from "../../../sc1-main/m3-dal/packCards-api";
+import {packCardsApi, PacksType} from "../../../sc1-main/m3-dal/packCards-api";
 import {setAppErrorAC} from "../../../sc1-main/m2-bll/appReducer";
 
 // Types
-
-
-
 type InitStateType = typeof initState;
-type GetCardsPackActionType = ReturnType<typeof setCardsPackAC>;
+type GetCardsPackActionType =
+  ReturnType<typeof setCardsPackAC> |
+  ReturnType<typeof loadingCardsPackAC>
 export type PacksListActionsType = GetCardsPackActionType
 
 
 // Initial state
 const initState = {
-
+  cardPacks: [] as PacksType[],
+  isLoading: false,
 };
 
 // Action creators
-export const setCardsPackAC = (data: any) =>
+export const setCardsPackAC = (data: PacksType[]) =>
   ({type: "packsList/GET-CARDS-PACK", data} as const);
+export const loadingCardsPackAC = (value: boolean) =>
+  ({type: "packsList/LOADING-STATUS", value} as const);
 
 // Thunk creators
 export const getCardsPackThunk = (): AppThunkType => (dispatch) => {
+  dispatch(loadingCardsPackAC(true));
   packCardsApi.getAllCards()
     .then(res => {
-      dispatch(setCardsPackAC(res));
+      dispatch(setCardsPackAC(res.cardPacks));
     })
     .catch(e => {
       const error = e.response
@@ -32,11 +35,15 @@ export const getCardsPackThunk = (): AppThunkType => (dispatch) => {
         : (e.message + ', more details in the console');
       console.log('Error: ', error);
       dispatch(setAppErrorAC(error));
-    });
+    }).finally(() => dispatch(loadingCardsPackAC(false)));
 };
 
 export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
   switch (action.type) {
+    case "packsList/GET-CARDS-PACK":
+      return {...state, cardPacks: action.data}
+    case "packsList/LOADING-STATUS":
+      return {...state, isLoading: action.value}
     default:
       return state;
   }
