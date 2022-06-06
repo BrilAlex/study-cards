@@ -17,6 +17,10 @@ import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppActionsType, appReducer} from "./appReducer";
 import {PacksListActionsType, packsListReducer} from "../../sc2-features/f3-packsList/bll/packsListReducer";
+import {
+  CardsListActionsType,
+  cardsListReducer
+} from "../../sc2-features/f4-cardsList/bll/cardsListReducer";
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type RootActionsType =
@@ -26,7 +30,8 @@ export type RootActionsType =
   | ProfileActionsType
   | NewPasswordActionsType
   | PasswordRecoveryActionsType
-  | PacksListActionsType;
+  | PacksListActionsType
+  | CardsListActionsType;
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, RootActionsType>;
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, RootActionsType>;
 
@@ -38,6 +43,7 @@ const rootReducer = combineReducers({
   newPassword: newPasswordReducer,
   passwordRecovery: passwordRecoveryReducer,
   packsList: packsListReducer,
+  cardsList: cardsListReducer,
 });
 
 // Custom `useDispatch` and `useSelector: Use throughout app instead of plain `useDispatch` and `useSelector`
