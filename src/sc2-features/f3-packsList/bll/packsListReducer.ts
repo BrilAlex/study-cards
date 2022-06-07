@@ -50,6 +50,7 @@ export const addNewPackThunk = (): AppThunkType => (dispatch => {
                 : (e.message + ', more details in the console');
             console.log('Error: ', error);
             dispatch(setAppErrorAC(error));
+            dispatch(loadingCardsPackAC(false));
         });
 });
 
@@ -65,6 +66,7 @@ export const deleteCardsPackThunk = (id: string): AppThunkType => (dispatch => {
                 : (e.message + ', more details in the console');
             console.log('Error: ', error);
             dispatch(setAppErrorAC(error));
+            dispatch(loadingCardsPackAC(false));
         });
 });
 
@@ -80,6 +82,7 @@ export const updateCardsPackThunk = (id: string, name: string): AppThunkType => 
                 : (e.message + ', more details in the console');
             console.log('Error: ', error);
             dispatch(setAppErrorAC(error));
+            dispatch(loadingCardsPackAC(false));
         });
 })
 
