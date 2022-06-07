@@ -5,11 +5,12 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {addNewPackThunk, getCardsPackThunk} from "../bll/packsListReducer";
+import {addNewPackThunk, getCardsPackThunk, setCurrentPageCardPacksAC} from "../bll/packsListReducer";
 import {Packs} from "./Packs/Packs";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
+import {Paginator} from "./Paginator/Paginator";
 
 export const PacksList = () => {
 
@@ -17,14 +18,20 @@ export const PacksList = () => {
   const [value, setValue] = useState([0, 10]);
   const packData = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
   const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
+  const currentPage = useAppSelector<number>(store => store.packsList.page);
+  const pageSize = useAppSelector<number>(store => store.packsList.pageCount);
+  const totalCountPage = useAppSelector<number>(store => store.packsList.cardPacksTotalCount);
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
 
   useEffect(() => {
-    dispatch(getCardsPackThunk());
-  }, [dispatch]);
+    dispatch(getCardsPackThunk(currentPage));
+  }, [dispatch, currentPage]);
 
   const AddCardsPackHandler = () => {
     dispatch(addNewPackThunk());
+  }
+  const changePageHandler = (page: number) => {
+    dispatch(setCurrentPageCardPacksAC(page))
   }
 
   if (!userNameStore) {
@@ -62,8 +69,12 @@ export const PacksList = () => {
               )
             })}
           </div>
+          <Paginator totalItemCount={totalCountPage}
+                     currentPage={currentPage}
+                     pageSize={pageSize}
+                     spanClick={changePageHandler}
+          />
         </section>
-
       </div>
     </>
   );

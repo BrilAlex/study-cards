@@ -37,7 +37,7 @@ export const ProfileDev = () => {
       <Button onClick={putHandler}>Save</Button>
       <Button onClick={() => {
       }}>Cancel</Button>
-      <pre>Get me Data: {JSON.stringify(authData?.cardPacks[1], null, 2)}</pre>
+      <pre>Get me Data: {JSON.stringify(authData?.cardPacks[0], null, 2)}</pre>
       {/*<pre>Data: {JSON.stringify(userData, null, 2)}</pre>*/}
     </div>
   );

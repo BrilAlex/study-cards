@@ -32,10 +32,10 @@ export type cardPacksDataType = {
 
 
 export const packCardsApi = {
-  getAllCards() {
-    return instance.get<cardPacksDataType>(`/cards/pack`)
+  getAllCards(page: number = 1) {
+    return instance.get<cardPacksDataType>(`/cards/pack`,
+      {params: {pageCount: 5, page}})
       .then(res => {
-        console.log(res)
         return res.data
       })
   },
