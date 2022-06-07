@@ -39,4 +39,7 @@ export const packCardsApi = {
         return res.data
       })
   },
+  addNewPack() {
+    return instance.post<cardPacksDataType>(`/cards/pack`,{cardsPack:{}})
+  },
 }

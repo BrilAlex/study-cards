@@ -5,7 +5,7 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {getCardsPackThunk} from "../bll/packsListReducer";
+import {addNewPackThunk, getCardsPackThunk} from "../bll/packsListReducer";
 import {Packs} from "./Packs/Packs";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
@@ -24,7 +24,7 @@ export const PacksList = () => {
   }, [dispatch]);
 
   const AddCardsPackHandler = () => {
-    console.log("hardcoded pack should be added")
+    dispatch(addNewPackThunk());
   }
 
   if (!userNameStore) {
