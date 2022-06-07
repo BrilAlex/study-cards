@@ -17,6 +17,17 @@ export type PacksType = {
   updated: string // Лёха, тут нужна строка!!!
   more_id: string
 }
+export type AddPackType = {
+  name: string // если не отправить будет таким
+  deckCover: string // не обязателен
+  private: boolean
+}
+
+export type UpdatePackType = {
+  _id: string // если не отправить будет таким
+  deckCover: string // не обязателен
+  private: boolean
+}
 export type cardPacksDataType = {
   cardPacks: PacksType[]
 
@@ -40,12 +51,13 @@ export const packCardsApi = {
       })
   },
   addNewPack(name: string, makePrivate: boolean) {
-    return instance.post<cardPacksDataType>(`/cards/pack`, {cardsPack: {name, private: makePrivate}})
+    return instance.post<AddPackType>(`/cards/pack`,
+      {cardsPack: {name, private: makePrivate}})
   },
   deleteCardsPack(id: string) {
     return instance.delete<cardPacksDataType>(`/cards/pack/?id=${id}`)
   },
   updateCardsPack(_id: string, name: string) {
-    return instance.put<cardPacksDataType>(`/cards/pack`, {cardsPack: {_id, name}})
+    return instance.put<UpdatePackType>(`/cards/pack`, {cardsPack: {_id, name}})
   },
 }
