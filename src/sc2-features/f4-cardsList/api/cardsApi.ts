@@ -17,15 +17,15 @@ export type CardType = {
   user_id: string
   question: string
   answer: string
-  grade: 0
-  shots: 0
+  grade: number
+  shots: number
   comments: string
   type: string
-  rating: 0
+  rating: number
   more_id: string
   created: string
   updated: string
-  __v: 0
+  __v: number
   answerImg: string
   answerVideo: string
   questionImg: string
