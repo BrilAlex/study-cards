@@ -1,6 +1,6 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {setAppErrorAC, setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
-import {cardsAPI, CardsListItemType} from "../api/cardsApi";
+import {cardsAPI, CardType, GetCardsQueryParams} from "../api/cardsApi";
 
 // Types
 type InitStateType = typeof initState;
@@ -9,20 +9,28 @@ export type CardsListActionsType = ActionType;
 
 // Initial state
 const initState = {
-  cards: [] as Array<CardsListItemType>,
+  cards: [] as Array<CardType>,
+  packUserId: "",
+  cardsTotalCount: 0,
+  maxGrade: 0,
+  minGrade: 0,
+  page: 0,
+  pageCount: 0,
 };
 
 // Action creators
-export const setCardsAC = (cards: Array<CardsListItemType>) =>
+export const setCardsAC = (cards: Array<CardType>) =>
   ({type: "cards/SET-CARDS", cards} as const);
 
 // Thunk creators
 export const getCardsTC = (pack_ID: string): AppThunkType => (dispatch) => {
+  const queryParams: GetCardsQueryParams = {cardsPack_id: pack_ID};
+  console.log("Query params", queryParams);
   dispatch(setAppIsLoadingAC(true));
-  cardsAPI.getCards(pack_ID)
-    .then(response => {
-      console.log(response);
-      dispatch(setCardsAC(response.data.cards));
+  cardsAPI.getCards(queryParams)
+    .then(data => {
+      console.log(data);
+      dispatch(setCardsAC(data.cards));
     })
     .catch(error => {
       const errorMessage = error.response

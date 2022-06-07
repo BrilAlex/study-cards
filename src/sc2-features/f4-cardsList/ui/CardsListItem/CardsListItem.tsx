@@ -1,8 +1,8 @@
 import {FC} from "react";
-import {CardsListItemType} from "../../api/cardsApi";
+import {CardType} from "../../api/cardsApi";
 
 type CardsListItemPropsType = {
-  card: CardsListItemType
+  card: CardType
 };
 
 export const CardsListItem: FC<CardsListItemPropsType> = (props) => {

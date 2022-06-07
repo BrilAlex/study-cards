@@ -33,9 +33,6 @@ export const HeaderBigScreen = () => {
         <NavLink to={PATH.PACKS_LIST} className={(NavData) => getNavLinkStyle(NavData)}>
           Packs List
         </NavLink>
-        <NavLink to={PATH.CARDS_LIST} className={(NavData) => getNavLinkStyle(NavData)}>
-          Cards List
-        </NavLink>
         <NavLink to={PATH.PASSWORD_RECOVERY} className={(NavData) => getNavLinkStyle(NavData)}>
           Password recovery
         </NavLink>
