@@ -5,12 +5,13 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {addNewPackThunk, getCardsPackThunk, updateCardsPackThunk} from "../bll/packsListReducer";
+import {addNewPackThunk, deleteCardsPackThunk, getCardsPackThunk, updateCardsPackThunk} from "../bll/packsListReducer";
 import {Packs} from "./Packs/Packs";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {EditModal} from "../../f2-profile/ui/EditModal/EditModal";
+import {DeleteModal} from './ModalWindows/DeleteModal/DeleteModal';
 
 export const PacksList = () => {
 
@@ -19,6 +20,10 @@ export const PacksList = () => {
     const packData = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
     const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
     const userNameStore = useAppSelector<string>(store => store.profile.user.name);
+    const [name, setName] = useState<string>('');
+    const [id, setId] = useState<string>('');
+    const [activeEditModal, setActiveEditModal] = useState(false);
+    const [activeDeleteModal, setActiveDeleteModal] = useState(false);
 
     useEffect(() => {
         dispatch(getCardsPackThunk());
@@ -28,24 +33,31 @@ export const PacksList = () => {
         dispatch(addNewPackThunk());
     }
 
-    const [name, setName] = useState<string>('');
-    const [id, setId] = useState<string>('');
-    const [activeModal, setActiveModal] = useState(false);
-
     const onFocusHandler = () => {
         name ? setName(name) : setName("userNameStore")
     }
-
+    //ф-ия изменения имени колоды и закрытия окна
     const changeName = () => {
         dispatch(updateCardsPackThunk(id, name))
-        setActiveModal(false);
+        setActiveEditModal(false);
     }
-    const editButtonHandler = (id: string, name: string) => {
-        setActiveModal(true);
+    //ф-ия вызова модального окна при изменении имени колоды
+    const editHandler = (id: string, name: string) => {
+        setActiveEditModal(true);
         setName(name);
         setId(id);
     }
-
+    //ф-ия вызова модального окна при удалении колоды
+    const deletePackCardsHandler = (id: string, name: string) => {
+        setActiveDeleteModal(true);
+        setId(id);
+        setName(name);
+    }
+    //ф-ия удаления колоды и закрытия окна
+    const deletePack = () => {
+        dispatch(deleteCardsPackThunk(id))
+        setActiveDeleteModal(false);
+    }
 
     if (!userNameStore) {
         return <Navigate to={PATH.LOGIN}/>;
@@ -77,21 +89,27 @@ export const PacksList = () => {
                         {isLoading ? <MiniSpinner customSizeStyle={s.spinnerSize}/> : packData.map(el => {
                             return (
                                 <div key={el._id} className={s.tableString}>
-                                    <Packs dataPack={el} editButtonHandler={() => editButtonHandler(el._id, el.name)}/>
+                                    <Packs dataPack={el}
+                                           editHandler={() => editHandler(el._id, el.name)}
+                                           deletePackCardsHandler={() => deletePackCardsHandler(el._id, el.name)}/>
                                 </div>
                             )
                         })}
                     </div>
                 </section>
-
             </div>
-            <EditModal active={activeModal}
-                       setActive={setActiveModal}
+            <EditModal active={activeEditModal}
+                       setActive={setActiveEditModal}
                        name={name}
                        inputValue={name}
                        setInputValue={setName}
                        inputFocus={onFocusHandler}
                        changeName={changeName}
+            />
+            <DeleteModal active={activeDeleteModal}
+                         setActive={setActiveDeleteModal}
+                         name={name}
+                         deletePack={deletePack}
             />
         </>
     );

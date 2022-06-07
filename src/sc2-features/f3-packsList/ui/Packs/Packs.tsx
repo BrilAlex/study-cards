@@ -4,27 +4,18 @@ import {PacksType} from "../../../../sc1-main/m3-dal/packCards-api";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store";
-import {deleteCardsPackThunk} from "../../bll/packsListReducer";
+import {useAppSelector} from "../../../../sc1-main/m2-bll/store";
 
 type PacksPropsType = {
     dataPack: PacksType
-    editButtonHandler: () => void
+    editHandler: () => void
+    deletePackCardsHandler: () => void
 }
 
-export const Packs: React.FC<PacksPropsType> = ({dataPack, editButtonHandler}) => {
-    const dispatch = useAppDispatch();
+export const Packs: React.FC<PacksPropsType> = ({dataPack, editHandler, deletePackCardsHandler}) => {
+
     const userId = useAppSelector<string>(state => state.profile.user._id)
 
-    const deletePackCardsHandler = () => {
-        dispatch(deleteCardsPackThunk(dataPack._id))
-    }
-    // const editHandler = () => {
-    //     dispatch(updateCardsPackThunk(dataPack._id,'asd'))
-    // }
-    const editHandler = () => {
-        editButtonHandler();
-    }
     return (
         <>
             <div style={{width: "20%"}}>
