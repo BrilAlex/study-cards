@@ -38,7 +38,7 @@ export const getCardsPackThunk = (): AppThunkType => (dispatch) => {
     }).finally(() => dispatch(loadingCardsPackAC(false)));
 };
 
-export const addNewPackThunk = ():AppThunkType => (dispatch => {
+export const addNewPackThunk = (): AppThunkType => (dispatch => {
   dispatch(loadingCardsPackAC(true));
   packCardsApi.addNewPack()
       .then(()=>{
@@ -50,8 +50,23 @@ export const addNewPackThunk = ():AppThunkType => (dispatch => {
               : (e.message + ', more details in the console');
           console.log('Error: ', error);
           dispatch(setAppErrorAC(error));
-      }).finally(() => dispatch(loadingCardsPackAC(false)));
-})
+       });
+});
+
+export const deleteCardsPackThunk = (id: string): AppThunkType => (dispatch => {
+  dispatch(loadingCardsPackAC(true));
+  packCardsApi.deleteCardsPack(id)
+      .then(()=>{
+          dispatch(getCardsPackThunk());
+      })
+      .catch(e => {
+          const error = e.response
+              ? e.response.data.error
+              : (e.message + ', more details in the console');
+          console.log('Error: ', error);
+          dispatch(setAppErrorAC(error));
+      });
+});
 
 export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
   switch (action.type) {

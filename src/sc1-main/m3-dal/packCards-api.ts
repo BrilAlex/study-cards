@@ -42,4 +42,7 @@ export const packCardsApi = {
   addNewPack() {
     return instance.post<cardPacksDataType>(`/cards/pack`,{cardsPack:{}})
   },
+  deleteCardsPack(id:string) {
+    return instance.delete<cardPacksDataType>(`/cards/pack/?id=${id}`)
+  },
 }

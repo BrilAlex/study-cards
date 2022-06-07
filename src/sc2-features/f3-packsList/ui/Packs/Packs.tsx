@@ -5,15 +5,18 @@ import s from './Packs.module.css'
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
+import {useAppDispatch} from "../../../../sc1-main/m2-bll/store";
+import {deleteCardsPackThunk} from "../../bll/packsListReducer";
 
 type PacksPropsType = {
     dataPack: PacksType
 }
 
 export const Packs: React.FC<PacksPropsType> = ({dataPack}) => {
+    const dispatch = useAppDispatch();
 
     const deletePackCardsHandler = () => {
-        console.log(dataPack._id)
+        dispatch(deleteCardsPackThunk(dataPack._id))
     }
     return (
         <>
