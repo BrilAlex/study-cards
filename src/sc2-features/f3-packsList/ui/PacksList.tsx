@@ -12,6 +12,7 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {EditModal} from "../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from './ModalWindows/DeleteModal/DeleteModal';
+import {AddPackModal} from "./ModalWindows/AddPackModal/AddPackModal";
 
 export const PacksList = () => {
 
@@ -24,17 +25,26 @@ export const PacksList = () => {
     const [id, setId] = useState<string>('');
     const [activeEditModal, setActiveEditModal] = useState(false);
     const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+    const [activeAddPackModal, setActiveAddPackModal] = useState(false);
+    const [makePrivate, setMakePrivate] = useState(false);
 
     useEffect(() => {
         dispatch(getCardsPackThunk());
     }, [dispatch]);
 
-    const AddCardsPackHandler = () => {
-        dispatch(addNewPackThunk());
-    }
-
     const onFocusHandler = () => {
         name ? setName(name) : setName("userNameStore")
+    }
+
+    //ф-ия вызова модального окна при добавлении колоды
+    const addCardsPackHandler = () => {
+        setActiveAddPackModal(true)
+        setName('pack name')
+    }
+    //ф-ия изменения имени колоды и закрытия окна
+    const addPack = () => {
+        dispatch(addNewPackThunk(name, makePrivate));
+        setActiveAddPackModal(false);
     }
     //ф-ия изменения имени колоды и закрытия окна
     const changeName = () => {
@@ -77,7 +87,7 @@ export const PacksList = () => {
                 <section className={s.packList}>
                     <h1>PacksList</h1>
                     <InputText placeholder={"Search..."}/>
-                    <Button onClick={AddCardsPackHandler}>Add new pack</Button>
+                    <Button onClick={addCardsPackHandler}>Add new pack</Button>
                     <div className={s.cardsPackTable}>
                         <div className={s.tableHeader}>
                             <div style={{width: "20%"}}>Name</div>
@@ -110,6 +120,15 @@ export const PacksList = () => {
                          setActive={setActiveDeleteModal}
                          name={name}
                          deletePack={deletePack}
+            />
+            <AddPackModal active={activeAddPackModal}
+                          setActive={setActiveAddPackModal}
+                          name={name}
+                          inputValue={name}
+                          setInputValue={setName}
+                          inputFocus={onFocusHandler}
+                          addPack={addPack}
+                          makePrivate={(isPrivate) => setMakePrivate(isPrivate)}
             />
         </>
     );

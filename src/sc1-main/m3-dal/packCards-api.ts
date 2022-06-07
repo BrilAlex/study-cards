@@ -39,8 +39,8 @@ export const packCardsApi = {
                 return res.data
             })
     },
-    addNewPack() {
-        return instance.post<cardPacksDataType>(`/cards/pack`, {cardsPack: {}})
+    addNewPack(name: string, makePrivate: boolean) {
+        return instance.post<cardPacksDataType>(`/cards/pack`, {cardsPack: {name, private: makePrivate}})
     },
     deleteCardsPack(id: string) {
         return instance.delete<cardPacksDataType>(`/cards/pack/?id=${id}`)

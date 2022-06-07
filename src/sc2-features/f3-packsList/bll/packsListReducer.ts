@@ -38,9 +38,9 @@ export const getCardsPackThunk = (): AppThunkType => (dispatch) => {
         }).finally(() => dispatch(loadingCardsPackAC(false)));
 };
 
-export const addNewPackThunk = (): AppThunkType => (dispatch => {
+export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunkType => (dispatch => {
     dispatch(loadingCardsPackAC(true));
-    packCardsApi.addNewPack()
+    packCardsApi.addNewPack(name, makePrivate)
         .then(() => {
             dispatch(getCardsPackThunk());
         })
