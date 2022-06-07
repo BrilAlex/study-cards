@@ -44,12 +44,22 @@ export const Paginator: React.FC<PaginatorMyType> = (
 
   return (
     <div className={s.mainBlock}>
-      <Button onClick={back}
+      <div className={s.buttonBlock}>
+        <Button onClick={back}
                 disabled={range <= 1}
-      >
-        back
-      </Button>
-      <div>{pages
+                className={s.buttonStyle}
+        >
+          back
+        </Button>
+        <Button onClick={forward}
+                disabled={portionCount <= range}
+                className={s.buttonStyle}
+        >
+          forward
+        </Button>
+      </div>
+
+      <div className={s.pageList}>{pages
         .filter(el => el >= leftNumber && el <= rightNumber)
         .map(el => {
           return <span key={el.toString()}
@@ -58,11 +68,7 @@ export const Paginator: React.FC<PaginatorMyType> = (
           >{el}</span>
         })}</div>
 
-      <Button onClick={forward}
-                disabled={portionCount <= range}
-      >
-        forward
-      </Button>
+
     </div>
   );
 };

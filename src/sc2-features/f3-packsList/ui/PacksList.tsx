@@ -56,10 +56,10 @@ export const PacksList = () => {
           <div className={s.cardsPackTable}>
             <div className={s.tableHeader}>
               <div style={{width: "20%"}}>Name</div>
-              <div style={{width: "12%"}}>Cards</div>
-              <div style={{width: "20%"}}>Last Updated</div>
-              <div style={{width: "18%"}}>Created by</div>
-              <div style={{width: "30%"}}>Actions</div>
+              <div style={{width: "16%"}}>Cards</div>
+              <div style={{width: "24%"}}>Last Updated</div>
+              <div style={{width: "30%"}}>Created by</div>
+              <div style={{width: "17%"}}>Actions</div>
             </div>
             {isLoading ? <MiniSpinner customSizeStyle={s.spinnerSize}/> : packData.map(el => {
               return (
