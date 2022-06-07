@@ -24,16 +24,18 @@ import {Paginator} from "./Paginator/Paginator";
 export const PacksList = () => {
 
   const dispatch = useAppDispatch();
+
   const [value, setValue] = useState([0, 10]);
-  const packData = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
-  const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
-  const userNameStore = useAppSelector<string>(store => store.profile.user.name);
   const [name, setName] = useState<string>('');
   const [id, setId] = useState<string>('');
   const [activeEditModal, setActiveEditModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [activeAddPackModal, setActiveAddPackModal] = useState(false);
   const [makePrivate, setMakePrivate] = useState(false);
+
+  const packData = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
+  const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
+  const userNameStore = useAppSelector<string>(store => store.profile.user.name);
   const currentPage = useAppSelector<number>(store => store.packsList.page);
   const pageSize = useAppSelector<number>(store => store.packsList.pageCount);
   const totalCountPage = useAppSelector<number>(store => store.packsList.cardPacksTotalCount);
