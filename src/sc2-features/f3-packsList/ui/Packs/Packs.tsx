@@ -23,8 +23,8 @@ export const Packs: React.FC<PacksPropsType> = ({dataPack, editHandler, deletePa
                     {dataPack.name}
                 </NavLink>
             </div>
-            <div style={{width: "12%"}}>{dataPack.cardsCount}</div>
-            <div style={{width: "20%"}}><BeautyDate date={dataPack.updated}/></div>
+            <div style={{width: "2%"}}>{dataPack.cardsCount}</div>
+            <div style={{width: "30%"}}><BeautyDate date={dataPack.updated}/></div>
             <div style={{width: "18%"}}>{dataPack.user_name}</div>
             <div style={{width: "30%"}}>
                 <Button onClick={deletePackCardsHandler} red={true}>Delete</Button>

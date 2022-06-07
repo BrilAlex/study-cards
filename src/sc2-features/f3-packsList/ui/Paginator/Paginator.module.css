@@ -1,0 +1,39 @@
+.mainBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 7px;
+}
+
+.pageList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttonBlock {
+    margin-bottom: 10px;
+}
+
+.page {
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.selectPage {
+    background-color: #0241b7;
+    color: white;
+    border-radius: 50%;
+    height: 40px;
+    text-align: center;
+    width: 40px;
+    padding: 5px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.buttonStyle {
+    padding: 5px 20px;
+}

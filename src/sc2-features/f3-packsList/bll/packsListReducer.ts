@@ -5,37 +5,50 @@ import {setAppErrorAC} from "../../../sc1-main/m2-bll/appReducer";
 // Types
 type InitStateType = typeof initState;
 type GetCardsPackActionType =
-    ReturnType<typeof setCardsPackAC> |
-    ReturnType<typeof loadingCardsPackAC>
+  ReturnType<typeof setCardsPackAC> |
+  ReturnType<typeof loadingCardsPackAC> |
+  ReturnType<typeof setCardPacksTotalCountAC> |
+  ReturnType<typeof setCurrentPageCardPacksAC>
 export type PacksListActionsType = GetCardsPackActionType
 
 
 // Initial state
 const initState = {
-    cardPacks: [] as PacksType[],
-    isLoading: false,
+  cardPacks: [] as PacksType[],
+  pageCount: 10,
+  cardPacksTotalCount: 0,
+  min: 3,
+  max: 9,
+  sortPacks: '0updated',
+  page: 1,
+  isLoading: false,
 };
 
 // Action creators
 export const setCardsPackAC = (data: PacksType[]) =>
-    ({type: "packsList/GET-CARDS-PACK", data} as const);
+  ({type: "packsList/GET-CARDS-PACK", data} as const);
+export const setCardPacksTotalCountAC = (totalCount: number) =>
+  ({type: "packsList/SET-CARD-PACKS-TOTAL-COUNT", totalCount} as const);
+export const setCurrentPageCardPacksAC = (page: number) =>
+  ({type: "packsList/SET_CURRENT_PAGE", page} as const);
 export const loadingCardsPackAC = (value: boolean) =>
-    ({type: "packsList/LOADING-STATUS", value} as const);
+  ({type: "packsList/LOADING-STATUS", value} as const);
 
 // Thunk creators
-export const getCardsPackThunk = (): AppThunkType => (dispatch) => {
-    dispatch(loadingCardsPackAC(true));
-    packCardsApi.getAllCards()
-        .then(res => {
-            dispatch(setCardsPackAC(res.cardPacks));
-        })
-        .catch(e => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ', more details in the console');
-            console.log('Error: ', error);
-            dispatch(setAppErrorAC(error));
-        }).finally(() => dispatch(loadingCardsPackAC(false)));
+export const getCardsPackThunk = (currentPage: number = 1): AppThunkType => (dispatch) => {
+  dispatch(loadingCardsPackAC(true));
+  packCardsApi.getAllCards(currentPage)
+    .then(res => {
+      dispatch(setCardsPackAC(res.cardPacks));
+      dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+    }).finally(() => dispatch(loadingCardsPackAC(false)));
 };
 
 export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunkType => (dispatch => {
@@ -87,12 +100,16 @@ export const updateCardsPackThunk = (id: string, name: string): AppThunkType => 
 })
 
 export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
-    switch (action.type) {
-        case "packsList/GET-CARDS-PACK":
-            return {...state, cardPacks: action.data}
-        case "packsList/LOADING-STATUS":
-            return {...state, isLoading: action.value}
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case "packsList/GET-CARDS-PACK":
+      return {...state, cardPacks: action.data}
+    case "packsList/LOADING-STATUS":
+      return {...state, isLoading: action.value}
+    case "packsList/SET-CARD-PACKS-TOTAL-COUNT":
+      return {...state, cardPacksTotalCount: action.totalCount}
+    case "packsList/SET_CURRENT_PAGE":
+      return {...state, page: action.page}
+    default:
+      return state;
+  }
 };
