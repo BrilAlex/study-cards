@@ -22,7 +22,6 @@ export type AddPackType = {
   deckCover: string // не обязателен
   private: boolean
 }
-
 export type UpdatePackType = {
   _id: string // если не отправить будет таким
   deckCover: string // не обязателен
@@ -46,6 +45,13 @@ export const packCardsApi = {
   getAllCards(page: number = 1) {
     return instance.get<cardPacksDataType>(`/cards/pack`,
       {params: {pageCount: 5, page}})
+      .then(res => {
+        return res.data
+      })
+  },
+  searchCards(packName: string = '') {
+    return instance.get<cardPacksDataType>(`/cards/pack`,
+      {params: {pageCount: 5, packName}})
       .then(res => {
         return res.data
       })

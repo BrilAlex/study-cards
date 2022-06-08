@@ -51,6 +51,23 @@ export const getCardsPackThunk = (currentPage: number = 1): AppThunkType => (dis
     }).finally(() => dispatch(loadingCardsPackAC(false)));
 };
 
+export const searchCardsPackThunk = (searchValue: string): AppThunkType => (
+  dispatch) => {
+  dispatch(loadingCardsPackAC(true));
+  packCardsApi.searchCards(searchValue)
+    .then(res => {
+      dispatch(setCardsPackAC(res.cardPacks));
+      dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+    }).finally(() => dispatch(loadingCardsPackAC(false)));
+};
+
 export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunkType => (dispatch => {
     dispatch(loadingCardsPackAC(true));
     packCardsApi.addNewPack(name, makePrivate)

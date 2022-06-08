@@ -3,7 +3,6 @@ import s from './PacksList.module.css'
 import {PacksType} from "../../../sc1-main/m3-dal/packCards-api";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
-import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {
   addNewPackThunk,
@@ -20,6 +19,7 @@ import {EditModal} from "../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from './ModalWindows/DeleteModal/DeleteModal';
 import {AddPackModal} from "./ModalWindows/AddPackModal/AddPackModal";
 import {Paginator} from "./Paginator/Paginator";
+import {DebounceSearch} from "./DebounceSearch/DebounceSearch";
 
 export const PacksList = () => {
 
@@ -101,8 +101,10 @@ export const PacksList = () => {
         </section>
         <section className={s.packList}>
           <h1>PacksList</h1>
-          <InputText placeholder={"Search..."}/>
-          <Button onClick={addCardsPackHandler}>Add new pack</Button>
+          <div className={s.searchHeader}>
+            <DebounceSearch/>
+            <Button onClick={addCardsPackHandler}>Add new pack</Button>
+          </div>
           <div className={s.cardsPackTable}>
             <div className={s.tableHeader}>
               <div style={{width: "20%"}}>Name</div>
