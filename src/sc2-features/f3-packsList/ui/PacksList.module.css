@@ -23,6 +23,7 @@
     margin: 20px 0 45px;
     text-align: center;
     width: 196px;
+    cursor: pointer;
 }
 
 .searchHeader {
@@ -33,7 +34,7 @@
 
 .active {
     align-items: center;
-    background: #9A91C8;
+    background: #847bc4;
     border-radius: 0 2px 2px 0;
     color: #FFFFFF;
     display: flex;

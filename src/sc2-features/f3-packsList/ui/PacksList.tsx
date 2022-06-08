@@ -9,7 +9,7 @@ import {
   deleteCardsPackThunk,
   getCardsPackThunk,
   updateCardsPackThunk,
-  setCurrentPageCardPacksAC
+  setCurrentPageCardPacksAC, getMyCardsPackThunk
 } from "../bll/packsListReducer";
 import {Packs} from "./Packs/Packs";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
@@ -32,10 +32,12 @@ export const PacksList = () => {
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [activeAddPackModal, setActiveAddPackModal] = useState(false);
   const [makePrivate, setMakePrivate] = useState(false);
+  const [isActivePack, setIsActivePack] = useState(false);
 
   const packData = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
   const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
+  const userId = useAppSelector<string>(store => store.profile.user._id);
   const currentPage = useAppSelector<number>(store => store.packsList.page);
   const pageSize = useAppSelector<number>(store => store.packsList.pageCount);
   const totalCountPage = useAppSelector<number>(store => store.packsList.cardPacksTotalCount);
@@ -83,6 +85,14 @@ export const PacksList = () => {
     dispatch(deleteCardsPackThunk(id))
     setActiveDeleteModal(false);
   }
+  const getMyPackHandler = () => {
+    setIsActivePack(true);
+    dispatch(getMyCardsPackThunk(userId));
+  }
+  const getAllPackHandler = () => {
+    setIsActivePack(false);
+    dispatch(getCardsPackThunk());
+  }
 
   if (!userNameStore) {
     return <Navigate to={PATH.LOGIN}/>;
@@ -93,12 +103,12 @@ export const PacksList = () => {
         <section className={s.settingsSide}>
           <h2>Show packs cards</h2>
           <div className={s.userChooseButton}>
-            <span className={s.active}>MY</span>
-            <span className={s.inactive}>ALL</span>
+            <span className={isActivePack ? s.active : s.inactive} onClick={getMyPackHandler}>MY</span>
+            <span className={isActivePack ? s.inactive : s.active} onClick={getAllPackHandler}>ALL</span>
           </div>
           <h4 style={{margin: "20px"}}>Number of cards</h4>
           <DoubleRange min={0} max={100} valueArr={value} setValueArr={setValue}/>
-          <h2>{value[0] > 10 || value[1] < 90 ? 'in developing...' : ''}</h2>
+          <h2>{value[0] > 10 || value[1] < 90 ? 'Игнат, где мой офер!?' : ''}</h2>
         </section>
         <section className={s.packList}>
           <h1>PacksList</h1>

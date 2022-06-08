@@ -56,6 +56,13 @@ export const packCardsApi = {
         return res.data
       })
   },
+  getMyCards(user_id: string) {
+    return instance.get<cardPacksDataType>(`/cards/pack`,
+      {params: {pageCount: 5, user_id}})
+      .then(res => {
+        return res.data
+      })
+  },
   addNewPack(name: string, makePrivate: boolean) {
     return instance.post<AddPackType>(`/cards/pack`,
       {cardsPack: {name, private: makePrivate}})
