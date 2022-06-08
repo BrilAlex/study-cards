@@ -1,13 +1,14 @@
 import React, {useCallback, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {addNewCardTC, getCardsTC} from "../bll/cardsListReducer";
-import {CardType} from "../api/cardsApi";
+import {CardType, NewCardDataType} from "../../../sc1-main/m3-dal/cardsApi";
 import s from "./CardsList.module.css";
 import {NavLink, useParams} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {CardsListItem} from "./CardsListItem/CardsListItem";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
+import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 
 export const CardsList = () => {
   const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading);
@@ -22,7 +23,13 @@ export const CardsList = () => {
   }, [dispatch, cardsPack_ID]);
 
   const addCardHandler = useCallback(() => {
-    if (cardsPack_ID) dispatch(addNewCardTC(cardsPack_ID));
+    if (cardsPack_ID) {
+      const newCard: NewCardDataType = {
+        cardsPack_id: cardsPack_ID,
+        question: "Some question",
+      };
+      dispatch(addNewCardTC(newCard));
+    }
   }, [dispatch, cardsPack_ID]);
 
   if (isLoading) {
@@ -34,7 +41,11 @@ export const CardsList = () => {
       <NavLink to={PATH.PACKS_LIST}>
         <h2>Back to Packs List</h2>
       </NavLink>
-      <Button onClick={addCardHandler}>Add card</Button>
+      <div>
+        <InputText type={"text"} placeholder={"Filter by Question"}/>
+        <InputText type={"text"} placeholder={"Filter by Answer"}/>
+        <Button onClick={addCardHandler}>Add card</Button>
+      </div>
       {!cards ?
         <MiniSpinner/>
         :

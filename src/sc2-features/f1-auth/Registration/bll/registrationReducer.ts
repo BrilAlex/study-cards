@@ -1,5 +1,5 @@
 import {AppThunkType} from "../../../../sc1-main/m2-bll/store";
-import {registrationAPI} from "../dal/registrationApi";
+import {registrationAPI} from "../../../../sc1-main/m3-dal/registrationApi";
 import {setAppIsLoadingAC} from "../../../../sc1-main/m2-bll/appReducer";
 
 // Types

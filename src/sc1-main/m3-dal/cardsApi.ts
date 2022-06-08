@@ -1,4 +1,4 @@
-import {instance} from "../../../sc1-main/m3-dal/instance";
+import {instance} from "./instance";
 
 export type GetCardsQueryParams = {
   cardsPack_id: string

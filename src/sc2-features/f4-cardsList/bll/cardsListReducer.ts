@@ -6,7 +6,7 @@ import {
   GetCardsQueryParams, GetCardsResponseDataType,
   NewCardDataType,
   UpdateCardModelType
-} from "../api/cardsApi";
+} from "../../../sc1-main/m3-dal/cardsApi";
 
 // Types
 type InitStateType = typeof initState;
@@ -24,8 +24,6 @@ const initState = {
   pageCount: undefined as undefined | number,
   cardAnswer: undefined as undefined | string,
   cardQuestion: undefined as undefined | string,
-  min: undefined as undefined | number,
-  max: undefined as undefined | number,
   sortCards: undefined as undefined | string,
 };
 
@@ -35,13 +33,22 @@ export const setCardsDataAC = (data: GetCardsResponseDataType) =>
 
 // Thunk creators
 export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, getState: () => AppStateType) => {
-  const {cardAnswer, cardQuestion, min, max, sortCards, page, pageCount} = getState().cardsList;
+  const {
+    cardAnswer,
+    cardQuestion,
+    minGrade,
+    maxGrade,
+    sortCards,
+    page,
+    pageCount,
+  } = getState().cardsList;
+
   const queryParams: GetCardsQueryParams = {
     cardsPack_id: cardsPack_ID,
     cardAnswer,
     cardQuestion,
-    min,
-    max,
+    min: minGrade,
+    max: maxGrade,
     sortCards,
     page,
     pageCount,
@@ -66,17 +73,12 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
       dispatch(setAppIsLoadingAC(false));
     });
 };
-export const addNewCardTC = (cardsPack_ID: string): AppThunkType => (dispatch) => {
-  const newCard: NewCardDataType = {
-    cardsPack_id: cardsPack_ID,
-    question: "Some random question",
-  };
-
+export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatch) => {
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.createCard(newCard)
     .then((data) => {
       console.log(data);
-      dispatch(getCardsTC(cardsPack_ID));
+      dispatch(getCardsTC(newCard.cardsPack_id));
     })
     .catch(error => {
       const errorMessage = error.response

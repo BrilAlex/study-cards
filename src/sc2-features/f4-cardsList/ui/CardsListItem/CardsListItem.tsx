@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {CardType, UpdateCardModelType} from "../../api/cardsApi";
+import {CardType, UpdateCardModelType} from "../../../../sc1-main/m3-dal/cardsApi";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {useAppDispatch} from "../../../../sc1-main/m2-bll/store";
 import {deleteCardTC, updateCardTC} from "../../bll/cardsListReducer";
@@ -30,7 +30,7 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
       <div style={{width: "15%"}}>{card.grade}</div>
       <div style={{width: "15%"}}>
         <Button onClick={editCardHandler}>Edit</Button>
-        <Button onClick={deleteCardHandler}>Delete</Button>
+        <Button onClick={deleteCardHandler} red>Delete</Button>
       </div>
     </>
   );
