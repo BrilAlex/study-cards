@@ -1,17 +1,11 @@
 .mainBlock {
-    display: flex;
-    width: 80%;
-    max-width: 800px;
-    height: 85vh;
+    max-width: 500px;
     margin: auto;
-    /*border: 1px solid #070101;*/
-    /*border-radius: 15px;*/
-    /*box-shadow: 0 1px 15px 0 rgb(51 51 51 / 20%);*/
 }
 
 .editBlock {
     display: flex;
-    width: 30%;
+    /*width: 30%;*/
     flex-direction: column;
 }
 
@@ -42,9 +36,10 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 15px;
     height: 40%;
     border: 1px solid #070101;
-    /*border-radius: 15px;*/
+    border-radius: 15px;
     background-color: #b5b9f3;
 }
 

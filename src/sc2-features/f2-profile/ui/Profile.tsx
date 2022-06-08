@@ -7,18 +7,16 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import s from './Profile.module.css'
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
-import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
-import {Debounce} from "../../../sc1-main/m1-ui/common/components/Debounce/Debounce";
-import {ProfileDev} from "./ProfileDev";
+import {UserType} from "../../../sc1-main/m3-dal/profile-api";
 
 export const Profile = () => {
 
   const [name, setName] = useState<string>('');
   const [activeModal, setActiveModal] = useState(false);
-  const [valueArr, setValueArr] = useState([0, 100]);
 
   const dispatch = useAppDispatch();
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
+  const userData = useAppSelector<UserType>(store => store.profile.user);
   const userAva = useAppSelector<string | undefined>(store => store.profile.user.avatar);
   const isLoading = useAppSelector<boolean>(state => state.profile.loading);
 
@@ -50,29 +48,14 @@ export const Profile = () => {
             : <>
               <div className={s.profileInfo}>
                 <h3>{userNameStore}</h3>
+                <h3>{userData.email}</h3>
+                <h3>ID: {userData._id}</h3>
+                <h3>Card Packs: {userData.publicCardPacksCount}</h3>
                 <Button onClick={editHandler}>Edit</Button>
               </div>
             </>
           }
         </div>
-
-        <div className={s.numberCards}>
-          <h3>Number of cards</h3>
-
-          <DoubleRange min={0}
-                       max={100}
-                       valueArr={valueArr}
-                       setValueArr={setValueArr}/>
-          <h2>{valueArr[0] > 50 || valueArr[1] < 50 ? 'Хватит уже крутить!!!' : ''}</h2>
-
-        </div>
-
-      </div>
-
-      <div className={s.packs}>
-        <h1>My packs list</h1>
-        <Debounce props={valueArr}/>
-        <ProfileDev/>
       </div>
 
       <EditModal active={activeModal}

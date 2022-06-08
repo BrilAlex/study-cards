@@ -25,7 +25,7 @@ export const PacksList = () => {
 
   const dispatch = useAppDispatch();
 
-  const [value, setValue] = useState([0, 10]);
+  const [value, setValue] = useState([0, 100]);
   const [name, setName] = useState<string>('');
   const [id, setId] = useState<string>('');
   const [activeEditModal, setActiveEditModal] = useState(false);
@@ -97,7 +97,8 @@ export const PacksList = () => {
             <span className={s.inactive}>ALL</span>
           </div>
           <h4 style={{margin: "20px"}}>Number of cards</h4>
-          <DoubleRange min={0} max={20} valueArr={value} setValueArr={setValue}/>
+          <DoubleRange min={0} max={100} valueArr={value} setValueArr={setValue}/>
+          <h2>{value[0] > 10 || value[1] < 90 ? 'in developing...' : ''}</h2>
         </section>
         <section className={s.packList}>
           <h1>PacksList</h1>
