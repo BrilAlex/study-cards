@@ -6,3 +6,32 @@
     display: flex;
     flex-direction: column;
 }
+
+.cardsPackTable {
+    filter: drop-shadow(0px 4px 14px rgba(45, 46, 70, 0.15));
+}
+
+.tableHeader {
+    background: #ECECF9;
+    color: #2D2E46;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    margin: 24px 0 0;
+    padding: 16px 24px;
+}
+
+.tableString {
+    background: #FFFFFF;
+    color: #000000;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    padding: 16px 24px;
+}
+
+.tableString:nth-of-type(2n+1) {
+    background: #F8F7FD;
+}
