@@ -1,5 +1,5 @@
 import {AppStateType, AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {setAppErrorAC, setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
+import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {
   cardsAPI,
   CardType,
@@ -7,37 +7,39 @@ import {
   NewCardDataType,
   UpdateCardModelType
 } from "../../../sc1-main/m3-dal/cardsApi";
+import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
 
 // Types
 type InitStateType = typeof initState;
-type ActionType = ReturnType<typeof setCardsDataAC>;
-export type CardsListActionsType = ActionType;
+export type CardsListActionsType =
+  | ReturnType<typeof setCardsDataAC>
+  | ReturnType<typeof setCurrentPageCardsListAC>;
 
 // Initial state
 const initState = {
   cards: null as null | Array<CardType>,
   packUserId: undefined as undefined | string,
-  cardsTotalCount: undefined as undefined | number,
+  cardsTotalCount: 0,
   maxGrade: undefined as undefined | number,
   minGrade: undefined as undefined | number,
-  page: undefined as undefined | number,
-  pageCount: undefined as undefined | number,
+  page: 1,
+  pageCount: 5,
   cardAnswer: undefined as undefined | string,
   cardQuestion: undefined as undefined | string,
-  sortCards: undefined as undefined | string,
+  sortCards: '0updated',
 };
 
 // Action creators
 export const setCardsDataAC = (data: GetCardsResponseDataType) =>
-  ({type: "cards/SET-CARDS", payload: data} as const);
+  ({type: "cardsList/SET-CARDS", payload: data} as const);
+export const setCurrentPageCardsListAC = (page: number) =>
+  ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
 
 // Thunk creators
 export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, getState: () => AppStateType) => {
   const {
     cardAnswer,
     cardQuestion,
-    minGrade,
-    maxGrade,
     sortCards,
     page,
     pageCount,
@@ -47,8 +49,6 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
     cardsPack_id: cardsPack_ID,
     cardAnswer,
     cardQuestion,
-    min: minGrade,
-    max: maxGrade,
     sortCards,
     page,
     pageCount,
@@ -62,12 +62,7 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
       dispatch(setCardsDataAC(data));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -81,12 +76,7 @@ export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatc
       dispatch(getCardsTC(newCard.cardsPack_id));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -100,12 +90,7 @@ export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkTyp
       dispatch(getCardsTC(cardsPack_ID));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -119,12 +104,7 @@ export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelTyp
       dispatch(getCardsTC(cardsPack_ID));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -133,8 +113,10 @@ export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelTyp
 
 export const cardsListReducer = (state: InitStateType = initState, action: CardsListActionsType): InitStateType => {
   switch (action.type) {
-    case "cards/SET-CARDS":
+    case "cardsList/SET-CARDS":
       return {...state, ...action.payload};
+    case"cardsList/SET_CURRENT_PAGE":
+      return {...state, page: action.page};
     default:
       return state;
   }
