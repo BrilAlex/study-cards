@@ -11,26 +11,29 @@ import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
 
 // Types
 type InitStateType = typeof initState;
-type ActionType = ReturnType<typeof setCardsDataAC>;
-export type CardsListActionsType = ActionType;
+export type CardsListActionsType =
+  | ReturnType<typeof setCardsDataAC>
+  | ReturnType<typeof setCurrentPageCardsListAC>;
 
 // Initial state
 const initState = {
   cards: null as null | Array<CardType>,
   packUserId: undefined as undefined | string,
-  cardsTotalCount: undefined as undefined | number,
-  maxGrade: undefined as undefined | number,
-  minGrade: undefined as undefined | number,
-  page: undefined as undefined | number,
-  pageCount: undefined as undefined | number,
+  cardsTotalCount: 0,
+  maxGrade: 0,
+  minGrade: 5,
+  page: 1,
+  pageCount: 5,
   cardAnswer: undefined as undefined | string,
   cardQuestion: undefined as undefined | string,
-  sortCards: undefined as undefined | string,
+  sortCards: '0updated',
 };
 
 // Action creators
 export const setCardsDataAC = (data: GetCardsResponseDataType) =>
-  ({type: "cards/SET-CARDS", payload: data} as const);
+  ({type: "cardsList/SET-CARDS", payload: data} as const);
+export const setCurrentPageCardsListAC = (page: number) =>
+  ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
 
 // Thunk creators
 export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, getState: () => AppStateType) => {
@@ -114,8 +117,10 @@ export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelTyp
 
 export const cardsListReducer = (state: InitStateType = initState, action: CardsListActionsType): InitStateType => {
   switch (action.type) {
-    case "cards/SET-CARDS":
+    case "cardsList/SET-CARDS":
       return {...state, ...action.payload};
+    case"cardsList/SET_CURRENT_PAGE":
+      return {...state, page: action.page};
     default:
       return state;
   }
