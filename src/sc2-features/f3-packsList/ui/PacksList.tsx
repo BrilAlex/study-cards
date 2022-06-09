@@ -41,10 +41,18 @@ export const PacksList = () => {
   const currentPage = useAppSelector<number>(store => store.packsList.page);
   const pageSize = useAppSelector<number>(store => store.packsList.pageCount);
   const totalCountPage = useAppSelector<number>(store => store.packsList.cardPacksTotalCount);
+  const maxNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.maxCardsCount);
+  const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
+
+
 
   useEffect(() => {
     dispatch(getCardsPackThunk(currentPage));
   }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    setValue([minNumberOfCards, maxNumberOfCards])
+  }, [minNumberOfCards, maxNumberOfCards]);
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageCardPacksAC(page))
@@ -106,9 +114,13 @@ export const PacksList = () => {
             <span className={isActivePack ? s.active : s.inactive} onClick={getMyPackHandler}>MY</span>
             <span className={isActivePack ? s.inactive : s.active} onClick={getAllPackHandler}>ALL</span>
           </div>
-          <h4 style={{margin: "20px"}}>Number of cards</h4>
-          <DoubleRange min={0} max={100} valueArr={value} setValueArr={setValue}/>
-          <h2>{value[0] > 10 || value[1] < 90 ? 'Игнат, где мой офер!?' : ''}</h2>
+          {isLoading
+            ? <MiniSpinner/>
+            : <div className={s.rangeBlock}>
+              <h3>Number of cards</h3>
+              <DoubleRange min={minNumberOfCards} max={maxNumberOfCards} valueArr={value} setValueArr={setValue}/>
+              <h2>{value[0] > 10 || value[1] < 90 ? 'Игнат, где мой офер!?' : ''}</h2>
+            </div>}
         </section>
         <section className={s.packList}>
           <h1>PacksList</h1>

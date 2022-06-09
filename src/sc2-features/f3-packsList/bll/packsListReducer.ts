@@ -8,7 +8,8 @@ type GetCardsPackActionType =
   ReturnType<typeof setCardsPackAC> |
   ReturnType<typeof loadingCardsPackAC> |
   ReturnType<typeof setCardPacksTotalCountAC> |
-  ReturnType<typeof setCurrentPageCardPacksAC>
+  ReturnType<typeof setCurrentPageCardPacksAC> |
+  ReturnType<typeof setMaxMinCardsCountAC>
 export type PacksListActionsType = GetCardsPackActionType
 
 
@@ -19,9 +20,30 @@ const initState = {
   cardPacksTotalCount: 0,
   min: 3,
   max: 9,
+  cardsCount: {
+    maxCardsCount: 0,
+    minCardsCount: 0,
+  },
   sortPacks: '0updated',
   page: 1,
   isLoading: false,
+};
+
+export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
+  switch (action.type) {
+    case "packsList/GET-CARDS-PACK":
+      return {...state, cardPacks: action.data}
+    case "packsList/LOADING-STATUS":
+      return {...state, isLoading: action.value}
+    case "packsList/SET-CARD-PACKS-TOTAL-COUNT":
+      return {...state, cardPacksTotalCount: action.totalCount}
+    case "packsList/SET_CURRENT_PAGE":
+      return {...state, page: action.page}
+    case "packsList/SET-MAX-MIN-CARDS-COUNT":
+      return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
+    default:
+      return state;
+  }
 };
 
 // Action creators
@@ -31,6 +53,8 @@ export const setCardPacksTotalCountAC = (totalCount: number) =>
   ({type: "packsList/SET-CARD-PACKS-TOTAL-COUNT", totalCount} as const);
 export const setCurrentPageCardPacksAC = (page: number) =>
   ({type: "packsList/SET_CURRENT_PAGE", page} as const);
+export const setMaxMinCardsCountAC = (max: number, min: number) =>
+  ({type: "packsList/SET-MAX-MIN-CARDS-COUNT", max, min} as const);
 export const loadingCardsPackAC = (value: boolean) =>
   ({type: "packsList/LOADING-STATUS", value} as const);
 
@@ -41,6 +65,7 @@ export const getCardsPackThunk = (currentPage: number = 1): AppThunkType => (dis
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));
       dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+      dispatch(setMaxMinCardsCountAC(res.maxCardsCount, res.minCardsCount));
     })
     .catch(e => {
       const error = e.response
@@ -68,10 +93,10 @@ export const searchCardsPackThunk = (searchValue: string): AppThunkType => (
     }).finally(() => dispatch(loadingCardsPackAC(false)));
 };
 
-export const getMyCardsPackThunk = (user_id: string): AppThunkType => (
+export const getMyCardsPackThunk = (userId: string): AppThunkType => (
   dispatch) => {
   dispatch(loadingCardsPackAC(true));
-  packCardsApi.getMyCards(user_id)
+  packCardsApi.getMyCards(userId)
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));
       dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
@@ -133,17 +158,3 @@ export const updateCardsPackThunk = (id: string, name: string): AppThunkType => 
         });
 })
 
-export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
-  switch (action.type) {
-    case "packsList/GET-CARDS-PACK":
-      return {...state, cardPacks: action.data}
-    case "packsList/LOADING-STATUS":
-      return {...state, isLoading: action.value}
-    case "packsList/SET-CARD-PACKS-TOTAL-COUNT":
-      return {...state, cardPacksTotalCount: action.totalCount}
-    case "packsList/SET_CURRENT_PAGE":
-      return {...state, page: action.page}
-    default:
-      return state;
-  }
-};

@@ -32,6 +32,17 @@
     justify-content: space-between;
 }
 
+.rangeBlock {
+
+}
+
+.rangeBlock h3 {
+    margin: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #2D2E46;
+}
+
 .active {
     align-items: center;
     background: #847bc4;

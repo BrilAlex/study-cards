@@ -56,9 +56,9 @@ export const packCardsApi = {
         return res.data
       })
   },
-  getMyCards(user_id: string) {
+  getMyCards(userId: string) {
     return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 5, user_id}})
+      {params: {pageCount: 5, user_id: userId}})
       .then(res => {
         return res.data
       })
