@@ -1,5 +1,5 @@
 import {AppStateType, AppThunkType} from "../../../sc1-main/m2-bll/store";
-import {setAppErrorAC, setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
+import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {
   cardsAPI,
   CardType,
@@ -7,6 +7,7 @@ import {
   NewCardDataType,
   UpdateCardModelType
 } from "../../../sc1-main/m3-dal/cardsApi";
+import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
 
 // Types
 type InitStateType = typeof initState;
@@ -62,12 +63,7 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
       dispatch(setCardsDataAC(data));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -81,12 +77,7 @@ export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatc
       dispatch(getCardsTC(newCard.cardsPack_id));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -100,12 +91,7 @@ export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkTyp
       dispatch(getCardsTC(cardsPack_ID));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
@@ -119,12 +105,7 @@ export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelTyp
       dispatch(getCardsTC(cardsPack_ID));
     })
     .catch(error => {
-      const errorMessage = error.response
-        ? error.response.data.error
-        : (error.message + ', more details in the console');
-
-      console.log('Error: ', errorMessage);
-      dispatch(setAppErrorAC(errorMessage));
+      handleAppRequestError(error, dispatch);
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
