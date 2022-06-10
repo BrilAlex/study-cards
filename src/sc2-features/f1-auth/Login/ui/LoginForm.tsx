@@ -7,6 +7,7 @@ import {LoginThunkTC} from "../bll/loginReducer";
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {useAppDispatch} from "../../../../sc1-main/m2-bll/store";
+import {InputPassword} from "../../../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
 
 type FormikErrorType = {
   email?: string
@@ -53,8 +54,7 @@ export const LoginForm = () => {
           {...formik.getFieldProps('email')}
         />
         {formik.errors.email && formik.touched.email && <div style={{color: "red"}}>{formik.errors.email}</div>}
-        <InputText
-          type="password"
+        <InputPassword
           {...formik.getFieldProps('password')}
         />
         {formik.errors.password && formik.touched.password &&
