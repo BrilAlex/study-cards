@@ -16,7 +16,6 @@ export const CardsList = () => {
   const cardsPack_ID = urlParams.cardPackID;
 
   const user_ID = useAppSelector(state => state.profile.user._id);
-  const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading);
   const cards = useAppSelector<null | Array<CardType>>(state => state.cardsList.cards);
   const cardsTotalCount = useAppSelector<number>(state => state.cardsList.cardsTotalCount);
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
@@ -44,10 +43,6 @@ export const CardsList = () => {
 
   if (!user_ID) {
     return <Navigate to={PATH.PACKS_LIST}/>
-  }
-
-  if (isLoading) {
-    return <MiniSpinner/>;
   }
 
   return (
