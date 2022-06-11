@@ -44,21 +44,21 @@ export type cardPacksDataType = {
 export const packCardsApi = {
   getAllCards(page: number = 1) {
     return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 5, page}})
+      {params: {pageCount: 10, page}})
       .then(res => {
         return res.data
       })
   },
   searchCards(packName: string = '') {
     return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 5, packName}})
+      {params: {pageCount: 10, packName}})
       .then(res => {
         return res.data
       })
   },
   getMyCards(userId: string) {
     return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 5, user_id: userId}})
+      {params: {pageCount: 10, user_id: userId}})
       .then(res => {
         return res.data
       })

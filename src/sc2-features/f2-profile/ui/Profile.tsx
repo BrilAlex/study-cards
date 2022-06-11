@@ -21,7 +21,7 @@ export const Profile = () => {
   const isLoading = useAppSelector<boolean>(state => state.profile.loading);
 
   const changeName = () => {
-    dispatch(updateNameThunk(name, ''));
+    dispatch(updateNameThunk(name, 'https://clck.ru/qFgs6'));
     setActiveModal(false);
   }
   const editHandler = () => {

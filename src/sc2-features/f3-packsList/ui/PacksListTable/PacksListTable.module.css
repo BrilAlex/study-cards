@@ -1,0 +1,60 @@
+.tableMainBlock  {
+    display: flex;
+    justify-content: center;
+    word-wrap: break-word;
+    text-align: center;
+    color: #2D2E46;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    padding: 5px;
+}
+
+.tableMainBlock th, td {
+    padding: 5px 10px;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: separate;
+    width: 100%;
+}
+
+.trStyle {
+    border-radius: 10px;
+    color: #ECECF9;
+    background-color: #847bc4;
+}
+
+.actions {
+
+}
+.buttonBlock {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.buttonBlock button {
+    padding: 5px 12px;
+}
+
+.tbodyStyle {
+
+}
+tr:nth-child(2n) {
+    background: #e8edff;
+}
+.tbodyStyle td {
+    max-width: 300px;
+}
+
+.nameStyle:hover {
+    transition: transform .5s;
+    transform: scale(1.1);
+}
+.nameStyle a  {
+    color: #2D2E46;
+}
+.nameStyle a:hover  {
+    color: #0241b7;
+}

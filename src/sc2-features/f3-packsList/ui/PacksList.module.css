@@ -63,6 +63,8 @@
 }
 
 .packList {
+    display: flex;
+    flex-direction: column;
     margin: 24px 48px;
     width: 100%;
 }
