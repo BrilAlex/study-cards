@@ -16,6 +16,7 @@ export type PacksListActionsType = GetCardsPackActionType
 // Initial state
 const initState = {
   cardPacks: [] as PacksType[],
+  columnName: ['№', 'Name', 'Cards', 'Last Updated', 'Created by', 'Actions'],
   pageCount: 10,
   cardPacksTotalCount: 0,
   min: 3,
@@ -111,50 +112,50 @@ export const getMyCardsPackThunk = (userId: string): AppThunkType => (
 };
 
 export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunkType => (dispatch => {
-    dispatch(loadingCardsPackAC(true));
-    packCardsApi.addNewPack(name, makePrivate)
-        .then(() => {
-            dispatch(getCardsPackThunk());
-        })
-        .catch(e => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ', more details in the console');
-            console.log('Error: ', error);
-            dispatch(setAppErrorAC(error));
-            dispatch(loadingCardsPackAC(false));
-        });
+  dispatch(loadingCardsPackAC(true));
+  packCardsApi.addNewPack(name, makePrivate)
+    .then(() => {
+      dispatch(getCardsPackThunk());
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+      dispatch(loadingCardsPackAC(false));
+    });
 });
 
 export const deleteCardsPackThunk = (id: string): AppThunkType => (dispatch => {
-    dispatch(loadingCardsPackAC(true));
-    packCardsApi.deleteCardsPack(id)
-        .then(() => {
-            dispatch(getCardsPackThunk());
-        })
-        .catch(e => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ', more details in the console');
-            console.log('Error: ', error);
-            dispatch(setAppErrorAC(error));
-            dispatch(loadingCardsPackAC(false));
-        });
+  dispatch(loadingCardsPackAC(true));
+  packCardsApi.deleteCardsPack(id)
+    .then(() => {
+      dispatch(getCardsPackThunk());
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+      dispatch(loadingCardsPackAC(false));
+    });
 });
 
 export const updateCardsPackThunk = (id: string, name: string): AppThunkType => (dispatch => {
-    dispatch(loadingCardsPackAC(true));
-    packCardsApi.updateCardsPack(id, name)
-        .then(() => {
-            dispatch(getCardsPackThunk());
-        })
-        .catch(e => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ', more details in the console');
-            console.log('Error: ', error);
-            dispatch(setAppErrorAC(error));
-            dispatch(loadingCardsPackAC(false));
-        });
+  dispatch(loadingCardsPackAC(true));
+  packCardsApi.updateCardsPack(id, name)
+    .then(() => {
+      dispatch(getCardsPackThunk());
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+      dispatch(loadingCardsPackAC(false));
+    });
 })
 

@@ -8,13 +8,13 @@ import {
   getCardsPackThunk,
   setCurrentPageCardPacksAC, getMyCardsPackThunk
 } from "../bll/packsListReducer";
-import {Packs} from "./Packs/Packs";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {AddPackModal} from "./ModalWindows/AddPackModal/AddPackModal";
 import {Paginator} from "./Paginator/Paginator";
 import {DebounceSearch} from "./DebounceSearch/DebounceSearch";
+import {PacksListTable} from "./PacksListTable/PacksListTable";
 
 export const PacksList = () => {
 
@@ -96,10 +96,10 @@ export const PacksList = () => {
           </div>
           {isLoading
             ? <MiniSpinner customSizeStyle={s.spinnerSize}/>
-            : <Packs name={name}
-                     setName={setName}
-                     onFocusHandler={onFocusHandler}
-            />}
+            : <PacksListTable name={name}
+                              setName={setName}
+                              onFocusHandler={onFocusHandler}/>
+          }
           <Paginator totalItemCount={totalCountPage}
                      currentPage={currentPage}
                      pageSize={pageSize}
