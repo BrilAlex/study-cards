@@ -124,3 +124,15 @@
         width: 3px;
         }
     }
+
+.headerIcon {
+    height: 100%;
+    width: 36px;
+    }
+
+.logOutButton {
+    align-items: center;
+    display: flex;
+    margin: 15px 15px;
+    padding: 5px 10px;
+    }
