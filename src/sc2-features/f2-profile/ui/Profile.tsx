@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {updateNameThunk} from "../bll/profileReducer";
 import {EditModal} from "./EditModal/EditModal";
-import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import s from './Profile.module.css'
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {UserType} from "../../../sc1-main/m3-dal/profile-api";
+import {ButtonLoad} from "../../../sc1-main/m1-ui/common/components/SpButton/ButtonLoad";
 
 export const Profile = () => {
 
@@ -21,7 +20,7 @@ export const Profile = () => {
   const isLoading = useAppSelector<boolean>(state => state.profile.loading);
 
   const changeName = () => {
-    dispatch(updateNameThunk(name, 'https://clck.ru/qFgs6'));
+    dispatch(updateNameThunk(name, ''));
     setActiveModal(false);
   }
   const editHandler = () => {
@@ -43,18 +42,13 @@ export const Profile = () => {
           <div className={s.profileAva}>
             <img src={userAva ? userAva : 'https://clck.ru/WQq57'} alt="user-ava"/>
           </div>
-          {isLoading
-            ? <MiniSpinner/>
-            : <>
-              <div className={s.profileInfo}>
-                <h3>{userNameStore}</h3>
-                <h3>{userData.email}</h3>
-                <h3>ID: {userData._id}</h3>
-                <h3>Card Packs: {userData.publicCardPacksCount}</h3>
-                <Button onClick={editHandler}>Edit</Button>
-              </div>
-            </>
-          }
+          <div className={s.profileInfo}>
+            <h3>{userNameStore}</h3>
+            <h3>{userData.email}</h3>
+            <h3>ID: {userData._id}</h3>
+            <h3>Card Packs: {userData.publicCardPacksCount}</h3>
+            <ButtonLoad isSpinner={isLoading} disabled={isLoading} onClick={editHandler}>Edit</ButtonLoad>
+          </div>
         </div>
       </div>
 
@@ -66,7 +60,6 @@ export const Profile = () => {
                  inputFocus={onFocusHandler}
                  changeName={changeName}
       />
-
     </div>
   );
 };
