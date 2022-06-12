@@ -35,7 +35,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   const [id, setId] = useState<string>('');
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
-  const currentFilter = useAppSelector(state => state.packsList.filter)
+  const currentFilter = useAppSelector(state => state.packsList.filter);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
 
   //ф-ия вызова модального окна при изменении имени колоды
