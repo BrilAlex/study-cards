@@ -5,6 +5,9 @@ import s from "./Header.module.css";
 import {LogoutThunkTC} from "../../../../sc2-features/f1-auth/Login/bll/loginReducer";
 import {useAppDispatch, useAppSelector} from "../../../m2-bll/store";
 import {Button} from "../../common/components/c2-Button/Button";
+import packListIcon from '../../../../assets/Web_app/Group 608.svg'
+import profileIcon from '../../../../assets/Web_app/Group 607.svg'
+import logoutIcon from '../../../../assets/Web_app/logout-svgrepo-com.svg'
 
 export const HeaderBigScreen = () => {
 
@@ -21,26 +24,27 @@ export const HeaderBigScreen = () => {
     <header>
       <div className={s.navbar}>
         <h1 className={s.logo}>NINJAS</h1>
-        <NavLink to={PATH.LOGIN} className={(NavData) => getNavLinkStyle(NavData)}>
-          Login
-        </NavLink>
-        <NavLink to={PATH.REGISTRATION} className={(NavData) => getNavLinkStyle(NavData)}>
-          Registration
-        </NavLink>
-        <NavLink to={PATH.PROFILE} className={(NavData) => getNavLinkStyle(NavData)}>
-          Profile
-        </NavLink>
-        <NavLink to={PATH.PACKS_LIST} className={(NavData) => getNavLinkStyle(NavData)}>
-          Packs List
-        </NavLink>
-        <NavLink to={PATH.PASSWORD_RECOVERY} className={(NavData) => getNavLinkStyle(NavData)}>
-          Password recovery
-        </NavLink>
-        <NavLink to={PATH.CREATE_NEW_PASSWORD} className={(NavData) => getNavLinkStyle(NavData)}>
-          Create new password
-        </NavLink>
-        {user_ID && <Button onClick={logoutHandler} style={{margin: "15px 15px", padding: "5px 10px"}}
-		>Logout</Button>}
+        {!user_ID
+          ? <>
+            <NavLink to={PATH.LOGIN} className={(NavData) => getNavLinkStyle(NavData)}>
+              Login
+            </NavLink>
+            <NavLink to={PATH.REGISTRATION} className={(NavData) => getNavLinkStyle(NavData)}>
+              Registration
+            </NavLink>
+            <NavLink to={PATH.PASSWORD_RECOVERY} className={(NavData) => getNavLinkStyle(NavData)}>
+              Password recovery
+            </NavLink></>
+          : <><NavLink to={PATH.PROFILE} className={(NavData) => getNavLinkStyle(NavData)}>
+            <img src={profileIcon} alt=""/>Profile
+          </NavLink>
+            <NavLink to={PATH.PACKS_LIST} className={(NavData) => getNavLinkStyle(NavData)}>
+              <img src={packListIcon} alt=""/>Packs List
+            </NavLink>
+          </>}
+        {user_ID && <Button onClick={logoutHandler} className={s.logOutButton}>
+			<img src={logoutIcon} className={s.headerIcon} alt=""/>Logout
+		</Button>}
       </div>
     </header>
   );

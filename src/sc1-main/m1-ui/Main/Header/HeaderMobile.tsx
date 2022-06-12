@@ -28,25 +28,24 @@ export const HeaderMobile = () => {
       <div className={s.navbar}>
         <h1 className={s.logo}>NINJAS</h1>
         <div className={isBurgerMenuOpened ? s.mobileLinksOpen : s.mobileLinksClosed}>
-          <NavLink to={PATH.LOGIN} className={(NavData) => getNavLinkStyle(NavData)}>
-            Login
-          </NavLink>
-          <NavLink to={PATH.REGISTRATION} className={(NavData) => getNavLinkStyle(NavData)}>
-            Registration
-          </NavLink>
-          <NavLink to={PATH.PROFILE} className={(NavData) => getNavLinkStyle(NavData)}>
-            Profile
-          </NavLink>
-          <NavLink to={PATH.PACKS_LIST} className={(NavData) => getNavLinkStyle(NavData)}>
-            Packs List
-          </NavLink>
-          <NavLink to={PATH.PASSWORD_RECOVERY} className={(NavData) => getNavLinkStyle(NavData)}>
-            Password recovery
-          </NavLink>
-          <NavLink to={PATH.CREATE_NEW_PASSWORD} className={(NavData) => getNavLinkStyle(NavData)}>
-            Create new password
-          </NavLink>
-
+          {!user_ID
+            ? <><NavLink to={PATH.LOGIN} className={(NavData) => getNavLinkStyle(NavData)}>
+              Login
+            </NavLink>
+              <NavLink to={PATH.REGISTRATION} className={(NavData) => getNavLinkStyle(NavData)}>
+                Registration
+              </NavLink>
+              <NavLink to={PATH.PASSWORD_RECOVERY} className={(NavData) => getNavLinkStyle(NavData)}>
+                Password recovery
+              </NavLink> </>
+            : <><NavLink to={PATH.PROFILE} className={(NavData) => getNavLinkStyle(NavData)}>
+              Profile
+            </NavLink>
+              <NavLink to={PATH.PACKS_LIST} className={(NavData) => getNavLinkStyle(NavData)}>
+                Packs List
+              </NavLink>
+            </>
+          }
         </div>
         {user_ID && <Button onClick={logoutHandler} style={{margin: "15px", marginLeft: 'auto', padding: "5px 10px"}}
 		>Logout</Button>}

@@ -9,7 +9,8 @@ type GetCardsPackActionType =
   ReturnType<typeof loadingCardsPackAC> |
   ReturnType<typeof setCardPacksTotalCountAC> |
   ReturnType<typeof setCurrentPageCardPacksAC> |
-  ReturnType<typeof setMaxMinCardsCountAC>
+  ReturnType<typeof setMaxMinCardsCountAC> |
+  ReturnType<typeof setCurrentFilterAC>
 export type PacksListActionsType = GetCardsPackActionType
 
 
@@ -25,9 +26,9 @@ const initState = {
     maxCardsCount: 0,
     minCardsCount: 0,
   },
-  sortPacks: '0updated',
   page: 1,
   isLoading: false,
+  filter: '' as string,
 };
 
 export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
@@ -42,6 +43,8 @@ export const packsListReducer = (state: InitStateType = initState, action: Packs
       return {...state, page: action.page}
     case "packsList/SET-MAX-MIN-CARDS-COUNT":
       return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
+    case "packsList/SET-CURRENT-FILTER":
+      return {...state, filter: action.filter}
     default:
       return state;
   }
@@ -58,6 +61,8 @@ export const setMaxMinCardsCountAC = (max: number, min: number) =>
   ({type: "packsList/SET-MAX-MIN-CARDS-COUNT", max, min} as const);
 export const loadingCardsPackAC = (value: boolean) =>
   ({type: "packsList/LOADING-STATUS", value} as const);
+export const setCurrentFilterAC = (filter: string) =>
+  ({type: "packsList/SET-CURRENT-FILTER", filter} as const);
 
 // Thunk creators
 export const getCardsPackThunk = (currentPage: number = 1): AppThunkType => (dispatch) => {
@@ -81,6 +86,23 @@ export const searchCardsPackThunk = (searchValue: string): AppThunkType => (
   dispatch) => {
   dispatch(loadingCardsPackAC(true));
   packCardsApi.searchCards(searchValue)
+    .then(res => {
+      dispatch(setCardsPackAC(res.cardPacks));
+      dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+    })
+    .catch(e => {
+      const error = e.response
+        ? e.response.data.error
+        : (e.message + ', more details in the console');
+      console.log('Error: ', error);
+      dispatch(setAppErrorAC(error));
+    }).finally(() => dispatch(loadingCardsPackAC(false)));
+};
+export const sortCardsPackThunk = (filter: string): AppThunkType => (
+  dispatch) => {
+  dispatch(loadingCardsPackAC(true));
+  dispatch(setCurrentFilterAC(filter))
+  packCardsApi.sortCards(filter)
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));
       dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));

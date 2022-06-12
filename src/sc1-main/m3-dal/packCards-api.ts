@@ -40,6 +40,12 @@ export type cardPacksDataType = {
   tokenDeathTime: Date
 }
 
+export type FilterParams = {
+  name: string,
+  updated: string,
+  cardsCount: string,
+}
+
 
 export const packCardsApi = {
   getAllCards(page: number = 1) {
@@ -52,6 +58,15 @@ export const packCardsApi = {
   searchCards(packName: string = '') {
     return instance.get<cardPacksDataType>(`/cards/pack`,
       {params: {pageCount: 10, packName}})
+      .then(res => {
+        return res.data
+      })
+  },
+  sortCards(filter: string) {
+    return instance.get<cardPacksDataType>(`/cards/pack`,
+      {
+        params: {pageCount: 10, sortPacks: filter}
+      })
       .then(res => {
         return res.data
       })

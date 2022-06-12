@@ -6,7 +6,11 @@ import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/But
 import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
-import {deleteCardsPackThunk, updateCardsPackThunk} from "../../bll/packsListReducer";
+import {
+  deleteCardsPackThunk,
+  sortCardsPackThunk,
+  updateCardsPackThunk
+} from "../../bll/packsListReducer";
 import {EditModal} from "../../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
 
@@ -24,6 +28,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   }
 ) => {
   const dispatch = useAppDispatch();
+  const currentFilter = useAppSelector(state => state.packsList.filter)
 
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [activeEditModal, setActiveEditModal] = useState(false);
@@ -31,7 +36,6 @@ export const PacksListTable: React.FC<PacksListTableType> = (
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
-  const columnName = useAppSelector<string[]>(store => store.packsList.columnName);
 
   //ф-ия вызова модального окна при изменении имени колоды
   const editHandler = (id: string, name: string) => {
@@ -59,17 +63,62 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setActiveDeleteModal(false);
   }
 
+  // ['№', 'Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
+  const sortCardsByNameHandler = () => {
+    console.log(currentFilter)
+    if (currentFilter === "0name") {
+      dispatch(sortCardsPackThunk('1name'))
+    }
+    if (currentFilter === "1name") {
+      dispatch(sortCardsPackThunk(''))
+    } else {
+      dispatch(sortCardsPackThunk('0name'))
+    }
+  }
+  const sortCardsByUpdatedHandler = () => {
+    console.log(currentFilter)
+    if (currentFilter === "0updated") {
+      dispatch(sortCardsPackThunk('1updated'))
+    }
+    if (currentFilter === "1updated") {
+      dispatch(sortCardsPackThunk(''))
+    } else {
+      dispatch(sortCardsPackThunk('0updated'))
+    }
+  }
+  const sortCardsByCardsCountHandler = () => {
+    console.log(currentFilter)
+    if (currentFilter === "0cardsCount") {
+      dispatch(sortCardsPackThunk('1cardsCount'))
+    } else if (currentFilter === "1cardsCount") {
+      dispatch(sortCardsPackThunk(''))
+    } else {
+      dispatch(sortCardsPackThunk('0cardsCount'))
+    }
+  }
+
   return (
     <div className={s.tableMainBlock}>
       {
         <table>
           <thead className={s.theadStyle}>
           <tr className={s.trStyle}>
-            {columnName.map((name, index) => {
-              return <th key={`${index}-${name}`}>
-                {name.toUpperCase()}
-              </th>
-            })}
+            <th>'№</th>
+            <th onClick={sortCardsByNameHandler}
+                style={{cursor: 'pointer'}}>Name {currentFilter === '1name'
+              ? '↓'
+              : currentFilter === '0name' ? '↑' : ''}</th>
+            <th onClick={sortCardsByCardsCountHandler}
+                style={{cursor: 'pointer'}}>Cards {currentFilter === '1cardsCount'
+              ? '↓'
+              : currentFilter === '0cardsCount' ? '↑' : ''}</th>
+            <th onClick={sortCardsByUpdatedHandler}
+                style={{cursor: 'pointer'}}>Last Updated {currentFilter === '1updated'
+              ? '↓'
+              : currentFilter === '0updated' ? '↑' : ''}
+            </th>
+            <th>Created by</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody className={s.tbodyStyle}>
@@ -88,9 +137,9 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                 <td className={s.actions}>
                   <div className={s.buttonBlock}>
                     {el.user_id === userId &&
-                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)} red>Delete</Button>}
+						<Button onClick={() => deletePackCardsHandler(el._id, el.name)} red>Delete</Button>}
                     {el.user_id === userId &&
-                      <Button onClick={() => editHandler(el._id, el.name)}>Edit</Button>}
+						<Button onClick={() => editHandler(el._id, el.name)}>Edit</Button>}
                     <Button onClick={() => learnHandler(el._id, el.name)}>Learn</Button>
                   </div>
                 </td>
