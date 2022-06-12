@@ -93,12 +93,9 @@ export const PacksList = () => {
             <DebounceSearch/>
             <Button onClick={addCardsPackHandler}>Add new pack</Button>
           </div>
-          {isLoading
-            ? <MiniSpinner customSizeStyle={s.spinnerSize}/>
-            : <PacksListTable name={name}
-                              setName={setName}
-                              onFocusHandler={onFocusHandler}/>
-          }
+          <PacksListTable name={name}
+                          setName={setName}
+                          onFocusHandler={onFocusHandler}/>
           <Paginator totalItemCount={totalCountPage}
                      currentPage={currentPage}
                      pageSize={pageSize}

@@ -3,9 +3,10 @@
     border-radius: 5px;
     display: flex;
     height: 60px;
-    margin-left: auto;
     width: 100%;
-    }
+    max-width: 1300px;
+    margin: auto;
+}
 
 .logo {
     border: 1px solid black;
@@ -18,15 +19,15 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    }
+}
 
 .item:nth-of-type(1) {
     margin-left: auto;
-    }
+}
 
 .item:nth-last-of-type(1) {
     margin-right: auto;
-    }
+}
 
 .item {
     align-items: center;
@@ -41,13 +42,13 @@
     padding: 5px 20px;
     position: relative;
     text-align: center;
-    }
+}
 
 .item.active {
     background: #DCCCDB;
     position: relative;
     text-align: center;
-    }
+}
 
 .item.active::after {
     background: #21268F;
@@ -57,28 +58,28 @@
     left: 0;
     position: absolute;
     width: 100%;
-    }
+}
 
 @media (max-width: 1004px) {
     .logo {
         font-size: 20px;
-        }
+    }
 
     .item {
         font-size: 14px;
         padding: 10px;
-        }
     }
+}
 
 @media (max-width: 800px) {
     .navbar {
         display: flex;
         justify-content: space-between;
-        }
+    }
 
     .logo {
         font-size: 20px;
-        }
+    }
 
     .mobileLinksOpen {
         backdrop-filter: blur(5px);
@@ -89,11 +90,11 @@
         top: 0;
         width: 100vw;
         z-index: 99;
-        }
+    }
 
     .mobileLinksClosed {
         display: none;
-        }
+    }
 
     .item {
         align-items: center;
@@ -103,16 +104,16 @@
         font-size: 16px;
         font-weight: bold;
         padding: 5px 5px 5px;
-        }
+    }
 
     .item:hover {
         text-decoration: underline;
-        }
+    }
 
     .item.active {
         background-color: rgba(255, 255, 255, 0);
         font-weight: bold;
-        }
+    }
 
     .item.active::after {
         background: #b3abe7;
@@ -122,17 +123,17 @@
         position: absolute;
         top: 0;
         width: 3px;
-        }
     }
+}
 
 .headerIcon {
     height: 100%;
     width: 36px;
-    }
+}
 
 .logOutButton {
     align-items: center;
     display: flex;
     margin: 15px 15px;
     padding: 5px 10px;
-    }
+}

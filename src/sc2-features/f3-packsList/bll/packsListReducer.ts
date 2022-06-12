@@ -1,6 +1,7 @@
 import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {packCardsApi, PacksType} from "../../../sc1-main/m3-dal/packCards-api";
 import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
+import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 
 // Types
 type InitStateType = typeof initState;
@@ -67,6 +68,7 @@ export const setCurrentFilterAC = (sortPacks: string) =>
 export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
   const {pageCount, page} = getState().packsList;
   dispatch(loadingCardsPackAC(true));
+  dispatch(setAppIsLoadingAC(true));
   packCardsApi.getCardsPack({pageCount, page})
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));
@@ -74,7 +76,11 @@ export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
       dispatch(setMaxMinCardsCountAC(res.maxCardsCount, res.minCardsCount));
     })
     .catch(error => handleAppRequestError(error, dispatch))
-    .finally(() => dispatch(loadingCardsPackAC(false)));
+    .finally(() => {
+      dispatch(loadingCardsPackAC(false));
+      dispatch(setAppIsLoadingAC(false));
+    })
+
 };
 
 export const getMyCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
