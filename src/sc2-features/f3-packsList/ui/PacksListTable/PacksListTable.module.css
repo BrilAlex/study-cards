@@ -32,6 +32,7 @@ table {
 .buttonBlock {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     width: 100%;
 }
 .buttonBlock button {
@@ -45,7 +46,7 @@ tr:nth-child(2n) {
     background: #e8edff;
 }
 .tbodyStyle td {
-    max-width: 300px;
+    max-width: 190px;
 }
 
 .nameStyle:hover {

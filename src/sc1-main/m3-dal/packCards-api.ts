@@ -40,40 +40,18 @@ export type cardPacksDataType = {
   tokenDeathTime: Date
 }
 
-export type FilterParams = {
-  name: string,
-  updated: string,
-  cardsCount: string,
+export type requestDataType = {
+  pageCount?: number
+  page?: number
+  packName?: string
+  user_id?: string
+  sortPacks?: string
 }
 
-
 export const packCardsApi = {
-  getAllCards(page: number = 1) {
+  getCardsPack(requestData: requestDataType) {
     return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 10, page}})
-      .then(res => {
-        return res.data
-      })
-  },
-  searchCards(packName: string = '') {
-    return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 10, packName}})
-      .then(res => {
-        return res.data
-      })
-  },
-  sortCards(filter: string) {
-    return instance.get<cardPacksDataType>(`/cards/pack`,
-      {
-        params: {pageCount: 10, sortPacks: filter}
-      })
-      .then(res => {
-        return res.data
-      })
-  },
-  getMyCards(userId: string) {
-    return instance.get<cardPacksDataType>(`/cards/pack`,
-      {params: {pageCount: 10, user_id: userId}})
+      {params: {...requestData}})
       .then(res => {
         return res.data
       })

@@ -20,6 +20,6 @@ export const ButtonLoad: React.FC<ButtonLoadPropsType> = (
   const finalStyle = `${s.btnStyle} ${isSpinner ? s.spinner : ''} ${red ? s.red : ""} ${className ? className : ""}`;
 
   return (
-    <button className={finalStyle} {...restProps}/>
+    <button className={finalStyle} disabled={isSpinner} {...restProps}/>
   )
 };

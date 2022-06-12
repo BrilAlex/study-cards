@@ -27,7 +27,6 @@ export const PacksList = () => {
   const [isActivePack, setIsActivePack] = useState(false);
 
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
-  const userId = useAppSelector<string>(store => store.profile.user._id);
   const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
   const currentPage = useAppSelector<number>(store => store.packsList.page);
   const pageSize = useAppSelector<number>(store => store.packsList.pageCount);
@@ -36,7 +35,7 @@ export const PacksList = () => {
   const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
 
   useEffect(() => {
-    dispatch(getCardsPackThunk(currentPage));
+    dispatch(getCardsPackThunk());
   }, [dispatch, currentPage]);
 
   useEffect(() => {
@@ -61,7 +60,7 @@ export const PacksList = () => {
   }
   const getMyPackHandler = () => {
     setIsActivePack(true);
-    dispatch(getMyCardsPackThunk(userId));
+    dispatch(getMyCardsPackThunk());
   }
   const getAllPackHandler = () => {
     setIsActivePack(false);

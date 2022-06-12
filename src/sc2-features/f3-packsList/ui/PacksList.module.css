@@ -5,6 +5,8 @@
     min-height: 300px;
     overflow: hidden;
     position: relative;
+    max-width: 1300px;
+    margin: auto;
 }
 
 .settingsSide {

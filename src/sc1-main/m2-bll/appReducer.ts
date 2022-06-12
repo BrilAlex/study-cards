@@ -37,12 +37,9 @@ export const initializeAppTC = (): AppThunkType => (dispatch) => {
       const errorMessage = error.response
         ? error.response.data.error
         : (error.message + ', more details in the console');
-
       console.log('Error: ', errorMessage);
     })
-    .finally(() => {
-      dispatch(setAppIsInitializedAC(true));
-    });
+    .finally(() => dispatch(setAppIsInitializedAC(true)))
 };
 
 export const appReducer = (state: InitStateType = initState, action: AppActionsType): InitStateType => {

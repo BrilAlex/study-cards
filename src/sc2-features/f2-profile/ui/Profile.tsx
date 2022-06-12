@@ -47,7 +47,7 @@ export const Profile = () => {
             <h3>{userData.email}</h3>
             <h3>ID: {userData._id}</h3>
             <h3>Card Packs: {userData.publicCardPacksCount}</h3>
-            <ButtonLoad isSpinner={isLoading} disabled={isLoading} onClick={editHandler}>Edit</ButtonLoad>
+            <ButtonLoad isSpinner={isLoading} onClick={editHandler}>Edit</ButtonLoad>
           </div>
         </div>
       </div>
