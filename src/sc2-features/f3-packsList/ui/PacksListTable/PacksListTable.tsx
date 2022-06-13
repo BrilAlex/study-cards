@@ -27,14 +27,15 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setName,
   }
 ) => {
-  const dispatch = useAppDispatch();
-  const currentFilter = useAppSelector(state => state.packsList.filter)
 
-  const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+  const dispatch = useAppDispatch();
+
   const [activeEditModal, setActiveEditModal] = useState(false);
+  const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [id, setId] = useState<string>('');
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
+  const currentFilter = useAppSelector(state => state.packsList.filter);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
 
   //ф-ия вызова модального окна при изменении имени колоды
@@ -63,9 +64,9 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setActiveDeleteModal(false);
   }
 
-  // ['№', 'Name', 'Cards', 'Last Updated', 'Created by', 'Actions']
   const sortCardsByNameHandler = () => {
-    console.log(currentFilter)
+    // let filter;
+    // if(currentFilter)
     if (currentFilter === "0name") {
       dispatch(sortCardsPackThunk('1name'))
     }
@@ -87,7 +88,6 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     }
   }
   const sortCardsByCardsCountHandler = () => {
-    console.log(currentFilter)
     if (currentFilter === "0cardsCount") {
       dispatch(sortCardsPackThunk('1cardsCount'))
     } else if (currentFilter === "1cardsCount") {
@@ -103,7 +103,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
         <table>
           <thead className={s.theadStyle}>
           <tr className={s.trStyle}>
-            <th>'№</th>
+            <th>№</th>
             <th onClick={sortCardsByNameHandler}
                 style={{cursor: 'pointer'}}>Name {currentFilter === '1name'
               ? '↓'
@@ -137,10 +137,14 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                 <td className={s.actions}>
                   <div className={s.buttonBlock}>
                     {el.user_id === userId &&
-						<Button onClick={() => deletePackCardsHandler(el._id, el.name)} red>Delete</Button>}
+                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+                              style={{margin: '5px 5px'}}
+                              red>Delete</Button>}
                     {el.user_id === userId &&
-						<Button onClick={() => editHandler(el._id, el.name)}>Edit</Button>}
-                    <Button onClick={() => learnHandler(el._id, el.name)}>Learn</Button>
+                      <Button onClick={() => editHandler(el._id, el.name)}
+                              style={{margin: '5px 5px'}}>Edit</Button>}
+                    <Button onClick={() => learnHandler(el._id, el.name)}
+                            style={{margin: '5px 5px'}}>Learn</Button>
                   </div>
                 </td>
               </tr>

@@ -19,9 +19,9 @@ export const ProfileDev = () => {
     name ? setName(name) : setName(userNameStore)
   }
   const getTasksHandler = () => {
-    packCardsApi.getAllCards().then(res => {
-      setAuthData(res);
-    })
+    // packCardsApi.getAllCards().then(res => {
+    //   setAuthData(res);
+    // })
   }
   const putHandler = () => {
     dispatch(updateNameThunk(name, ''));

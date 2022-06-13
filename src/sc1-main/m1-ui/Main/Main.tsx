@@ -23,7 +23,9 @@ export const Main = () => {
   return (
     <>
       <Header/>
-      {isLoading && <ProgressBar/>}
+      <div style={{height: '5px'}}>
+        {isLoading && <ProgressBar/>}
+      </div>
       <Pages/>
       <Snackbar/>
     </>

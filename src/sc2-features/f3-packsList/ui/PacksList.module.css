@@ -5,11 +5,14 @@
     min-height: 300px;
     overflow: hidden;
     position: relative;
+    max-width: 1300px;
+    margin: auto;
 }
 
 .settingsSide {
     background: #ECECF9;
     padding: 0 24px;
+    width: 244px;
 }
 
 .userChooseButton {
