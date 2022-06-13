@@ -50,6 +50,7 @@ export type requestDataType = {
 
 export const packCardsApi = {
   getCardsPack(requestData: requestDataType) {
+    console.log({...requestData}) //TODO при запросе отправлять все настройки в стейте
     return instance.get<cardPacksDataType>(`/cards/pack`,
       {params: {...requestData}})
       .then(res => {

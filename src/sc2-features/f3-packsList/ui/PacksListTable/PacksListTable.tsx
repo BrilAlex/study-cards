@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {
-  deleteCardsPackThunk,
+  deleteCardsPackThunk, setCurrentFilterAC,
   sortCardsPackThunk,
   updateCardsPackThunk
 } from "../../bll/packsListReducer";
@@ -64,36 +64,15 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setActiveDeleteModal(false);
   }
 
-  const sortCardsByNameHandler = () => {
-    // let filter;
-    // if(currentFilter)
-    if (currentFilter === "0name") {
-      dispatch(sortCardsPackThunk('1name'))
+  //фильтрация колод по типу (тип передаем в виде строки)
+  const sortCardsByTypeHandler = (sortType: string) => {
+    if (currentFilter === "0" + sortType) {
+      dispatch(sortCardsPackThunk('1' + sortType))
     }
-    if (currentFilter === "1name") {
+    if (currentFilter === "1" + sortType) {
       dispatch(sortCardsPackThunk(''))
     } else {
-      dispatch(sortCardsPackThunk('0name'))
-    }
-  }
-  const sortCardsByUpdatedHandler = () => {
-    console.log(currentFilter)
-    if (currentFilter === "0updated") {
-      dispatch(sortCardsPackThunk('1updated'))
-    }
-    if (currentFilter === "1updated") {
-      dispatch(sortCardsPackThunk(''))
-    } else {
-      dispatch(sortCardsPackThunk('0updated'))
-    }
-  }
-  const sortCardsByCardsCountHandler = () => {
-    if (currentFilter === "0cardsCount") {
-      dispatch(sortCardsPackThunk('1cardsCount'))
-    } else if (currentFilter === "1cardsCount") {
-      dispatch(sortCardsPackThunk(''))
-    } else {
-      dispatch(sortCardsPackThunk('0cardsCount'))
+      dispatch(sortCardsPackThunk('0' + sortType))
     }
   }
 
@@ -104,15 +83,15 @@ export const PacksListTable: React.FC<PacksListTableType> = (
           <thead className={s.theadStyle}>
           <tr className={s.trStyle}>
             <th>№</th>
-            <th onClick={sortCardsByNameHandler}
+            <th onClick={() => sortCardsByTypeHandler('name')}
                 style={{cursor: 'pointer'}}>Name {currentFilter === '1name'
               ? '↓'
               : currentFilter === '0name' ? '↑' : ''}</th>
-            <th onClick={sortCardsByCardsCountHandler}
+            <th onClick={() => sortCardsByTypeHandler('cardsCount')}
                 style={{cursor: 'pointer'}}>Cards {currentFilter === '1cardsCount'
               ? '↓'
               : currentFilter === '0cardsCount' ? '↑' : ''}</th>
-            <th onClick={sortCardsByUpdatedHandler}
+            <th onClick={() => sortCardsByTypeHandler('updated')}
                 style={{cursor: 'pointer'}}>Last Updated {currentFilter === '1updated'
               ? '↓'
               : currentFilter === '0updated' ? '↑' : ''}
@@ -137,12 +116,12 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                 <td className={s.actions}>
                   <div className={s.buttonBlock}>
                     {el.user_id === userId &&
-                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
-                              style={{margin: '5px 5px'}}
-                              red>Delete</Button>}
+						<Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+								style={{margin: '5px 5px'}}
+								red>Delete</Button>}
                     {el.user_id === userId &&
-                      <Button onClick={() => editHandler(el._id, el.name)}
-                              style={{margin: '5px 5px'}}>Edit</Button>}
+						<Button onClick={() => editHandler(el._id, el.name)}
+								style={{margin: '5px 5px'}}>Edit</Button>}
                     <Button onClick={() => learnHandler(el._id, el.name)}
                             style={{margin: '5px 5px'}}>Learn</Button>
                   </div>
