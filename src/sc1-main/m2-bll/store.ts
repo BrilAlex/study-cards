@@ -21,6 +21,7 @@ import {
   CardsListActionsType,
   cardsListReducer
 } from "../../sc2-features/f4-cardsList/bll/cardsListReducer";
+import {LearnActionsType, learnReducer} from "../../sc2-features/f5-learn/bll/learnReducer";
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 export type RootActionsType =
@@ -31,7 +32,8 @@ export type RootActionsType =
   | NewPasswordActionsType
   | PasswordRecoveryActionsType
   | PacksListActionsType
-  | CardsListActionsType;
+  | CardsListActionsType
+  | LearnActionsType;
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, RootActionsType>;
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, RootActionsType>;
 
@@ -44,6 +46,7 @@ const rootReducer = combineReducers({
   passwordRecovery: passwordRecoveryReducer,
   packsList: packsListReducer,
   cardsList: cardsListReducer,
+  learn: learnReducer,
 });
 
 // Custom `useDispatch` and `useSelector: Use throughout app instead of plain `useDispatch` and `useSelector`

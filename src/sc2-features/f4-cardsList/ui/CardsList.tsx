@@ -16,10 +16,11 @@ export const CardsList = () => {
   const cardsPack_ID = urlParams.cardPackID;
 
   const user_ID = useAppSelector(state => state.profile.user._id);
-  const cards = useAppSelector<null | Array<CardType>>(state => state.cardsList.cards);
+  const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
   const cardsTotalCount = useAppSelector<number>(state => state.cardsList.cardsTotalCount);
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
   const currentPage = useAppSelector<number>(state => state.cardsList.page);
+  const isFetching = useAppSelector<boolean>(state => state.cardsList.isFetching);
 
   const dispatch = useAppDispatch();
 
@@ -53,9 +54,9 @@ export const CardsList = () => {
       <div>
         <InputText type={"text"} placeholder={"Filter by Question"}/>
         <InputText type={"text"} placeholder={"Filter by Answer"}/>
-        <Button onClick={addCardHandler}>Add card</Button>
+        <Button onClick={addCardHandler} disabled={isFetching}>Add card</Button>
       </div>
-      {!cards ?
+      {isFetching ?
         <MiniSpinner/>
         :
         cards.length === 0 ?

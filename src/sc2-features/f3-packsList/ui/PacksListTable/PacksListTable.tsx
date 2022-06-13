@@ -3,7 +3,7 @@ import s from './PacksListTable.module.css'
 import {PacksType} from "../../../../sc1-main/m3-dal/packCards-api";
 import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {
@@ -13,6 +13,7 @@ import {
 } from "../../bll/packsListReducer";
 import {EditModal} from "../../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
+import {setLearnPackDataAC} from "../../../f5-learn/bll/learnReducer";
 
 type PacksListTableType = {
   name: string
@@ -27,7 +28,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setName,
   }
 ) => {
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [activeEditModal, setActiveEditModal] = useState(false);
@@ -51,7 +52,8 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setName(name);
   }
   const learnHandler = (id: string, name: string) => {
-    alert('learnHandler in development...')
+    dispatch(setLearnPackDataAC({cardsPack_ID: id, cardsPackName: name}));
+    navigate(PATH.LEARN);
   }
   //ф-ия изменения имени колоды и закрытия окна
   const changeName = () => {
