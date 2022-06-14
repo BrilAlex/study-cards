@@ -1,7 +1,7 @@
 import {LearnPage} from "./LearnPage";
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {getCardsTC} from "../../f4-cardsList/bll/cardsListReducer";
+import {getCardsTC, setPageCountAC} from "../../f4-cardsList/bll/cardsListReducer";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {CardType} from "../../../sc1-main/m3-dal/cardsApi";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
@@ -16,6 +16,10 @@ export const LearPageContainer = () => {
 
   useEffect(() => {
     if (cardPack_ID) dispatch(getCardsTC({cardsPack_id: cardPack_ID, pageCount: 1000000}));
+
+    return () => {
+      dispatch(setPageCountAC(5));
+    };
   }, [dispatch, cardPack_ID]);
 
   if (isFetching) {

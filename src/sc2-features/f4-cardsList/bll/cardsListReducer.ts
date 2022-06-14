@@ -16,6 +16,7 @@ export type CardsListActionsType =
   | ReturnType<typeof setCardsDataAC>
   | ReturnType<typeof updateCardsDataAC>
   | ReturnType<typeof setCurrentPageCardsListAC>
+  | ReturnType<typeof setPageCountAC>
   | ReturnType<typeof setIsFetching>;
 
 // Initial state
@@ -45,6 +46,8 @@ export const cardsListReducer = (state: InitStateType = initState, action: Cards
       };
     case"cardsList/SET_CURRENT_PAGE":
       return {...state, page: action.page};
+    case "cardsList/SET_PAGE_COUNT":
+      return {...state, pageCount: action.pageCount};
     case "cardsList/SET_IS_FETCHING":
       return {...state, isFetching: action.value};
     default:
@@ -59,6 +62,8 @@ export const updateCardsDataAC = (updatedGrade: UpdatedGradeType) =>
   ({type: "cardsList/UPDATE-CARDS-DATA", updatedGrade} as const);
 export const setCurrentPageCardsListAC = (page: number) =>
   ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
+export const setPageCountAC = (pageCount: number) =>
+  ({type: "cardsList/SET_PAGE_COUNT", pageCount} as const);
 export const setIsFetching = (value: boolean) =>
   ({type: "cardsList/SET_IS_FETCHING", value} as const);
 
