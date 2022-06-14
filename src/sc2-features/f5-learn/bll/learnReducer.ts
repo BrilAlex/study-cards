@@ -7,22 +7,21 @@ import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
 // Types
 type InitStateType = typeof initState;
 type ActionType =
-  | ReturnType<typeof setLearnPackDataAC>
+  | ReturnType<typeof setLearnPackNameAC>
   | ReturnType<typeof setLearnCardDataAC>;
 export type LearnActionsType = ActionType;
 
 
 // Initial state
 const initState = {
-  cardsPack_ID: "",
   cardsPackName: "",
   card: {} as CardType,
   isFetching: true,
 };
 
 // Action creators
-export const setLearnPackDataAC = (cardsPackData: { cardsPack_ID: string, cardsPackName: string }) =>
-  ({type: "learn/SET-LEARN-PACK-DATA", cardsPackData} as const);
+export const setLearnPackNameAC = (cardsPackName: string) =>
+  ({type: "learn/SET-LEARN-PACK-DATA", cardsPackName} as const);
 export const setLearnCardDataAC = (card: CardType) =>
   ({type: "learn/SET-LEARN-CARD-DATA", card} as const);
 
@@ -45,7 +44,7 @@ export const gradeCardTC = (data: UpgradeGradeDataType): AppThunkType => (dispat
 export const learnReducer = (state: InitStateType = initState, action: LearnActionsType): InitStateType => {
   switch (action.type) {
     case "learn/SET-LEARN-PACK-DATA":
-      return {...state, ...action.cardsPackData};
+      return {...state, cardsPackName: action.cardsPackName};
     case "learn/SET-LEARN-CARD-DATA":
       return {...state, card: action.card};
     default:

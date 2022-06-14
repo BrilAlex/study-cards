@@ -4,14 +4,16 @@ import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {getCardsTC} from "../../f4-cardsList/bll/cardsListReducer";
 import {CardType} from "../../../sc1-main/m3-dal/cardsApi";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {setLearnCardDataAC} from "../bll/learnReducer";
 
 export const LearnPage = () => {
-  const cardPack_ID = useAppSelector<string>(state => state.learn.cardsPack_ID);
+  const urlParams = useParams<"cardPackID">();
+  const cardPack_ID = urlParams.cardPackID;
+
   const cardPackName = useAppSelector<string>(state => state.learn.cardsPackName);
   console.log(cardPack_ID, cardPackName);
   const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
@@ -20,7 +22,7 @@ export const LearnPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getCardsTC(cardPack_ID));
+    if (cardPack_ID) dispatch(getCardsTC(cardPack_ID));
   }, [dispatch, cardPack_ID]);
 
   const getRandomCard = (array: Array<CardType>) => {
@@ -36,12 +38,12 @@ export const LearnPage = () => {
 
   const showAnswerHandler = () => {
     dispatch(setLearnCardDataAC(randomCard));
-    navigate(PATH.CARD);
+    navigate(PATH.CARD + randomCard._id);
   };
 
   return (
     <div className={commonStyles.smallContainer}>
-      <h1>Learn {cardPackName}</h1>
+      <h1>Learn pack {cardPackName}</h1>
       {isFetching ?
         <MiniSpinner/>
         :

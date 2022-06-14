@@ -13,7 +13,7 @@ import {
 } from "../../bll/packsListReducer";
 import {EditModal} from "../../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
-import {setLearnPackDataAC} from "../../../f5-learn/bll/learnReducer";
+import {setLearnPackNameAC} from "../../../f5-learn/bll/learnReducer";
 
 type PacksListTableType = {
   name: string
@@ -52,8 +52,8 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setName(name);
   }
   const learnHandler = (id: string, name: string) => {
-    dispatch(setLearnPackDataAC({cardsPack_ID: id, cardsPackName: name}));
-    navigate(PATH.LEARN);
+    dispatch(setLearnPackNameAC(name));
+    navigate(PATH.LEARN + id);
   }
   //ф-ия изменения имени колоды и закрытия окна
   const changeName = () => {
