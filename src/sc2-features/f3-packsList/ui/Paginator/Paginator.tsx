@@ -1,74 +1,78 @@
-import React, {useState} from 'react';
-import s from "./Paginator.module.css";
-import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
+import React from 'react';
+import s from './Pagination_.module.css'
+import {DOTS, usePagination} from "./UsePagination";
 
-type PaginatorMyType = {
-  totalItemCount: number
-  pageSize: number
-  currentPage: number
-  spanClick?: (page: number) => void
-  portionSize?: number
+type Pagination_PropsType = {
+  totalCount: number;
+  siblingCount: number;
+  currentPage: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
 }
 
-export const Paginator: React.FC<PaginatorMyType> = (
+export const Paginator: React.FC<Pagination_PropsType> = (
   {
-    totalItemCount,
-    pageSize,
+    onPageChange,
+    totalCount,
+    siblingCount = 10,
     currentPage,
-    spanClick,
-    portionSize = 10,
+    pageSize,
   }
 ) => {
 
-  const pagesCount = Math.ceil(totalItemCount / pageSize);
+  const paginationRange = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize
+  });
 
-  const pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i)
+  // @ts-ignore
+  if (currentPage === 0 || paginationRange.length < 2) {
+    return null;
   }
 
-  const portionCount = Math.ceil(pagesCount / pageSize);
-  const [range, setRange] = useState(1);
-  const leftNumber = (range - 1) * portionSize + 1;
-  const rightNumber = range * portionSize;
+  const onNext = () => {
+    onPageChange(currentPage + 1);
+  };
 
-  const back = () => {
-    setRange(range - 1)
-  }
-  const forward = () => {
-    setRange(range + 1)
-  }
-  const spanHandler = (page: number) => {
-    spanClick && spanClick(page);
-  }
+  const onPrevious = () => {
+    onPageChange(currentPage - 1);
+  };
+  // @ts-ignore
+  let lastPage = paginationRange[paginationRange.length - 1];
+
 
   return (
-    <div className={s.mainBlock}>
-      <div className={s.buttonBlock}>
-        <Button onClick={back}
-                disabled={range <= 1}
-                className={s.buttonStyle}
+    <div className={s.paginationContainer}>
+      <ul className={s.paginationBlock}>
+        <li onClick={onPrevious}
+            className={currentPage === 1 ? s.disabled : s.paginationItem}
         >
-          back
-        </Button>
-        <Button onClick={forward}
-                disabled={portionCount <= range}
-                className={s.buttonStyle}
+          <div className={`${s.arrow} ${s.left}`}/>
+        </li>
+
+        {paginationRange?.map((pageNumber, index) => {
+          if (pageNumber === DOTS) {
+            return <li key={`${index}-${pageNumber}`} className={s.dots}>&#8230;</li>;
+          }
+          return (
+            <li key={`${index}-${pageNumber}`}
+                className={pageNumber === currentPage ? s.selected : s.paginationItem}
+              // @ts-ignore
+                onClick={() => onPageChange(pageNumber)}
+            >
+              {pageNumber}
+            </li>
+          );
+        })}
+        <li
+          className={currentPage === lastPage ? s.disabled : s.paginationItem}
+          onClick={onNext}
         >
-          forward
-        </Button>
-      </div>
-
-      <div className={s.pageList}>{pages
-        .filter(el => el >= leftNumber && el <= rightNumber)
-        .map(el => {
-          return <span key={el.toString()}
-                       className={currentPage === el ? s.selectPage : s.page}
-                       onClick={() => spanHandler(el)}
-          >{el}</span>
-        })}</div>
-
-
+          <div className={`${s.arrow} ${s.right}`}/>
+        </li>
+      </ul>
     </div>
   );
 };

@@ -12,9 +12,9 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {AddPackModal} from "./ModalWindows/AddPackModal/AddPackModal";
-import {Paginator} from "./Paginator/Paginator";
 import {DebounceSearch} from "./DebounceSearch/DebounceSearch";
 import {PacksListTable} from "./PacksListTable/PacksListTable";
+import {Paginator} from "./Paginator/Paginator";
 
 export const PacksList = () => {
 
@@ -96,10 +96,11 @@ export const PacksList = () => {
           <PacksListTable name={name}
                           setName={setName}
                           onFocusHandler={onFocusHandler}/>
-          <Paginator totalItemCount={totalCountPage}
-                     currentPage={currentPage}
+          <Paginator currentPage={currentPage}
                      pageSize={pageSize}
-                     spanClick={changePageHandler}
+                     totalCount={totalCountPage}
+                     onPageChange={changePageHandler}
+                     siblingCount={2}
           />
         </section>
       </div>

@@ -112,7 +112,7 @@ export const sortCardsPackThunk = (sortPacks: string): AppThunkType => (
     dispatch, getState) => {
     const {pageCount} = getState().packsList;
     dispatch(setAppIsLoadingAC(true));
-    dispatch(setCurrentFilterAC(sortPacks))
+    dispatch(setCurrentFilterAC(sortPacks));
     packCardsApi.getCardsPack({pageCount, sortPacks})
         .then(res => {
             dispatch(setCardsPackAC(res.cardPacks));

@@ -79,11 +79,11 @@ export const CardsList = () => {
                 );
               })}
             </div>
-            <Paginator
-              totalItemCount={cardsTotalCount}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              spanClick={changePageHandler}
+            <Paginator siblingCount={3}
+                       totalCount={cardsTotalCount}
+                       currentPage={currentPage}
+                       pageSize={pageSize}
+                       onPageChange={changePageHandler}
             />
           </>
       }
