@@ -29,7 +29,7 @@ export const CardPage = () => {
     const data = {card_id: card._id, grade: grades.indexOf(grade) + 1};
     console.log(data);
     dispatch(gradeCardTC(data));
-    navigate(PATH.LEARN);
+    navigate(PATH.LEARN + card.cardsPack_id);
   };
 
   return (

@@ -40,7 +40,7 @@ export const Pages = () => {
         <Route path={PATH.PACKS_LIST} element={<PacksList/>}/>
         <Route path={PATH.CARDS_LIST + ":cardPackID"} element={<CardsList/>}/>
         <Route path={PATH.LEARN + ":cardPackID"} element={<LearnPage/>}/>
-        <Route path={PATH.CARD + ":cardID"} element={<CardPage/>}/>
+        <Route path={PATH.CARD} element={<CardPage/>}/>
         <Route path={PATH.CHECK_EMAIL_SUCCESS} element={<CheckEmailSuccess/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>
         <Route path={PATH.ERROR404} element={<Error404/>}/>

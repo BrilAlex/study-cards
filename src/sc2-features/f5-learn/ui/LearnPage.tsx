@@ -22,7 +22,12 @@ export const LearnPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (cardPack_ID) dispatch(getCardsTC(cardPack_ID));
+    const timeoutID = setTimeout(() => {
+      if (cardPack_ID) dispatch(getCardsTC(cardPack_ID));
+    }, 3000)
+    return () => {
+      clearTimeout(timeoutID)
+    };
   }, [dispatch, cardPack_ID]);
 
   const getRandomCard = (array: Array<CardType>) => {
@@ -38,7 +43,7 @@ export const LearnPage = () => {
 
   const showAnswerHandler = () => {
     dispatch(setLearnCardDataAC(randomCard));
-    navigate(PATH.CARD + randomCard._id);
+    navigate(PATH.CARD);
   };
 
   return (
