@@ -11,8 +11,8 @@ import {
   sortCardsPackThunk,
   updateCardsPackThunk
 } from "../../bll/packsListReducer";
-import {EditModal} from "../../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
+import {EditPackModal} from '../ModalWindows/EditPackModal/EditPackModal';
 import {setLearnPackNameAC} from "../../../f5-learn/bll/learnReducer";
 
 type PacksListTableType = {
@@ -34,6 +34,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   const [activeEditModal, setActiveEditModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [id, setId] = useState<string>('');
+  const [makePrivate, setMakePrivate] = useState(false);
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
   const currentFilter = useAppSelector(state => state.packsList.filter);
@@ -57,7 +58,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   }
   //ф-ия изменения имени колоды и закрытия окна
   const changeName = () => {
-    dispatch(updateCardsPackThunk(id, name))
+    dispatch(updateCardsPackThunk(id, name, makePrivate))
     setActiveEditModal(false);
   }
   //ф-ия удаления колоды и закрытия окна
@@ -139,12 +140,12 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                 <td className={s.actions}>
                   <div className={s.buttonBlock}>
                     {el.user_id === userId &&
-                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
-                              style={{margin: '5px 5px'}}
-                              red>Delete</Button>}
+                    <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+                            style={{margin: '5px 5px'}}
+                            red>Delete</Button>}
                     {el.user_id === userId &&
-                      <Button onClick={() => editHandler(el._id, el.name)}
-                              style={{margin: '5px 5px'}}>Edit</Button>}
+                    <Button onClick={() => editHandler(el._id, el.name)}
+                            style={{margin: '5px 5px'}}>Edit</Button>}
                     <Button onClick={() => learnHandler(el._id, el.name)}
                             style={{margin: '5px 5px'}}>Learn</Button>
                   </div>
@@ -155,13 +156,14 @@ export const PacksListTable: React.FC<PacksListTableType> = (
           </tbody>
         </table>
       }
-      <EditModal active={activeEditModal}
-                 setActive={setActiveEditModal}
-                 name={name}
-                 inputValue={name}
-                 setInputValue={setName}
-                 inputFocus={onFocusHandler}
-                 changeName={changeName}
+      <EditPackModal active={activeEditModal}
+                     setActive={setActiveEditModal}
+                     name={name}
+                     inputValue={name}
+                     setInputValue={setName}
+                     inputFocus={onFocusHandler}
+                     changeName={changeName}
+                     makePrivate={(isPrivate) => setMakePrivate(isPrivate)}
       />
       <DeleteModal active={activeDeleteModal}
                    setActive={setActiveDeleteModal}
