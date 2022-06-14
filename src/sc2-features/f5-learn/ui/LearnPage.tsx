@@ -15,19 +15,17 @@ export const LearnPage = () => {
   const cardPack_ID = urlParams.cardPackID;
 
   const cardPackName = useAppSelector<string>(state => state.learn.cardsPackName);
-  console.log(cardPack_ID, cardPackName);
   const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
   const isFetching = useAppSelector<boolean>(state => state.cardsList.isFetching);
+
+  console.log(cardPack_ID, cardPackName);
+  console.log(cards);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timeoutID = setTimeout(() => {
-      if (cardPack_ID) dispatch(getCardsTC(cardPack_ID));
-    }, 3000)
-    return () => {
-      clearTimeout(timeoutID)
-    };
+    if (cardPack_ID) dispatch(getCardsTC({cardsPack_id: cardPack_ID, pageCount: 1000000}));
   }, [dispatch, cardPack_ID]);
 
   const getRandomCard = (array: Array<CardType>) => {

@@ -40,7 +40,7 @@ export const setIsFetching = (value: boolean) =>
   ({type: "cardsList/SET_IS_FETCHING", value} as const);
 
 // Thunk creators
-export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, getState: () => AppStateType) => {
+export const getCardsTC = (params: GetCardsQueryParams): AppThunkType => (dispatch, getState: () => AppStateType) => {
   const {
     cardAnswer,
     cardQuestion,
@@ -50,12 +50,12 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
   } = getState().cardsList;
 
   const queryParams: GetCardsQueryParams = {
-    cardsPack_id: cardsPack_ID,
     cardAnswer,
     cardQuestion,
     sortCards,
     page,
     pageCount,
+    ...params,
   };
 
   dispatch(setAppIsLoadingAC(true));
@@ -76,7 +76,7 @@ export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatc
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.createCard(newCard)
     .then(() => {
-      dispatch(getCardsTC(newCard.cardsPack_id));
+      dispatch(getCardsTC({cardsPack_id: newCard.cardsPack_id}));
     })
     .catch(error => {
       handleAppRequestError(error, dispatch);
@@ -89,7 +89,7 @@ export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkTyp
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.deleteCard(card_ID)
     .then(() => {
-      dispatch(getCardsTC(cardsPack_ID));
+      dispatch(getCardsTC({cardsPack_id: cardsPack_ID, page: 1}));
     })
     .catch(error => {
       handleAppRequestError(error, dispatch);
@@ -102,7 +102,7 @@ export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelTyp
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.updateCard(cardModel)
     .then(() => {
-      dispatch(getCardsTC(cardsPack_ID));
+      dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
     })
     .catch(error => {
       handleAppRequestError(error, dispatch);

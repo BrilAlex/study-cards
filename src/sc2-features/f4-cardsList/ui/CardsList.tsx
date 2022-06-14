@@ -25,7 +25,7 @@ export const CardsList = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (cardsPack_ID) dispatch(getCardsTC(cardsPack_ID));
+    if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
   }, [dispatch, cardsPack_ID, currentPage]);
 
   const addCardHandler = useCallback(() => {
