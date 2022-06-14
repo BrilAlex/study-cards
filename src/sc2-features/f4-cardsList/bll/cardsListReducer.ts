@@ -8,13 +8,15 @@ import {
   UpdateCardModelType
 } from "../../../sc1-main/m3-dal/cardsApi";
 import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
+import {UpdatedGradeType} from "../../f5-learn/dal/learnApi";
 
 // Types
 type InitStateType = typeof initState;
 export type CardsListActionsType =
-  | ReturnType<typeof setIsFetching>
   | ReturnType<typeof setCardsDataAC>
-  | ReturnType<typeof setCurrentPageCardsListAC>;
+  | ReturnType<typeof updateCardsDataAC>
+  | ReturnType<typeof setCurrentPageCardsListAC>
+  | ReturnType<typeof setIsFetching>;
 
 // Initial state
 const initState = {
@@ -31,9 +33,30 @@ const initState = {
   isFetching: true,
 };
 
+export const cardsListReducer = (state: InitStateType = initState, action: CardsListActionsType): InitStateType => {
+  switch (action.type) {
+    case "cardsList/SET-CARDS-DATA":
+      return {...state, ...action.payload};
+    case "cardsList/UPDATE-CARDS-DATA":
+      const {card_id, grade} = action.updatedGrade;
+      return {
+        ...state,
+        cards: state.cards.map(c => c._id === card_id ? {...c, grade} : c),
+      };
+    case"cardsList/SET_CURRENT_PAGE":
+      return {...state, page: action.page};
+    case "cardsList/SET_IS_FETCHING":
+      return {...state, isFetching: action.value};
+    default:
+      return state;
+  }
+};
+
 // Action creators
 export const setCardsDataAC = (data: GetCardsResponseDataType) =>
-  ({type: "cardsList/SET-CARDS", payload: data} as const);
+  ({type: "cardsList/SET-CARDS-DATA", payload: data} as const);
+export const updateCardsDataAC = (updatedGrade: UpdatedGradeType) =>
+  ({type: "cardsList/UPDATE-CARDS-DATA", updatedGrade} as const);
 export const setCurrentPageCardsListAC = (page: number) =>
   ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
 export const setIsFetching = (value: boolean) =>
@@ -110,17 +133,4 @@ export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelTyp
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
     });
-};
-
-export const cardsListReducer = (state: InitStateType = initState, action: CardsListActionsType): InitStateType => {
-  switch (action.type) {
-    case "cardsList/SET-CARDS":
-      return {...state, ...action.payload};
-    case"cardsList/SET_CURRENT_PAGE":
-      return {...state, page: action.page};
-    case "cardsList/SET_IS_FETCHING":
-      return {...state, isFetching: action.value};
-    default:
-      return state;
-  }
 };

@@ -1,5 +1,4 @@
 import commonStyles from "../../../sc1-main/m1-ui/App.module.css";
-import s from "./LearnPage.module.css";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {getCardsTC} from "../../f4-cardsList/bll/cardsListReducer";
@@ -8,7 +7,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
-import {setLearnCardDataAC} from "../bll/learnReducer";
+import {CardPage} from "./CardPage";
 
 export const LearnPage = () => {
   const urlParams = useParams<"cardPackID">();
@@ -17,9 +16,6 @@ export const LearnPage = () => {
   const cardPackName = useAppSelector<string>(state => state.learn.cardsPackName);
   const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
   const isFetching = useAppSelector<boolean>(state => state.cardsList.isFetching);
-
-  console.log(cardPack_ID, cardPackName);
-  console.log(cards);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -39,11 +35,6 @@ export const LearnPage = () => {
     navigate(PATH.PACKS_LIST);
   };
 
-  const showAnswerHandler = () => {
-    dispatch(setLearnCardDataAC(randomCard));
-    navigate(PATH.CARD);
-  };
-
   return (
     <div className={commonStyles.smallContainer}>
       <h1>Learn pack {cardPackName}</h1>
@@ -56,15 +47,7 @@ export const LearnPage = () => {
             <Button onClick={cancelHandler}>Chancel</Button>
           </div>
           :
-          <div className={s.cardBlock}>
-            <div className={s.questionBlock}>
-              <p><b>Question:</b> {randomCard.question}</p>
-            </div>
-            <div className={s.buttonsBlock}>
-              <Button onClick={cancelHandler}>Chancel</Button>
-              <Button onClick={showAnswerHandler}>Show answer</Button>
-            </div>
-          </div>
+          <CardPage card={randomCard}/>
       }
     </div>
   );
