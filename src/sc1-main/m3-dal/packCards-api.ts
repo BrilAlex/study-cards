@@ -50,7 +50,6 @@ export type requestDataType = {
 
 export const packCardsApi = {
   getCardsPack(requestData: requestDataType) {
-    console.log({...requestData}) //TODO при запросе отправлять все настройки в стейте
     return instance.get<cardPacksDataType>(`/cards/pack`,
       {params: {...requestData}})
       .then(res => {
@@ -64,7 +63,7 @@ export const packCardsApi = {
   deleteCardsPack(id: string) {
     return instance.delete<cardPacksDataType>(`/cards/pack/?id=${id}`)
   },
-  updateCardsPack(_id: string, name: string) {
-    return instance.put<UpdatePackType>(`/cards/pack`, {cardsPack: {_id, name}})
+  updateCardsPack(_id: string, name: string, makePrivate: boolean) {
+    return instance.put<UpdatePackType>(`/cards/pack`, {cardsPack: {_id, name, private: makePrivate}})
   },
 }

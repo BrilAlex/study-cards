@@ -111,6 +111,7 @@ export const searchCardsPackThunk = (packName: string): AppThunkType => (
 export const sortCardsPackThunk = (sortPacks: string): AppThunkType => (
   dispatch, getState) => {
   const {pageCount} = getState().packsList;
+  dispatch(setAppIsLoadingAC(true));
   dispatch(setCurrentFilterAC(sortPacks))
   packCardsApi.getCardsPack({pageCount, sortPacks})
     .then(res => {
@@ -141,9 +142,9 @@ export const deleteCardsPackThunk = (id: string): AppThunkType => (dispatch => {
     .finally(() => dispatch(setAppIsLoadingAC(false)));
 });
 
-export const updateCardsPackThunk = (id: string, name: string): AppThunkType => (dispatch => {
+export const updateCardsPackThunk = (id: string, name: string, makePrivate: boolean): AppThunkType => (dispatch => {
   dispatch(setAppIsLoadingAC(true));
-  packCardsApi.updateCardsPack(id, name)
+  packCardsApi.updateCardsPack(id, name, makePrivate)
     .then(() => {
       dispatch(getCardsPackThunk());
     })

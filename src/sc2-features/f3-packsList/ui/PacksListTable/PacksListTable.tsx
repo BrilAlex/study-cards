@@ -3,7 +3,7 @@ import s from './PacksListTable.module.css'
 import {PacksType} from "../../../../sc1-main/m3-dal/packCards-api";
 import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {
@@ -13,6 +13,8 @@ import {
 } from "../../bll/packsListReducer";
 import {EditModal} from "../../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
+import {EditPackModal} from '../ModalWindows/EditPackModal/EditPackModal';
+import {setLearnPackNameAC} from "../../../f5-learn/bll/learnReducer";
 
 type PacksListTableType = {
   name: string
@@ -27,12 +29,13 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setName,
   }
 ) => {
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [activeEditModal, setActiveEditModal] = useState(false);
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [id, setId] = useState<string>('');
+  const [makePrivate, setMakePrivate] = useState(false);
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
   const currentFilter = useAppSelector(state => state.packsList.filter);
@@ -51,11 +54,12 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setName(name);
   }
   const learnHandler = (id: string, name: string) => {
-    alert('learnHandler in development...')
+    dispatch(setLearnPackNameAC(name));
+    navigate(PATH.LEARN + id);
   }
   //ф-ия изменения имени колоды и закрытия окна
   const changeName = () => {
-    dispatch(updateCardsPackThunk(id, name))
+    dispatch(updateCardsPackThunk(id, name, makePrivate))
     setActiveEditModal(false);
   }
   //ф-ия удаления колоды и закрытия окна
@@ -116,12 +120,12 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                 <td className={s.actions}>
                   <div className={s.buttonBlock}>
                     {el.user_id === userId &&
-						<Button onClick={() => deletePackCardsHandler(el._id, el.name)}
-								style={{margin: '5px 5px'}}
-								red>Delete</Button>}
+                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+                              style={{margin: '5px 5px'}}
+                              red>Delete</Button>}
                     {el.user_id === userId &&
-						<Button onClick={() => editHandler(el._id, el.name)}
-								style={{margin: '5px 5px'}}>Edit</Button>}
+                      <Button onClick={() => editHandler(el._id, el.name)}
+                              style={{margin: '5px 5px'}}>Edit</Button>}
                     <Button onClick={() => learnHandler(el._id, el.name)}
                             style={{margin: '5px 5px'}}>Learn</Button>
                   </div>
@@ -132,13 +136,14 @@ export const PacksListTable: React.FC<PacksListTableType> = (
           </tbody>
         </table>
       }
-      <EditModal active={activeEditModal}
-                 setActive={setActiveEditModal}
-                 name={name}
-                 inputValue={name}
-                 setInputValue={setName}
-                 inputFocus={onFocusHandler}
-                 changeName={changeName}
+      <EditPackModal active={activeEditModal}
+                     setActive={setActiveEditModal}
+                     name={name}
+                     inputValue={name}
+                     setInputValue={setName}
+                     inputFocus={onFocusHandler}
+                     changeName={changeName}
+                     makePrivate={(isPrivate) => setMakePrivate(isPrivate)}
       />
       <DeleteModal active={activeDeleteModal}
                    setActive={setActiveDeleteModal}

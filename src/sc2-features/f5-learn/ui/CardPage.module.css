@@ -1,0 +1,21 @@
+.questionBlock {
+    margin: 40px 0;
+}
+
+
+.rateBlock {
+    margin-bottom: 30px;
+}
+
+.rateBlock p {
+    margin-bottom: 20px;
+}
+
+.rateBlock label {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.buttonsBlock button {
+    padding: 5px 15px;
+}

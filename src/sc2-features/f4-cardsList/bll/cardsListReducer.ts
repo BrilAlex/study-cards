@@ -12,12 +12,13 @@ import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
 // Types
 type InitStateType = typeof initState;
 export type CardsListActionsType =
+  | ReturnType<typeof setIsFetching>
   | ReturnType<typeof setCardsDataAC>
   | ReturnType<typeof setCurrentPageCardsListAC>;
 
 // Initial state
 const initState = {
-  cards: null as null | Array<CardType>,
+  cards: [] as Array<CardType>,
   packUserId: undefined as undefined | string,
   cardsTotalCount: 0,
   maxGrade: undefined as undefined | number,
@@ -27,6 +28,7 @@ const initState = {
   cardAnswer: undefined as undefined | string,
   cardQuestion: undefined as undefined | string,
   sortCards: '0updated',
+  isFetching: true,
 };
 
 // Action creators
@@ -34,6 +36,8 @@ export const setCardsDataAC = (data: GetCardsResponseDataType) =>
   ({type: "cardsList/SET-CARDS", payload: data} as const);
 export const setCurrentPageCardsListAC = (page: number) =>
   ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
+export const setIsFetching = (value: boolean) =>
+  ({type: "cardsList/SET_IS_FETCHING", value} as const);
 
 // Thunk creators
 export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, getState: () => AppStateType) => {
@@ -53,12 +57,11 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
     page,
     pageCount,
   };
-  console.log("Query params", queryParams);
 
   dispatch(setAppIsLoadingAC(true));
+  dispatch(setIsFetching(true));
   cardsAPI.getCards(queryParams)
     .then(data => {
-      console.log(data);
       dispatch(setCardsDataAC(data));
     })
     .catch(error => {
@@ -66,13 +69,13 @@ export const getCardsTC = (cardsPack_ID: string): AppThunkType => (dispatch, get
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
+      dispatch(setIsFetching(false));
     });
 };
 export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatch) => {
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.createCard(newCard)
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       dispatch(getCardsTC(newCard.cardsPack_id));
     })
     .catch(error => {
@@ -85,8 +88,7 @@ export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatc
 export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkType => (dispatch) => {
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.deleteCard(card_ID)
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       dispatch(getCardsTC(cardsPack_ID));
     })
     .catch(error => {
@@ -99,8 +101,7 @@ export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkTyp
 export const updateCardTC = (cardsPack_ID: string, cardModel: UpdateCardModelType): AppThunkType => (dispatch) => {
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.updateCard(cardModel)
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       dispatch(getCardsTC(cardsPack_ID));
     })
     .catch(error => {
@@ -117,6 +118,8 @@ export const cardsListReducer = (state: InitStateType = initState, action: Cards
       return {...state, ...action.payload};
     case"cardsList/SET_CURRENT_PAGE":
       return {...state, page: action.page};
+    case "cardsList/SET_IS_FETCHING":
+      return {...state, isFetching: action.value};
     default:
       return state;
   }
