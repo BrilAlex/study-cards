@@ -1,32 +1,19 @@
 import commonStyles from "../../../sc1-main/m1-ui/App.module.css";
-import s from "./LearnPage.module.css";
-import {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {getCardsTC} from "../../f4-cardsList/bll/cardsListReducer";
+import {useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {CardType} from "../../../sc1-main/m3-dal/cardsApi";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
-import {setLearnCardDataAC} from "../bll/learnReducer";
+import {CardPage} from "./CardPage";
+import {FC} from "react";
 
-export const LearnPage = () => {
-  const urlParams = useParams<"cardPackID">();
-  const cardPack_ID = urlParams.cardPackID;
+type LearnPagePropsType = {
+  cards: Array<CardType>
+};
 
+export const LearnPage: FC<LearnPagePropsType> = ({cards}) => {
   const cardPackName = useAppSelector<string>(state => state.learn.cardsPackName);
-  const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
-  const isFetching = useAppSelector<boolean>(state => state.cardsList.isFetching);
-
-  console.log(cardPack_ID, cardPackName);
-  console.log(cards);
-
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (cardPack_ID) dispatch(getCardsTC({cardsPack_id: cardPack_ID, pageCount: 1000000}));
-  }, [dispatch, cardPack_ID]);
 
   const getRandomCard = (array: Array<CardType>) => {
     const randomIndex = Math.floor(Math.random() * array.length);
@@ -39,32 +26,17 @@ export const LearnPage = () => {
     navigate(PATH.PACKS_LIST);
   };
 
-  const showAnswerHandler = () => {
-    dispatch(setLearnCardDataAC(randomCard));
-    navigate(PATH.CARD);
-  };
-
   return (
     <div className={commonStyles.smallContainer}>
       <h1>Learn pack {cardPackName}</h1>
-      {isFetching ?
-        <MiniSpinner/>
-        :
+      {
         cards.length === 0 ?
           <div>
             <p>No cards found in this pack</p>
             <Button onClick={cancelHandler}>Chancel</Button>
           </div>
           :
-          <div className={s.cardBlock}>
-            <div className={s.questionBlock}>
-              <p><b>Question:</b> {randomCard.question}</p>
-            </div>
-            <div className={s.buttonsBlock}>
-              <Button onClick={cancelHandler}>Chancel</Button>
-              <Button onClick={showAnswerHandler}>Show answer</Button>
-            </div>
-          </div>
+          <CardPage card={randomCard}/>
       }
     </div>
   );
