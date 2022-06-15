@@ -14,7 +14,8 @@ type GetCardsPackActionType =
   ReturnType<typeof setCurrentFilterAC> |
   ReturnType<typeof setActiveSortAC> |
   ReturnType<typeof setViewPacksAC> |
-  ReturnType<typeof setSearchResultAC>
+  ReturnType<typeof setSearchResultAC> |
+  ReturnType<typeof filterCardsCountAC>
 
 export type PacksListActionsType = GetCardsPackActionType
 
@@ -25,8 +26,8 @@ const initState = {
   cardPacks: [] as PacksType[],
   pageCount: 10,
   cardPacksTotalCount: 0,
-  min: 3,
-  max: 9,
+  min: 0,
+  max: 100,
   cardsCount: {
     maxCardsCount: 0,
     minCardsCount: 0,
@@ -59,6 +60,8 @@ export const packsListReducer = (state: InitStateType = initState, action: Packs
       return {...state, isMyPacks: action.value}
     case "packsList/SET-SEARCH-RESULT":
       return {...state, searchResult: action.value}
+    case "packsList/FILTER_CARDS_COUNT":
+      return {...state, ...action.cardsCount};
     default:
       return state;
   }
@@ -83,10 +86,12 @@ export const setViewPacksAC = (value: boolean) =>
   ({type: "packsList/SET-VIEW-PACKS", value} as const);
 export const setSearchResultAC = (value: string) =>
   ({type: "packsList/SET-SEARCH-RESULT", value} as const);
+export const filterCardsCountAC = (min: number, max: number) =>
+  ({type: "packsList/FILTER_CARDS_COUNT", cardsCount: {min, max}} as const);
 
 // Thunk creators
 export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
-  const {pageCount, page, filter, isMyPacks, searchResult} = getState().packsList;
+  const {pageCount, page, filter, isMyPacks, searchResult, min, max} = getState().packsList;
   const {_id} = getState().profile.user;
   const user_id = isMyPacks ? _id : '';
   const packName = searchResult ? searchResult : '';
@@ -98,6 +103,8 @@ export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
     sortPacks: filter,
     user_id,
     packName,
+    min,
+    max,
   })
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));

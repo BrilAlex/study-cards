@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import s from './PacksList.module.css'
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
-import {DoubleRange} from "../../../sc1-main/m1-ui/common/components/DoubleRange/DoubleRange";
+import DoubleRange from "../../../sc1-main/m1-ui/common/components/c6-DoubleRange/DoubleRange";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {
   addNewPackThunk,
   getCardsPackThunk,
-  setCurrentPageCardPacksAC, getMyCardsPackThunk, setViewPacksAC, setSearchResultAC
+  setCurrentPageCardPacksAC,
+  getMyCardsPackThunk,
+  setViewPacksAC,
+  setSearchResultAC,
+  filterCardsCountAC
 } from "../bll/packsListReducer";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
@@ -20,7 +24,6 @@ export const PacksList = () => {
 
   const dispatch = useAppDispatch();
 
-  const [value, setValue] = useState([0, 100]);
   const [name, setName] = useState<string>('');
   const [activeAddPackModal, setActiveAddPackModal] = useState(false);
   const [makePrivate, setMakePrivate] = useState(false);
@@ -33,14 +36,17 @@ export const PacksList = () => {
   const isMyPacks = useAppSelector<boolean>(store => store.packsList.isMyPacks);
   const maxNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.maxCardsCount);
   const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
+  const minCardsCount = useAppSelector<number>(state => state.packsList.min);
+  const maxCardsCount = useAppSelector<number>(state => state.packsList.max);
 
   useEffect(() => {
     dispatch(getCardsPackThunk());
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, minCardsCount, maxCardsCount]);
 
-  useEffect(() => {
-    setValue([minNumberOfCards, maxNumberOfCards])
-  }, [minNumberOfCards, maxNumberOfCards]);
+  const filterCardsCount = (value: [number, number]) => {
+    const [min, max] = value;
+    dispatch(filterCardsCountAC(min, max));
+  };
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageCardPacksAC(page))
@@ -77,15 +83,23 @@ export const PacksList = () => {
         <section className={s.settingsSide}>
           <h2>Show packs cards</h2>
           <div className={s.userChooseButton}>
-            <span className={isMyPacks ? s.active : s.inactive} onClick={getMyPackHandler}>MY</span>
-            <span className={isMyPacks ? s.inactive : s.active} onClick={getAllPackHandler}>ALL</span>
+            <span className={isMyPacks ? s.active : s.inactive} onClick={getMyPackHandler}>
+              MY
+            </span>
+            <span className={isMyPacks ? s.inactive : s.active} onClick={getAllPackHandler}>
+              ALL
+            </span>
           </div>
           {isLoading
             ? <MiniSpinner/>
             : <div className={s.rangeBlock}>
               <h3>Number of cards</h3>
-              <DoubleRange min={minNumberOfCards} max={maxNumberOfCards} valueArr={value} setValueArr={setValue}/>
-              <h2>{value[0] > 10 || value[1] < 90 ? 'Игнат, где мой офер!?' : ''}</h2>
+              <DoubleRange
+                value={[minCardsCount, maxCardsCount]}
+                onChangeRange={filterCardsCount}
+                min={minNumberOfCards}
+                max={maxNumberOfCards}
+              />
             </div>}
         </section>
         <section className={s.packList}>

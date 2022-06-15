@@ -46,6 +46,8 @@ export type requestDataType = {
   packName?: string
   user_id?: string
   sortPacks?: string
+  min?: number
+  max?: number
 }
 
 export const packCardsApi = {
