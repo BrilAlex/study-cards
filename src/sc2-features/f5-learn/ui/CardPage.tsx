@@ -5,8 +5,9 @@ import {CardType} from "../../../sc1-main/m3-dal/cardsApi";
 import {useState} from "react";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../../sc1-main/m2-bll/store";
+import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {gradeCardTC} from "../bll/learnReducer";
+import {ButtonLoad} from "../../../sc1-main/m1-ui/common/components/SpButton/ButtonLoad";
 
 type GradeType = "Did not know" | "Forgot" | "A lot of thought" | "Confused" | "Knew the answer";
 
@@ -15,6 +16,8 @@ export const CardPage = (props: { card: CardType }) => {
 
   const {card} = props;
   const dispatch = useAppDispatch();
+
+  const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading);
 
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
   const grades: Array<GradeType> = ["Did not know", "Forgot", "A lot of thought", "Confused", "Knew the answer"];
@@ -52,11 +55,11 @@ export const CardPage = (props: { card: CardType }) => {
       </div>
       }
       <div className={s.buttonsBlock}>
-        <Button onClick={cancelHandler}>Chancel</Button>
+        <ButtonLoad isSpinner={isLoading} onClick={cancelHandler}>Chancel</ButtonLoad>
         {isAnswered ?
           <Button onClick={nextHandler}>Next</Button>
           :
-          <Button onClick={showAnswerHandler}>Show answer</Button>
+          <ButtonLoad isSpinner={isLoading} onClick={showAnswerHandler}>Show answer</ButtonLoad>
         }
       </div>
     </div>
