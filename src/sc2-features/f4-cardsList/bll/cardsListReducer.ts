@@ -14,7 +14,7 @@ import {UpdatedGradeType} from "../../f5-learn/dal/learnApi";
 type InitStateType = typeof initState;
 export type CardsListActionsType =
   | ReturnType<typeof setCardsDataAC>
-  | ReturnType<typeof updateCardsDataAC>
+  | ReturnType<typeof updateCardGradeAC>
   | ReturnType<typeof setCurrentPageCardsListAC>
   | ReturnType<typeof setPageCountAC>
   | ReturnType<typeof setIsFetchingCards>;
@@ -31,18 +31,18 @@ const initState = {
   cardAnswer: undefined as undefined | string,
   cardQuestion: undefined as undefined | string,
   sortCards: '0updated',
-  isFetchingCards: true,
+  isFetchingCards: false,
 };
 
 export const cardsListReducer = (state: InitStateType = initState, action: CardsListActionsType): InitStateType => {
   switch (action.type) {
-    case "cardsList/SET-CARDS-DATA":
+    case "cardsList/SET_CARDS_DATA":
       return {...state, ...action.payload};
-    case "cardsList/UPDATE-CARDS-DATA":
-      const {card_id, grade} = action.updatedGrade;
+    case "cardsList/UPDATE_CARD_GRADE":
+      const {card_id, grade, shots} = action.updatedGrade;
       return {
         ...state,
-        cards: state.cards.map(c => c._id === card_id ? {...c, grade} : c),
+        cards: state.cards.map(c => c._id === card_id ? {...c, grade, shots} : c),
       };
     case"cardsList/SET_CURRENT_PAGE":
       return {...state, page: action.page};
@@ -57,9 +57,9 @@ export const cardsListReducer = (state: InitStateType = initState, action: Cards
 
 // Action creators
 export const setCardsDataAC = (data: GetCardsResponseDataType) =>
-  ({type: "cardsList/SET-CARDS-DATA", payload: data} as const);
-export const updateCardsDataAC = (updatedGrade: UpdatedGradeType) =>
-  ({type: "cardsList/UPDATE-CARDS-DATA", updatedGrade} as const);
+  ({type: "cardsList/SET_CARDS_DATA", payload: data} as const);
+export const updateCardGradeAC = (updatedGrade: UpdatedGradeType) =>
+  ({type: "cardsList/UPDATE_CARD_GRADE", updatedGrade} as const);
 export const setCurrentPageCardsListAC = (page: number) =>
   ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
 export const setPageCountAC = (pageCount: number) =>

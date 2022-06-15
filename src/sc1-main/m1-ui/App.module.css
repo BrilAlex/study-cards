@@ -37,6 +37,13 @@ h2 {
     margin: 32px 0;
     }
 
+h4 {
+    color: #2D2E46;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 20px 0;
+}
+
 b {
     font-weight: bold;
 }
