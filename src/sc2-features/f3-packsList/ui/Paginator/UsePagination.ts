@@ -7,7 +7,7 @@ const range = (start: number, end: number) => {
   return Array.from(Array(length), (val, index) => index + start);
 };
 
-type UsePaginationType = {
+type PaginationArgsType = {
   totalCount: number
   pageSize: number
   siblingCount: number
@@ -16,12 +16,11 @@ type UsePaginationType = {
 type UsePaginationReturnType =
   number[] |
   (number | "...")[] |
-  (1 | "..." | number)[] |
-  undefined
+  (1 | "..." | number)[]
 
-type UsePagination = (args: UsePaginationType) => (UsePaginationReturnType);
+type UsePaginationType = (args: PaginationArgsType) => (UsePaginationReturnType);
 
-export const usePagination: UsePagination = (
+export const usePagination: UsePaginationType = (
   {
     currentPage,
     pageSize,
@@ -39,10 +38,7 @@ export const usePagination: UsePagination = (
     }
 
     const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-    const rightSiblingIndex = Math.min(
-      currentPage + siblingCount,
-      totalPageCount
-    );
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPageCount);
 
     const shouldShowLeftDots = leftSiblingIndex > 2;
     const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
@@ -59,10 +55,7 @@ export const usePagination: UsePagination = (
 
     if (shouldShowLeftDots && !shouldShowRightDots) {
       const rightItemCount = 3 + 2 * siblingCount;
-      const rightRange = range(
-        totalPageCount - rightItemCount + 1,
-        totalPageCount
-      );
+      const rightRange = range(totalPageCount - rightItemCount + 1, totalPageCount);
       return [firstPageIndex, DOTS, ...rightRange];
     }
 
@@ -70,6 +63,6 @@ export const usePagination: UsePagination = (
       const middleRange = range(leftSiblingIndex, rightSiblingIndex);
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
-
+    return []
   }, [totalCount, pageSize, siblingCount, currentPage]);
 };
