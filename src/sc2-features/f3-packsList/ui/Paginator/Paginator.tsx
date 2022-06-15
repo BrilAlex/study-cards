@@ -27,7 +27,8 @@ export const Paginator: React.FC<Pagination_PropsType> = (
     pageSize
   });
 
-  // @ts-ignore
+  if (paginationRange === undefined) return <div>No pages...</div>;
+
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -39,40 +40,42 @@ export const Paginator: React.FC<Pagination_PropsType> = (
   const onPrevious = () => {
     onPageChange(currentPage - 1);
   };
-  // @ts-ignore
-  let lastPage = paginationRange[paginationRange.length - 1];
+
+  let lastPage
+  if (paginationRange) {
+    lastPage = paginationRange[paginationRange.length - 1];
+  }
 
 
   return (
     <div className={s.paginationContainer}>
-      <ul className={s.paginationBlock}>
-        <li onClick={onPrevious}
+      <span className={s.paginationBlock}>
+        <span onClick={onPrevious}
             className={currentPage === 1 ? s.disabled : s.paginationItem}
         >
           <div className={`${s.arrow} ${s.left}`}/>
-        </li>
+        </span>
 
         {paginationRange?.map((pageNumber, index) => {
           if (pageNumber === DOTS) {
-            return <li key={`${index}-${pageNumber}`} className={s.dots}>&#8230;</li>;
+            return <span key={`${index}-${pageNumber}`} className={s.dots}>&#8230;</span>;
           }
           return (
-            <li key={`${index}-${pageNumber}`}
+            <span key={`${index}-${pageNumber}`}
                 className={pageNumber === currentPage ? s.selected : s.paginationItem}
-              // @ts-ignore
                 onClick={() => onPageChange(pageNumber)}
             >
               {pageNumber}
-            </li>
+            </span>
           );
         })}
-        <li
+        <span
           className={currentPage === lastPage ? s.disabled : s.paginationItem}
           onClick={onNext}
         >
           <div className={`${s.arrow} ${s.right}`}/>
-        </li>
-      </ul>
+        </span>
+      </span>
     </div>
   );
 };

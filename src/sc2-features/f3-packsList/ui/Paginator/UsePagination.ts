@@ -7,20 +7,28 @@ const range = (start: number, end: number) => {
   return Array.from(Array(length), (val, index) => index + start);
 };
 
-export type UsePaginationType = {
+type UsePaginationType = {
   totalCount: number
   pageSize: number
   siblingCount: number
   currentPage: number
 }
+type UsePaginationReturnType =
+  number[] |
+  (number | "...")[] |
+  (1 | "..." | number)[] |
+  undefined
 
-export const usePagination = (data: UsePaginationType) => {
-  const {
+type UsePagination = (args: UsePaginationType) => (UsePaginationReturnType);
+
+export const usePagination: UsePagination = (
+  {
     currentPage,
     pageSize,
-    siblingCount = 1,
+    siblingCount,
     totalCount,
-  } = data
+  }
+) => {
 
   return useMemo(() => {
     const totalPageCount = Math.ceil(totalCount / pageSize);

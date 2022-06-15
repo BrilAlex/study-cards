@@ -1,85 +1,85 @@
 .btnStyle {
-    position: relative;
-    align-items: center;
-    color: #ECECF9;
-    background: #21268F;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    line-height: 19px;
-    margin: 5px 10px;
-    padding: 7px 45px;
-    text-align: center;
-    transition: all .3s;
-    cursor: pointer;
-    border-radius: 30px;
-    box-shadow: 0 4px 18px rgba(33, 38, 143, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  align-items: center;
+  color: #ECECF9;
+  background: #21268F;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 19px;
+  margin: 5px 10px;
+  padding: 7px 45px;
+  text-align: center;
+  transition: all .3s;
+  cursor: pointer;
+  border-radius: 30px;
+  box-shadow: 0 4px 18px rgba(33, 38, 143, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .spinner {
-    color: rgba(0,0,0,0);
+  color: transparent;
 }
 
 .spinner::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 18px;
-    width: 18px;
-    margin: auto;
-    border: 2px solid #ECECF9;
-    border-radius: 50%;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    animation: my_spinner 800ms infinite linear;
-    -webkit-animation: my_spinner 800ms infinite linear;
-    -moz-animation: my_spinner 800ms infinite linear;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18px;
+  width: 18px;
+  margin: auto;
+  border: 2px solid #ECECF9;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: my_spinner 800ms infinite linear;
+  -webkit-animation: my_spinner 800ms infinite linear;
+  -moz-animation: my_spinner 800ms infinite linear;
 }
 
 .btnStyle:hover {
-    background: darkorange;
+  background: darkorange;
 }
 
 .btnStyle:disabled {
-    background: #1e24b7;
-    cursor: auto;
+  background: #1e24b7;
+  cursor: auto;
 }
 
 .red {
-    background: #ef0c0c;
+  background: #ef0c0c;
 
-    color: white;
+  color: white;
 }
 
 .red:hover {
-    background: #f63b3b;
+  background: #f63b3b;
 }
 
 .red:disabled {
-    background: #c22b2b;
-    cursor: auto;
+  background: #c22b2b;
+  cursor: auto;
 }
 
 @keyframes my_spinner {
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @-webkit-keyframes my_spinner {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @-moz-keyframes my_spinner {
-    100% {
-        -moz-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
