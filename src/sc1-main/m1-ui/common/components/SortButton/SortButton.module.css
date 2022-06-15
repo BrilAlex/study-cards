@@ -1,0 +1,16 @@
+.btnStyle {
+  margin-left: 5px;
+  height: 20px;
+  color: transparent;
+  background: #21268F;
+  padding: 0 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.active {
+  background-color: #21268F;
+  opacity: 1;
+  color: #ECECF9;
+}

@@ -11,9 +11,12 @@ type GetCardsPackActionType =
   ReturnType<typeof setCardPacksTotalCountAC> |
   ReturnType<typeof setCurrentPageCardPacksAC> |
   ReturnType<typeof setMaxMinCardsCountAC> |
-  ReturnType<typeof setCurrentFilterAC>
+  ReturnType<typeof setCurrentFilterAC> |
+  ReturnType<typeof setActiveSortAC>
+
 export type PacksListActionsType = GetCardsPackActionType
 
+export type ActiveSortType = 'updated' | 'name' | 'cardsCount'
 
 // Initial state
 const initState = {
@@ -29,6 +32,7 @@ const initState = {
   page: 1,
   isLoading: false,
   filter: '' as string,
+  activeSort: 'updated' as ActiveSortType,
 };
 
 export const packsListReducer = (state: InitStateType = initState, action: PacksListActionsType): InitStateType => {
@@ -45,6 +49,8 @@ export const packsListReducer = (state: InitStateType = initState, action: Packs
       return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
     case "packsList/SET-CURRENT-FILTER":
       return {...state, filter: action.sortPacks}
+    case "packsList/SET-ACTIVE-SORT":
+      return {...state, activeSort: action.filter}
     default:
       return state;
   }
@@ -63,13 +69,15 @@ export const loadingCardsPackAC = (value: boolean) =>
   ({type: "packsList/LOADING-STATUS", value} as const);
 export const setCurrentFilterAC = (sortPacks: string) =>
   ({type: "packsList/SET-CURRENT-FILTER", sortPacks} as const);
+export const setActiveSortAC = (filter: ActiveSortType) =>
+  ({type: "packsList/SET-ACTIVE-SORT", filter} as const);
 
 // Thunk creators
 export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
-  const {pageCount, page} = getState().packsList;
+  const {pageCount, page, filter} = getState().packsList;
   dispatch(loadingCardsPackAC(true));
   dispatch(setAppIsLoadingAC(true));
-  packCardsApi.getCardsPack({pageCount, page})
+  packCardsApi.getCardsPack({pageCount, page, sortPacks: filter})
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));
       dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));

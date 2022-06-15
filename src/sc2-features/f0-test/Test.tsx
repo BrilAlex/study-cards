@@ -4,7 +4,7 @@ import {Checkbox} from "../../sc1-main/m1-ui/common/components/c3-Checkbox/Check
 import {useState} from "react";
 import s from "./Test.module.css";
 import {useAppDispatch} from "../../sc1-main/m2-bll/store";
-import {LogoutThunkTC} from "../f1-auth/Login/bll/loginReducer";
+import {logoutThunkTC} from "../f1-auth/Login/bll/loginReducer";
 import {InputPassword} from "../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
 
 export const Test = () => {
@@ -17,7 +17,7 @@ export const Test = () => {
     alert(text);
   };
   const logoutHandler = () => {
-    dispatch(LogoutThunkTC())
+    dispatch(logoutThunkTC())
   }
   return (
     <div>
