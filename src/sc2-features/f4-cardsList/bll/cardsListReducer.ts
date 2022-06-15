@@ -14,10 +14,10 @@ import {UpdatedGradeType} from "../../f5-learn/dal/learnApi";
 type InitStateType = typeof initState;
 export type CardsListActionsType =
   | ReturnType<typeof setCardsDataAC>
-  | ReturnType<typeof updateCardsDataAC>
+  | ReturnType<typeof updateCardGradeAC>
   | ReturnType<typeof setCurrentPageCardsListAC>
   | ReturnType<typeof setPageCountAC>
-  | ReturnType<typeof setIsFetching>;
+  | ReturnType<typeof setIsFetchingCards>;
 
 // Initial state
 const initState = {
@@ -31,25 +31,25 @@ const initState = {
   cardAnswer: undefined as undefined | string,
   cardQuestion: undefined as undefined | string,
   sortCards: '0updated',
-  isFetching: true,
+  isFetchingCards: false,
 };
 
 export const cardsListReducer = (state: InitStateType = initState, action: CardsListActionsType): InitStateType => {
   switch (action.type) {
-    case "cardsList/SET-CARDS-DATA":
+    case "cardsList/SET_CARDS_DATA":
       return {...state, ...action.payload};
-    case "cardsList/UPDATE-CARDS-DATA":
-      const {card_id, grade} = action.updatedGrade;
+    case "cardsList/UPDATE_CARD_GRADE":
+      const {card_id, grade, shots} = action.updatedGrade;
       return {
         ...state,
-        cards: state.cards.map(c => c._id === card_id ? {...c, grade} : c),
+        cards: state.cards.map(c => c._id === card_id ? {...c, grade, shots} : c),
       };
     case"cardsList/SET_CURRENT_PAGE":
       return {...state, page: action.page};
     case "cardsList/SET_PAGE_COUNT":
       return {...state, pageCount: action.pageCount};
     case "cardsList/SET_IS_FETCHING":
-      return {...state, isFetching: action.value};
+      return {...state, isFetchingCards: action.value};
     default:
       return state;
   }
@@ -57,14 +57,14 @@ export const cardsListReducer = (state: InitStateType = initState, action: Cards
 
 // Action creators
 export const setCardsDataAC = (data: GetCardsResponseDataType) =>
-  ({type: "cardsList/SET-CARDS-DATA", payload: data} as const);
-export const updateCardsDataAC = (updatedGrade: UpdatedGradeType) =>
-  ({type: "cardsList/UPDATE-CARDS-DATA", updatedGrade} as const);
+  ({type: "cardsList/SET_CARDS_DATA", payload: data} as const);
+export const updateCardGradeAC = (updatedGrade: UpdatedGradeType) =>
+  ({type: "cardsList/UPDATE_CARD_GRADE", updatedGrade} as const);
 export const setCurrentPageCardsListAC = (page: number) =>
   ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
 export const setPageCountAC = (pageCount: number) =>
   ({type: "cardsList/SET_PAGE_COUNT", pageCount} as const);
-export const setIsFetching = (value: boolean) =>
+export const setIsFetchingCards = (value: boolean) =>
   ({type: "cardsList/SET_IS_FETCHING", value} as const);
 
 // Thunk creators
@@ -87,7 +87,7 @@ export const getCardsTC = (params: GetCardsQueryParams): AppThunkType => (dispat
   };
 
   dispatch(setAppIsLoadingAC(true));
-  dispatch(setIsFetching(true));
+  dispatch(setIsFetchingCards(true));
   cardsAPI.getCards(queryParams)
     .then(data => {
       dispatch(setCardsDataAC(data));
@@ -97,7 +97,7 @@ export const getCardsTC = (params: GetCardsQueryParams): AppThunkType => (dispat
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
-      dispatch(setIsFetching(false));
+      dispatch(setIsFetchingCards(false));
     });
 };
 export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatch) => {
