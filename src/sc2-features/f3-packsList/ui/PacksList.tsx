@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {
   addNewPackThunk,
   getCardsPackThunk,
-  setCurrentPageCardPacksAC, getMyCardsPackThunk
+  setCurrentPageCardPacksAC, getMyCardsPackThunk, setViewPacksAC, setSearchResultAC
 } from "../bll/packsListReducer";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
@@ -24,13 +24,13 @@ export const PacksList = () => {
   const [name, setName] = useState<string>('');
   const [activeAddPackModal, setActiveAddPackModal] = useState(false);
   const [makePrivate, setMakePrivate] = useState(false);
-  const [isActivePack, setIsActivePack] = useState(false);
 
   const userNameStore = useAppSelector<string>(store => store.profile.user.name);
   const isLoading = useAppSelector<boolean>(store => store.packsList.isLoading);
   const currentPage = useAppSelector<number>(store => store.packsList.page);
   const pageSize = useAppSelector<number>(store => store.packsList.pageCount);
   const totalCountPage = useAppSelector<number>(store => store.packsList.cardPacksTotalCount);
+  const isMyPacks = useAppSelector<boolean>(store => store.packsList.isMyPacks);
   const maxNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.maxCardsCount);
   const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
 
@@ -56,14 +56,15 @@ export const PacksList = () => {
   }
   const addPack = () => {
     dispatch(addNewPackThunk(name, makePrivate));
+    dispatch(setSearchResultAC(''));
     setActiveAddPackModal(false);
   }
   const getMyPackHandler = () => {
-    setIsActivePack(true);
+    dispatch(setViewPacksAC(true));
     dispatch(getMyCardsPackThunk());
   }
   const getAllPackHandler = () => {
-    setIsActivePack(false);
+    dispatch(setViewPacksAC(false));
     dispatch(getCardsPackThunk());
   }
 
@@ -76,8 +77,8 @@ export const PacksList = () => {
         <section className={s.settingsSide}>
           <h2>Show packs cards</h2>
           <div className={s.userChooseButton}>
-            <span className={isActivePack ? s.active : s.inactive} onClick={getMyPackHandler}>MY</span>
-            <span className={isActivePack ? s.inactive : s.active} onClick={getAllPackHandler}>ALL</span>
+            <span className={isMyPacks ? s.active : s.inactive} onClick={getMyPackHandler}>MY</span>
+            <span className={isMyPacks ? s.inactive : s.active} onClick={getAllPackHandler}>ALL</span>
           </div>
           {isLoading
             ? <MiniSpinner/>

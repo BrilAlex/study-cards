@@ -8,7 +8,7 @@ import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {
   ActiveSortType,
-  deleteCardsPackThunk, setActiveSortAC,
+  deleteCardsPackThunk, setActiveSortAC, setSearchResultAC,
   sortCardsPackThunk,
   updateCardsPackThunk
 } from "../../bll/packsListReducer";
@@ -39,18 +39,20 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   const [makePrivate, setMakePrivate] = useState(false);
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
-  const currentFilter = useAppSelector(state => state.packsList.filter);
+  const currentFilter = useAppSelector<string>(state => state.packsList.filter);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
   const activeSort = useAppSelector<ActiveSortType>(store => store.packsList.activeSort);
 
   //ф-ия вызова модального окна при изменении имени колоды
   const editHandler = (id: string, name: string) => {
+    dispatch(setSearchResultAC(''));
     setActiveEditModal(true);
     setName(name);
     setId(id);
   }
   //ф-ия вызова модального окна при удалении колоды
   const deletePackCardsHandler = (id: string, name: string) => {
+    dispatch(setSearchResultAC(''));
     setActiveDeleteModal(true);
     setId(id);
     setName(name);
