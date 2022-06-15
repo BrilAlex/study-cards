@@ -2,7 +2,7 @@ import {AppThunkType} from "../../../sc1-main/m2-bll/store";
 import {setAppIsLoadingAC} from "../../../sc1-main/m2-bll/appReducer";
 import {learnAPI, UpdateGradeDataType} from "../dal/learnApi";
 import {handleAppRequestError} from "../../../sc3-utils/errorUtils";
-import {updateCardsDataAC} from "../../f4-cardsList/bll/cardsListReducer";
+import {setIsFetchingCards, updateCardsDataAC} from "../../f4-cardsList/bll/cardsListReducer";
 
 // Types
 type InitStateType = typeof initState;
@@ -23,6 +23,7 @@ export const setLearnPackNameAC = (cardsPackName: string) =>
 // Thunk creators
 export const gradeCardTC = (data: UpdateGradeDataType): AppThunkType => (dispatch) => {
   dispatch(setAppIsLoadingAC(true));
+  dispatch(setIsFetchingCards(true));
   learnAPI.gradeCard(data)
     .then(data => {
       console.log("Updated grade data: ", data);
@@ -33,6 +34,7 @@ export const gradeCardTC = (data: UpdateGradeDataType): AppThunkType => (dispatc
     })
     .finally(() => {
       dispatch(setAppIsLoadingAC(false));
+      dispatch(setIsFetchingCards(false));
     });
 };
 
