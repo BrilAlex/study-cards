@@ -16,7 +16,7 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {AddPackModal} from "./ModalWindows/AddPackModal/AddPackModal";
-import {DebounceSearch} from "./DebounceSearch/DebounceSearch";
+import {DebounceSearch} from "../../../sc1-main/m1-ui/common/components/c7-DebounceSearch/DebounceSearch";
 import {PacksListTable} from "./PacksListTable/PacksListTable";
 import {Paginator} from "./Paginator/Paginator";
 
@@ -38,14 +38,19 @@ export const PacksList = () => {
   const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
   const minCardsCount = useAppSelector<number>(state => state.packsList.min);
   const maxCardsCount = useAppSelector<number>(state => state.packsList.max);
+  const searchQuery = useAppSelector<string>(state => state.packsList.searchResult);
 
   useEffect(() => {
     dispatch(getCardsPackThunk());
-  }, [dispatch, currentPage, minCardsCount, maxCardsCount]);
+  }, [dispatch, currentPage, minCardsCount, maxCardsCount, searchQuery]);
 
   const filterCardsCount = (value: [number, number]) => {
     const [min, max] = value;
     dispatch(filterCardsCountAC(min, max));
+  };
+
+  const searchCardPacksByName = (value: string) => {
+    dispatch(setSearchResultAC(value));
   };
 
   const changePageHandler = (page: number) => {
@@ -105,7 +110,7 @@ export const PacksList = () => {
         <section className={s.packList}>
           <h1>PacksList</h1>
           <div className={s.searchHeader}>
-            <DebounceSearch/>
+            <DebounceSearch searchValue={searchQuery} setSearchValue={searchCardPacksByName}/>
             <Button onClick={addCardsPackHandler}>Add new pack</Button>
           </div>
           <PacksListTable name={name}
