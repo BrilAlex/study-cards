@@ -1,27 +1,29 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, useState} from "react";
 import s from "./DoubleRange.module.css";
 
-type SuperDoubleRangePropsType = {
+type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+
+type DoubleRangePropsType = DefaultInputPropsType & {
   onChangeRange?: (value: [number, number]) => void
-  value?: [number, number]
+  rangeValues?: [number, number]
   min?: number
   max?: number
   step?: number
   disabled?: boolean
 };
 
-const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
+const DoubleRange: React.FC<DoubleRangePropsType> = (
   {
-    onChangeRange, value,
-    min, max, step,
-    disabled,
+    type, value, rangeValues, onChange, onChangeRange,
+    min, max, step, disabled,
+    ...restProps
   }
 ) => {
   const initMin = min ? min : 0;
   const initMax = max ? max : 100;
   const stepValue = step ? step : 1;
-  const initMinValue = value ? value[0] : initMin;
-  const initMaxValue = value ? value[1] : initMax;
+  const initMinValue = rangeValues ? rangeValues[0] : initMin;
+  const initMaxValue = rangeValues ? rangeValues[1] : initMax;
 
   const [minValue, setMinValue] = useState(initMinValue);
   const [maxValue, setMaxValue] = useState(initMaxValue);
@@ -50,11 +52,12 @@ const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
           onChange={onMinValueChange}
           onMouseUp={onMouseUpHandler}
           className={s.doubleRangeThumb}
-          style={{zIndex: minValue === maxValue ? 1 : 0}}
+          style={{zIndex: minValue === maxValue && minValue !== 0 ? 1 : 0}}
           min={initMin}
           max={initMax}
           step={stepValue}
           disabled={disabled}
+          {...restProps}
         />
         <input
           type={"range"}
@@ -66,6 +69,7 @@ const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
           max={initMax}
           step={stepValue}
           disabled={disabled}
+          {...restProps}
         />
       </div>
       <div className={s.doubleRangeValues}>

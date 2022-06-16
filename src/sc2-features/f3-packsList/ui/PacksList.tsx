@@ -95,7 +95,7 @@ export const PacksList = () => {
             : <div className={s.rangeBlock}>
               <h3>Number of cards</h3>
               <DoubleRange
-                value={[minCardsCount, maxCardsCount]}
+                rangeValues={[minCardsCount, maxCardsCount]}
                 onChangeRange={filterCardsCount}
                 min={minNumberOfCards}
                 max={maxNumberOfCards}
