@@ -1,0 +1,44 @@
+.mainBlock {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: -182px;
+    left: -58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+    z-index: 10;
+}
+
+.mainBlock.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+    min-width: 70vh;
+    min-height: 30vh;
+    transform: scale(0.5);
+    transition: 0.4s all;
+}
+
+.modalContent.active {
+    transform: scale(1);
+}
+
+.description {
+    color: #9A91C8;
+    /*padding-top: 200px;*/
+}
