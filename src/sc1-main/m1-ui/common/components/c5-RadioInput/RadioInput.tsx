@@ -37,9 +37,9 @@ const RadioInput: React.FC<RadioInputPropsTypePropsType> = (
   )) : []
 
   return (
-    <>
+    <div className={s.labelBlock}>
       {mappedOptions}
-    </>
+    </div>
   );
 }
 

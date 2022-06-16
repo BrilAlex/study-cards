@@ -20,12 +20,12 @@ export const CardsList = () => {
   const cardsTotalCount = useAppSelector<number>(state => state.cardsList.cardsTotalCount);
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
   const currentPage = useAppSelector<number>(state => state.cardsList.page);
-  const isFetching = useAppSelector<boolean>(state => state.cardsList.isFetching);
+  const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (cardsPack_ID) dispatch(getCardsTC(cardsPack_ID));
+    if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
   }, [dispatch, cardsPack_ID, currentPage]);
 
   const addCardHandler = useCallback(() => {
@@ -54,9 +54,9 @@ export const CardsList = () => {
       <div>
         <InputText type={"text"} placeholder={"Filter by Question"}/>
         <InputText type={"text"} placeholder={"Filter by Answer"}/>
-        <Button onClick={addCardHandler} disabled={isFetching}>Add card</Button>
+        <Button onClick={addCardHandler} disabled={isFetchingCards}>Add card</Button>
       </div>
-      {isFetching ?
+      {isFetchingCards ?
         <MiniSpinner/>
         :
         cards.length === 0 ?
@@ -80,10 +80,11 @@ export const CardsList = () => {
               })}
             </div>
             <Paginator
-              totalItemCount={cardsTotalCount}
+              siblingCount={3}
+              totalCount={cardsTotalCount}
               currentPage={currentPage}
               pageSize={pageSize}
-              spanClick={changePageHandler}
+              onPageChange={changePageHandler}
             />
           </>
       }

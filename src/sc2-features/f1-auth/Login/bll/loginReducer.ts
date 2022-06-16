@@ -33,7 +33,7 @@ export const authMeAC = (payload: InitStateType) => ({type: "login/AUTH_ME", pay
 
 // Thunk creators
 
-export const LoginThunkTC = (email: string, password: string, remember: boolean): AppThunkType => (dispatch) => {
+export const loginThunkTC = (email: string, password: string, remember: boolean): AppThunkType => (dispatch) => {
   dispatch(setAppIsLoadingAC(true))
   authApi.login(email, password, remember)
     .then(res => {
@@ -50,7 +50,7 @@ export const LoginThunkTC = (email: string, password: string, remember: boolean)
       dispatch(setAppIsLoadingAC(false))
     })
 };
-export const LogoutThunkTC = (): AppThunkType => (dispatch) => {
+export const logoutThunkTC = (): AppThunkType => (dispatch) => {
   authApi.logout()
     .then((res) => {
       dispatch(setAppErrorAC(res.info))
@@ -70,13 +70,10 @@ export const loginReducer = (state: InitStateType = initState, action: LoginActi
   switch (action.type) {
     case "login/AUTH_ME":
       return {...action.payload}
-    case "login/LOGIN": {
+    case "login/LOGIN":
       return {...action.payload}
-    }
-    case "login/LOGOUT": {
+    case "login/LOGOUT":
       return {...initState}
-    }
-
     default:
       return state;
   }

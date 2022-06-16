@@ -10,7 +10,7 @@ type CardsListItemPropsType = {
 };
 
 export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
-  const isFetching = useAppSelector<boolean>(state => state.cardsList.isFetching);
+  const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
   const dispatch = useAppDispatch();
 
   const editCardHandler = () => {
@@ -31,8 +31,8 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
       <div style={{width: "10%"}}><BeautyDate date={card.updated}/></div>
       <div style={{width: "15%"}}>{card.grade}</div>
       <div style={{width: "15%"}}>
-        <Button onClick={editCardHandler} disabled={isFetching}>Edit</Button>
-        <Button onClick={deleteCardHandler} disabled={isFetching} red>Delete</Button>
+        <Button onClick={editCardHandler} disabled={isFetchingCards}>Edit</Button>
+        <Button onClick={deleteCardHandler} disabled={isFetchingCards} red>Delete</Button>
       </div>
     </>
   );

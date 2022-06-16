@@ -9,8 +9,7 @@ import {Error404} from "./pages/Error404/Error404";
 import {CheckEmailSuccess} from "../../../sc2-features/f1-auth/PasswordRecovery/CheckEmailSuccess/CheckEmailSuccess";
 import {PacksList} from "../../../sc2-features/f3-packsList/ui/PacksList";
 import {CardsList} from "../../../sc2-features/f4-cardsList/ui/CardsList";
-import {LearnPage} from "../../../sc2-features/f5-learn/ui/LearnPage";
-import {CardPage} from "../../../sc2-features/f5-learn/ui/CardPage";
+import {LearnPageContainer} from "../../../sc2-features/f5-learn/ui/LearnPageContainer";
 
 export const PATH = {
   LOGIN: "/login",
@@ -22,7 +21,6 @@ export const PATH = {
   PACKS_LIST: "/packs-list",
   CARDS_LIST: "/cards-list/",
   LEARN: "/learn/",
-  CARD: "/card/",
   TEST: "/test",
   ERROR404: "/error404",
 };
@@ -39,8 +37,7 @@ export const Pages = () => {
         <Route path={PATH.CREATE_NEW_PASSWORD} element={<NewPassword/>}/>
         <Route path={PATH.PACKS_LIST} element={<PacksList/>}/>
         <Route path={PATH.CARDS_LIST + ":cardPackID"} element={<CardsList/>}/>
-        <Route path={PATH.LEARN + ":cardPackID"} element={<LearnPage/>}/>
-        <Route path={PATH.CARD} element={<CardPage/>}/>
+        <Route path={PATH.LEARN + ":cardPackID"} element={<LearnPageContainer/>}/>
         <Route path={PATH.CHECK_EMAIL_SUCCESS} element={<CheckEmailSuccess/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>
         <Route path={PATH.ERROR404} element={<Error404/>}/>

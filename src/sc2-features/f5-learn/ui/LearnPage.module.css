@@ -1,7 +1,29 @@
-.questionBlock {
-    margin: 40px 0;
+.cardBlock h4 {
+    margin: 10px 0;
+}
+
+.cardInfoBlock {
+    margin: 30px 0;
+}
+
+.grade, .shots {
+    display: inline-block;
+    margin: 10px;
+}
+
+.rateBlock {
+    margin-bottom: 30px;
+}
+
+.rateBlock p {
+    margin-bottom: 20px;
+}
+
+.rateBlock label {
+    display: block;
+    margin-bottom: 15px;
 }
 
 .buttonsBlock button {
-    padding: 5px 15px;
+    padding: 7px 15px;
 }

@@ -19,17 +19,17 @@ export type CardType = {
   answer: string
   grade: number
   shots: number
-  comments: string
-  type: string
-  rating: number
-  more_id: string
+  comments?: string
+  type?: string
+  rating?: number
+  more_id?: string
   created: string
   updated: string
-  __v: number
-  answerImg: string
-  answerVideo: string
-  questionImg: string
-  questionVideo: string
+  __v?: number
+  answerImg?: string
+  answerVideo?: string
+  questionImg?: string
+  questionVideo?: string
 }
 
 export type NewCardDataType = {

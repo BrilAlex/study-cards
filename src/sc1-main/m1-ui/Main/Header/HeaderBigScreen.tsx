@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import {PATH} from "../Pages";
 import s from "./Header.module.css";
-import {LogoutThunkTC} from "../../../../sc2-features/f1-auth/Login/bll/loginReducer";
+import {logoutThunkTC} from "../../../../sc2-features/f1-auth/Login/bll/loginReducer";
 import {useAppDispatch, useAppSelector} from "../../../m2-bll/store";
 import {Button} from "../../common/components/c2-Button/Button";
 import packListIcon from '../../../../assets/Web_app/Group 608.svg'
@@ -17,7 +17,7 @@ export const HeaderBigScreen = () => {
   };
   const dispatch = useAppDispatch();
   const logoutHandler = () => {
-    dispatch(LogoutThunkTC());
+    dispatch(logoutThunkTC());
   };
 
   return (
@@ -43,8 +43,8 @@ export const HeaderBigScreen = () => {
             </NavLink>
           </>}
         {user_ID && <Button onClick={logoutHandler} className={s.logOutButton}>
-			<img src={logoutIcon} className={s.headerIcon} alt=""/>Logout
-		</Button>}
+          <img src={logoutIcon} className={s.headerIcon} alt=""/>Logout
+        </Button>}
       </div>
     </header>
   );

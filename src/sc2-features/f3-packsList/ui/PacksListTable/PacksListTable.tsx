@@ -7,14 +7,15 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {
-  deleteCardsPackThunk, setCurrentFilterAC,
+  ActiveSortType,
+  deleteCardsPackThunk, setActiveSortAC, setSearchResultAC,
   sortCardsPackThunk,
   updateCardsPackThunk
 } from "../../bll/packsListReducer";
-import {EditModal} from "../../../f2-profile/ui/EditModal/EditModal";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
 import {EditPackModal} from '../ModalWindows/EditPackModal/EditPackModal';
 import {setLearnPackNameAC} from "../../../f5-learn/bll/learnReducer";
+import {SortButton} from "../../../../sc1-main/m1-ui/common/components/SortButton/SortButton";
 
 type PacksListTableType = {
   name: string
@@ -38,17 +39,20 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   const [makePrivate, setMakePrivate] = useState(false);
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
-  const currentFilter = useAppSelector(state => state.packsList.filter);
+  const currentFilter = useAppSelector<string>(state => state.packsList.filter);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
+  const activeSort = useAppSelector<ActiveSortType>(store => store.packsList.activeSort);
 
   //ф-ия вызова модального окна при изменении имени колоды
   const editHandler = (id: string, name: string) => {
+    dispatch(setSearchResultAC(''));
     setActiveEditModal(true);
     setName(name);
     setId(id);
   }
   //ф-ия вызова модального окна при удалении колоды
   const deletePackCardsHandler = (id: string, name: string) => {
+    dispatch(setSearchResultAC(''));
     setActiveDeleteModal(true);
     setId(id);
     setName(name);
@@ -69,14 +73,12 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   }
 
   //фильтрация колод по типу (тип передаем в виде строки)
-  const sortCardsByTypeHandler = (sortType: string) => {
+  const sortCardsByTypeHandler = (sortType: ActiveSortType) => {
+    dispatch(setActiveSortAC(sortType));
     if (currentFilter === "0" + sortType) {
-      dispatch(sortCardsPackThunk('1' + sortType))
-    }
-    if (currentFilter === "1" + sortType) {
-      dispatch(sortCardsPackThunk(''))
+      dispatch(sortCardsPackThunk(`1${sortType}`))
     } else {
-      dispatch(sortCardsPackThunk('0' + sortType))
+      dispatch(sortCardsPackThunk(`0${sortType}`))
     }
   }
 
@@ -87,18 +89,20 @@ export const PacksListTable: React.FC<PacksListTableType> = (
           <thead className={s.theadStyle}>
           <tr className={s.trStyle}>
             <th>№</th>
-            <th onClick={() => sortCardsByTypeHandler('name')}
-                style={{cursor: 'pointer'}}>Name {currentFilter === '1name'
-              ? '↓'
-              : currentFilter === '0name' ? '↑' : ''}</th>
-            <th onClick={() => sortCardsByTypeHandler('cardsCount')}
-                style={{cursor: 'pointer'}}>Cards {currentFilter === '1cardsCount'
-              ? '↓'
-              : currentFilter === '0cardsCount' ? '↑' : ''}</th>
-            <th onClick={() => sortCardsByTypeHandler('updated')}
-                style={{cursor: 'pointer'}}>Last Updated {currentFilter === '1updated'
-              ? '↓'
-              : currentFilter === '0updated' ? '↑' : ''}
+            <th onClick={() => sortCardsByTypeHandler('name')}>
+              Name
+              <SortButton isActive={activeSort === 'name'}
+                          direction={currentFilter && currentFilter[0]}/>
+            </th>
+            <th onClick={() => sortCardsByTypeHandler('cardsCount')}>
+              Cards
+              <SortButton isActive={activeSort === 'cardsCount'}
+                          direction={currentFilter && currentFilter[0]}/>
+            </th>
+            <th onClick={() => sortCardsByTypeHandler('updated')}>
+              Last Updated
+              <SortButton isActive={activeSort === 'updated'}
+                          direction={currentFilter && currentFilter[0]}/>
             </th>
             <th>Created by</th>
             <th>Actions</th>
@@ -119,15 +123,14 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                 <td>{el.user_name}</td>
                 <td className={s.actions}>
                   <div className={s.buttonBlock}>
-                    {el.user_id === userId &&
-                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
-                              style={{margin: '5px 5px'}}
-                              red>Delete</Button>}
+                    <Button onClick={() => learnHandler(el._id, el.name)}
+                    >Learn</Button>
                     {el.user_id === userId &&
                       <Button onClick={() => editHandler(el._id, el.name)}
-                              style={{margin: '5px 5px'}}>Edit</Button>}
-                    <Button onClick={() => learnHandler(el._id, el.name)}
-                            style={{margin: '5px 5px'}}>Learn</Button>
+                      >Edit</Button>}
+                    {el.user_id === userId &&
+                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+                              red>Delete</Button>}
                   </div>
                 </td>
               </tr>

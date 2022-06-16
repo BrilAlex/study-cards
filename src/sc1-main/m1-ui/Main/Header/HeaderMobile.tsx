@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import {PATH} from "../Pages";
 import s from "./Header.module.css";
-import {LogoutThunkTC} from "../../../../sc2-features/f1-auth/Login/bll/loginReducer";
+import {logoutThunkTC} from "../../../../sc2-features/f1-auth/Login/bll/loginReducer";
 import {useAppDispatch, useAppSelector} from "../../../m2-bll/store";
 import {Button} from "../../common/components/c2-Button/Button";
 import {useState} from "react";
@@ -17,7 +17,7 @@ export const HeaderMobile = () => {
   };
 
   const logoutHandler = () => {
-    dispatch(LogoutThunkTC());
+    dispatch(logoutThunkTC());
   };
 
   const onBurgerMenuButtonClickHandler = () => {
@@ -48,7 +48,7 @@ export const HeaderMobile = () => {
           }
         </div>
         {user_ID && <Button onClick={logoutHandler} style={{margin: "15px", marginLeft: 'auto', padding: "5px 10px"}}
-		>Logout</Button>}
+        >Logout</Button>}
         <Button
           style={{position: 'relative', margin: "15px", padding: "5px 10px", zIndex: 100, backgroundColor: "black"}}
           onClick={onBurgerMenuButtonClickHandler}>☰</Button>
