@@ -6,6 +6,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
 type SortButtonPropsType = DefaultButtonPropsType & {
   direction: string
   isActive: boolean
+  isFetching: boolean
 }
 
 export const SortButton: React.FC<SortButtonPropsType> = (
@@ -13,13 +14,14 @@ export const SortButton: React.FC<SortButtonPropsType> = (
     direction,
     isActive,
     className,
+    isFetching,
   }
 ) => {
 
   const finalStyle = `${s.btnStyle} ${isActive ? s.active : ''}  ${className ? className : ""}`;
-  const indicator = !direction ? '🠗' : direction === "0" ? '🠗' : '🠕';
+  const indicator = !direction ? '↓' : direction === "0" ? '↓' : '↑';
 
   return (
-    <button className={finalStyle}>{indicator}</button>
+    <button className={finalStyle} disabled={isFetching}>{indicator}</button>
   )
 };

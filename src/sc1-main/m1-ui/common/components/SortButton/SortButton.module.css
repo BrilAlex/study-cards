@@ -1,16 +1,20 @@
 .btnStyle {
-  margin-left: 5px;
-  height: 20px;
-  color: transparent;
-  background: #21268F;
-  padding: 0 7px;
-  border-radius: 5px;
-  cursor: pointer;
-  opacity: 0.5;
-}
+    background: #21268F;
+    border-radius: 5px;
+    color: transparent;
+    cursor: pointer;
+    height: 20px;
+    margin-left: 5px;
+    opacity: 0.5;
+    padding: 0 7px;
+    }
 
 .active {
-  background-color: #21268F;
-  opacity: 1;
-  color: #ECECF9;
-}
+    background-color: #21268F;
+    color: #ECECF9;
+    opacity: 1;
+    }
+
+.btnStyle:disabled {
+    background-color: grey;
+    }

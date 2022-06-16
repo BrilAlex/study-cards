@@ -42,6 +42,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   const currentFilter = useAppSelector<string>(state => state.packsList.filter);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
   const activeSort = useAppSelector<ActiveSortType>(store => store.packsList.activeSort);
+  const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading)
 
   //ф-ия вызова модального окна при изменении имени колоды
   const editHandler = (id: string, name: string) => {
@@ -89,20 +90,23 @@ export const PacksListTable: React.FC<PacksListTableType> = (
           <thead className={s.theadStyle}>
           <tr className={s.trStyle}>
             <th>№</th>
-            <th onClick={() => sortCardsByTypeHandler('name')}>
+            <th onClick={() => !isLoading && sortCardsByTypeHandler('name')}>
               Name
               <SortButton isActive={activeSort === 'name'}
-                          direction={currentFilter && currentFilter[0]}/>
+                          direction={currentFilter && currentFilter[0]}
+                          isFetching={isLoading}/>
             </th>
-            <th onClick={() => sortCardsByTypeHandler('cardsCount')}>
+            <th onClick={() => !isLoading && sortCardsByTypeHandler('cardsCount')}>
               Cards
               <SortButton isActive={activeSort === 'cardsCount'}
-                          direction={currentFilter && currentFilter[0]}/>
+                          direction={currentFilter && currentFilter[0]}
+                          isFetching={isLoading}/>
             </th>
-            <th onClick={() => sortCardsByTypeHandler('updated')}>
+            <th onClick={() => !isLoading && sortCardsByTypeHandler('updated')}>
               Last Updated
               <SortButton isActive={activeSort === 'updated'}
-                          direction={currentFilter && currentFilter[0]}/>
+                          direction={currentFilter && currentFilter[0]}
+                          isFetching={isLoading}/>
             </th>
             <th>Created by</th>
             <th>Actions</th>
@@ -126,11 +130,11 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                     <Button onClick={() => learnHandler(el._id, el.name)}
                     >Learn</Button>
                     {el.user_id === userId &&
-                      <Button onClick={() => editHandler(el._id, el.name)}
-                      >Edit</Button>}
+											<Button onClick={() => editHandler(el._id, el.name)}
+											>Edit</Button>}
                     {el.user_id === userId &&
-                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
-                              red>Delete</Button>}
+											<Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+															red>Delete</Button>}
                   </div>
                 </td>
               </tr>
