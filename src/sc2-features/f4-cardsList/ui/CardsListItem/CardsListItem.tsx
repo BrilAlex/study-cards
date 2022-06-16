@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../../../sc1-main/m2-bll/store"
 import {deleteCardTC, updateCardTC} from "../../bll/cardsListReducer";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {DeleteModal} from "../DeleteModal/DeleteModal";
+import {EditAddModal} from "../EditAddModal/EditAddModal";
 
 type CardsListItemPropsType = {
   card: CardType
@@ -15,12 +16,15 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
   const dispatch = useAppDispatch();
 
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+  const [answer, setAnswer] = useState<string>(card.answer)
+  const [activeModal, setActiveModal] = useState<boolean>(false)
+  const [question, setQuestion] = useState<string>(card.question)
 
   const editCardHandler = () => {
     const cardUpdateModel: UpdateCardModelType = {
       _id: card._id,
-      answer: "New answer",
-      question: "ffsfsdf",
+      question: question,
+      answer: answer,
     };
     dispatch(updateCardTC(card.cardsPack_id, cardUpdateModel));
   };
@@ -33,13 +37,21 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
   };
 
   return (
-    <>
+    <><EditAddModal
+      inputAnswer={answer}
+      setInputAnswer={setAnswer}
+      inputQuestion={question}
+      setInputQuestion={setQuestion}
+      active={activeModal}
+      setActive={setActiveModal}
+      setCard={editCardHandler}
+    />
       <div style={{width: "30%"}}>{card.question}</div>
       <div style={{width: "30%"}}>{card.answer}</div>
       <div style={{width: "10%"}}><BeautyDate date={card.updated}/></div>
       <div style={{width: "15%"}}>{card.grade}</div>
       <div style={{width: "15%"}}>
-        <Button onClick={editCardHandler} disabled={isFetchingCards}>Edit</Button>
+        <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>
         <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>
       </div>
 

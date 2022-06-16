@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {
   addNewCardTC,
@@ -13,10 +13,9 @@ import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {CardsListItem} from "./CardsListItem/CardsListItem";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
-import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {Paginator} from "../../f3-packsList/ui/Paginator/Paginator";
 import {DebounceSearch} from "../../../sc1-main/m1-ui/common/components/c7-DebounceSearch/DebounceSearch";
-import {setSearchResultAC} from "../../f3-packsList/bll/packsListReducer";
+import {EditAddModal} from "./EditAddModal/EditAddModal";
 
 export const CardsList = () => {
   const urlParams = useParams<'cardPackID'>();
@@ -32,20 +31,23 @@ export const CardsList = () => {
   const cardAnswer = useAppSelector<undefined | string>(state => state.cardsList.cardAnswer);
 
   const dispatch = useAppDispatch();
+  const [answer, setAnswer] = useState<string>('')
+  const [activeModal, setActiveModal] = useState<boolean>(false)
+  const [question, setQuestion] = useState<string>('')
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
   }, [dispatch, cardsPack_ID, currentPage, cardQuestion, cardAnswer]);
 
   const addCardHandler = useCallback(() => {
-    if (cardsPack_ID) {
-      const newCard: NewCardDataType = {
-        cardsPack_id: cardsPack_ID,
-        question: "Some question",
-      };
-      dispatch(addNewCardTC(newCard));
-    }
-  }, [dispatch, cardsPack_ID]);
+    const newCard: NewCardDataType = {
+      cardsPack_id: cardsPack_ID as string,
+      question: question,
+      answer: answer,
+    };
+    dispatch(addNewCardTC(newCard));
+
+  }, [dispatch, cardsPack_ID, question, answer]);
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageCardsListAC(page));
@@ -71,7 +73,7 @@ export const CardsList = () => {
       <div>
         <DebounceSearch searchValue={cardQuestion as string} setSearchValue={searchCardsByQuestion}/>
         <DebounceSearch searchValue={cardAnswer as string} setSearchValue={searchCardsByAnswer}/>
-        <Button onClick={addCardHandler} disabled={isFetchingCards}>Add card</Button>
+        <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Add card</Button>
       </div>
       {isFetchingCards ?
         <MiniSpinner/>
@@ -103,6 +105,9 @@ export const CardsList = () => {
               pageSize={pageSize}
               onPageChange={changePageHandler}
             />
+            <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
+                          setInputQuestion={setQuestion} active={activeModal}
+                          setActive={setActiveModal} setCard={addCardHandler}/>
           </>
       }
     </div>
