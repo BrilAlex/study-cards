@@ -24,12 +24,10 @@ export const DebounceSearch: FC<DebounceSearchPropsType> = ({searchValue, setSea
   };
 
   return (
-    <div>
-      <InputText
-        placeholder={"Search by pack name..."}
-        value={inputValue}
-        onChangeText={onChangeValue}
-      />
-    </div>
+    <InputText
+      placeholder={"Search by pack name..."}
+      value={inputValue}
+      onChangeText={onChangeValue}
+    />
   );
 };

@@ -1,6 +1,11 @@
 import React, {useCallback, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
-import {addNewCardTC, getCardsTC, setCurrentPageCardsListAC} from "../bll/cardsListReducer";
+import {
+  addNewCardTC,
+  getCardsTC,
+  setCurrentPageCardsListAC, setSearchQueryByAnswerAC,
+  setSearchQueryByQuestionAC
+} from "../bll/cardsListReducer";
 import {CardType, NewCardDataType} from "../../../sc1-main/m3-dal/cardsApi";
 import s from "./CardsList.module.css";
 import {Navigate, NavLink, useParams} from "react-router-dom";
@@ -10,6 +15,8 @@ import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {InputText} from "../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {Paginator} from "../../f3-packsList/ui/Paginator/Paginator";
+import {DebounceSearch} from "../../../sc1-main/m1-ui/common/components/c7-DebounceSearch/DebounceSearch";
+import {setSearchResultAC} from "../../f3-packsList/bll/packsListReducer";
 
 export const CardsList = () => {
   const urlParams = useParams<'cardPackID'>();
@@ -21,12 +28,14 @@ export const CardsList = () => {
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
   const currentPage = useAppSelector<number>(state => state.cardsList.page);
   const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
+  const cardQuestion = useAppSelector<undefined | string>(state => state.cardsList.cardQuestion);
+  const cardAnswer = useAppSelector<undefined | string>(state => state.cardsList.cardAnswer);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-  }, [dispatch, cardsPack_ID, currentPage]);
+  }, [dispatch, cardsPack_ID, currentPage, cardQuestion, cardAnswer]);
 
   const addCardHandler = useCallback(() => {
     if (cardsPack_ID) {
@@ -42,6 +51,14 @@ export const CardsList = () => {
     dispatch(setCurrentPageCardsListAC(page));
   };
 
+  const searchCardsByQuestion = (value: string) => {
+    dispatch(setSearchQueryByQuestionAC(value));
+  };
+
+  const searchCardsByAnswer = (value: string) => {
+    dispatch(setSearchQueryByAnswerAC(value));
+  };
+
   if (!user_ID) {
     return <Navigate to={PATH.PACKS_LIST}/>
   }
@@ -49,11 +66,11 @@ export const CardsList = () => {
   return (
     <div className={s.cardsPage}>
       <NavLink to={PATH.PACKS_LIST}>
-        <h2>Back to Packs List</h2>
+        Back to Packs List
       </NavLink>
       <div>
-        <InputText type={"text"} placeholder={"Filter by Question"}/>
-        <InputText type={"text"} placeholder={"Filter by Answer"}/>
+        <DebounceSearch searchValue={cardQuestion as string} setSearchValue={searchCardsByQuestion}/>
+        <DebounceSearch searchValue={cardAnswer as string} setSearchValue={searchCardsByAnswer}/>
         <Button onClick={addCardHandler} disabled={isFetchingCards}>Add card</Button>
       </div>
       {isFetchingCards ?

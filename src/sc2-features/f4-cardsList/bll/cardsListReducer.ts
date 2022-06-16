@@ -17,7 +17,9 @@ export type CardsListActionsType =
   | ReturnType<typeof updateCardGradeAC>
   | ReturnType<typeof setCurrentPageCardsListAC>
   | ReturnType<typeof setPageCountAC>
-  | ReturnType<typeof setIsFetchingCards>;
+  | ReturnType<typeof setIsFetchingCards>
+  | ReturnType<typeof setSearchQueryByQuestionAC>
+  | ReturnType<typeof setSearchQueryByAnswerAC>;
 
 // Initial state
 const initState = {
@@ -50,6 +52,10 @@ export const cardsListReducer = (state: InitStateType = initState, action: Cards
       return {...state, pageCount: action.pageCount};
     case "cardsList/SET_IS_FETCHING":
       return {...state, isFetchingCards: action.value};
+    case "cardsList/SET_SEARCH_QUERY_BY_QUESTION":
+      return {...state, cardQuestion: action.value};
+    case "cardsList/SET_SEARCH_QUERY_BY_ANSWER":
+      return {...state, cardAnswer: action.value};
     default:
       return state;
   }
@@ -64,6 +70,10 @@ export const setCurrentPageCardsListAC = (page: number) =>
   ({type: "cardsList/SET_CURRENT_PAGE", page} as const);
 export const setPageCountAC = (pageCount: number) =>
   ({type: "cardsList/SET_PAGE_COUNT", pageCount} as const);
+export const setSearchQueryByQuestionAC = (value: string) =>
+  ({type: "cardsList/SET_SEARCH_QUERY_BY_QUESTION", value} as const);
+export const setSearchQueryByAnswerAC = (value: string) =>
+  ({type: "cardsList/SET_SEARCH_QUERY_BY_ANSWER", value} as const);
 export const setIsFetchingCards = (value: boolean) =>
   ({type: "cardsList/SET_IS_FETCHING", value} as const);
 

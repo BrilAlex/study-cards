@@ -16,9 +16,10 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {AddPackModal} from "./ModalWindows/AddPackModal/AddPackModal";
-import {DebounceSearch} from "../../../sc1-main/m1-ui/common/components/c7-DebounceSearch/DebounceSearch";
+
 import {PacksListTable} from "./PacksListTable/PacksListTable";
 import {Paginator} from "./Paginator/Paginator";
+import {DebounceSearch} from "./DebounceSearch/DebounceSearch";
 
 export const PacksList = () => {
 
@@ -49,9 +50,9 @@ export const PacksList = () => {
     dispatch(filterCardsCountAC(min, max));
   };
 
-  const searchCardPacksByName = (value: string) => {
-    dispatch(setSearchResultAC(value));
-  };
+  // const searchCardPacksByName = (value: string) => {
+  //   dispatch(setSearchResultAC(value));
+  // };
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageCardPacksAC(page))
@@ -110,7 +111,7 @@ export const PacksList = () => {
         <section className={s.packList}>
           <h1>PacksList</h1>
           <div className={s.searchHeader}>
-            <DebounceSearch searchValue={searchQuery} setSearchValue={searchCardPacksByName}/>
+            <DebounceSearch/>
             <Button onClick={addCardsPackHandler}>Add new pack</Button>
           </div>
           <PacksListTable name={name}
