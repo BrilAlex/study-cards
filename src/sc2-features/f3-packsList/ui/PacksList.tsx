@@ -37,8 +37,8 @@ export const PacksList = () => {
   const isMyPacks = useAppSelector<boolean>(store => store.packsList.isMyPacks);
   const maxNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.maxCardsCount);
   const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
-  const minCardsCount = useAppSelector<number>(state => state.packsList.min);
-  const maxCardsCount = useAppSelector<number>(state => state.packsList.max);
+  const minCardsCount = useAppSelector<number | undefined>(state => state.packsList.min);
+  const maxCardsCount = useAppSelector<number | undefined>(state => state.packsList.max);
   // const searchQuery = useAppSelector<string>(state => state.packsList.searchResult);
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export const PacksList = () => {
             : <div className={s.rangeBlock}>
               <h3>Number of cards</h3>
               <DoubleRange
-                rangeValues={[minCardsCount, maxCardsCount]}
+                rangeValues={[minCardsCount as number, maxCardsCount as number]}
                 onChangeRange={filterCardsCount}
                 min={minNumberOfCards}
                 max={maxNumberOfCards}
