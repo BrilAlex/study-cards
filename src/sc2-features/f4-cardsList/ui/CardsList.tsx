@@ -8,7 +8,7 @@ import {
 } from "../bll/cardsListReducer";
 import {CardType, NewCardDataType} from "../../../sc1-main/m3-dal/cardsApi";
 import s from "./CardsList.module.css";
-import {Navigate, NavLink, useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 import {CardsListItem} from "./CardsListItem/CardsListItem";
 import {Button} from "../../../sc1-main/m1-ui/common/components/c2-Button/Button";
@@ -31,9 +31,11 @@ export const CardsList = () => {
   const cardAnswer = useAppSelector<undefined | string>(state => state.cardsList.cardAnswer);
 
   const dispatch = useAppDispatch();
-  const [answer, setAnswer] = useState<string>('')
-  const [activeModal, setActiveModal] = useState<boolean>(false)
-  const [question, setQuestion] = useState<string>('')
+  const navigate = useNavigate();
+
+  const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [answer, setAnswer] = useState<string>('');
+  const [question, setQuestion] = useState<string>('');
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
@@ -61,15 +63,19 @@ export const CardsList = () => {
     dispatch(setSearchQueryByAnswerAC(value));
   };
 
+  const backButtonHandler = () => {
+    navigate(PATH.PACKS_LIST);
+  };
+
   if (!user_ID) {
-    return <Navigate to={PATH.PACKS_LIST}/>
+    return <Navigate to={PATH.LOGIN}/>
   }
 
   return (
     <div className={s.cardsPage}>
-      <NavLink to={PATH.PACKS_LIST}>
-        Back to Packs List
-      </NavLink>
+      <div>
+        <Button onClick={backButtonHandler}>&#10094; Back to Packs List</Button>
+      </div>
       <div>
         <DebounceSearch
           searchValue={cardQuestion as string}

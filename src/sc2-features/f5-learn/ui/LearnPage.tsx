@@ -24,7 +24,7 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
   const roundedCardGrade = Math.round(card.grade * 100) / 100;
 
   const cancelHandler = () => {
-    navigate(- 1);
+    navigate(PATH.PACKS_LIST);
   };
 
   const showAnswerHandler = () => {

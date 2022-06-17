@@ -6,24 +6,20 @@ import {deleteCardTC, updateCardTC} from "../../bll/cardsListReducer";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {DeleteModal} from "../DeleteModal/DeleteModal";
 import {EditAddModal} from "../EditAddModal/EditAddModal";
-import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
-import {useNavigate} from "react-router-dom";
 
 type CardsListItemPropsType = {
   card: CardType
 };
 
 export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
-
-  const navigate = useNavigate();
   const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
   const userId = useAppSelector<string>(state => state.profile.user._id);
   const dispatch = useAppDispatch();
 
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
-  const [answer, setAnswer] = useState<string>(card.answer)
-  const [question, setQuestion] = useState<string>(card.question)
-  const [activeModal, setActiveModal] = useState<boolean>(false)
+  const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [answer, setAnswer] = useState<string>(card.answer);
+  const [question, setQuestion] = useState<string>(card.question);
 
   const editCardHandler = () => {
     const cardUpdateModel: UpdateCardModelType = {
@@ -41,23 +37,18 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
     setActiveDeleteModal(true);
   };
 
-  const learnHandler = (id: string) => {
-    navigate(PATH.LEARN + id);
-  }
-
   return (
     <>
       <tr>
         <td>{card.question}</td>
         <td>{card.answer}</td>
         <td><BeautyDate date={card.updated}/></td>
-        <td>{ Math.round(card.grade * 100) / 100}</td>
+        <td>{Math.round(card.grade * 100) / 100}</td>
         <td>
           {card.user_id === userId &&
-            <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
+          <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
           {card.user_id === userId &&
-            <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
-          <Button onClick={() => learnHandler(card.cardsPack_id)}>Learn</Button>
+          <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
           <EditAddModal
             inputAnswer={answer}
             setInputAnswer={setAnswer}

@@ -40,7 +40,7 @@ export const LearnPageContainer = () => {
       setIsFirstLoad(false);
     }
 
-    console.log("Cards: ", cards);
+    console.log("Cards in useEffect: ", cards);
     if (cards.length > 0) setRandomCard(getRandomCard(cards));
 
     return () => {
@@ -50,7 +50,7 @@ export const LearnPageContainer = () => {
   }, [dispatch, cardPack_ID, cards, isFirstLoad]);
 
   if (!user_ID) {
-    return <Navigate to={PATH.PACKS_LIST}/>
+    return <Navigate to={PATH.LOGIN}/>
   }
 
   return (
@@ -59,7 +59,7 @@ export const LearnPageContainer = () => {
       {isFetchingCards ?
         <div>
           <MiniSpinner/>
-          <p>Just a second, please :)</p>
+          <p>Just a moment, please :)</p>
           <p>Getting random card for You...</p>
         </div>
         :

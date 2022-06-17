@@ -1,7 +1,6 @@
 .cardsPage {
     max-width: 1300px;
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
     padding: 24px 48px;
     background: #fff;
     border-radius: 8px;
