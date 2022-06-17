@@ -16,5 +16,5 @@
     }
 
 .btnStyle:disabled {
-    background-color: grey;
+    opacity: 0.5;
     }

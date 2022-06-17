@@ -7,15 +7,13 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {
-  ActiveSortType,
-  deleteCardsPackThunk, setActiveSortAC, setSearchResultAC,
-  sortCardsPackThunk,
+  deleteCardsPackThunk, setSearchResultAC,
   updateCardsPackThunk
 } from "../../bll/packsListReducer";
 import {DeleteModal} from "../ModalWindows/DeleteModal/DeleteModal";
 import {EditPackModal} from '../ModalWindows/EditPackModal/EditPackModal';
 import {setLearnPackNameAC} from "../../../f5-learn/bll/learnReducer";
-import {SortButton} from "../../../../sc1-main/m1-ui/common/components/SortButton/SortButton";
+import {TableHeaders} from "./TableHeaders/TableHeaders";
 
 type PacksListTableType = {
   name: string
@@ -39,10 +37,7 @@ export const PacksListTable: React.FC<PacksListTableType> = (
   const [makePrivate, setMakePrivate] = useState(false);
 
   const userId = useAppSelector<string>(state => state.profile.user._id);
-  const currentFilter = useAppSelector<string>(state => state.packsList.filter);
   const dataPack = useAppSelector<PacksType[]>(store => store.packsList.cardPacks);
-  const activeSort = useAppSelector<ActiveSortType>(store => store.packsList.activeSort);
-  const isLoading = useAppSelector<boolean>(state => state.app.appIsLoading)
 
   //ф-ия вызова модального окна при изменении имени колоды
   const editHandler = (id: string, name: string) => {
@@ -73,45 +68,11 @@ export const PacksListTable: React.FC<PacksListTableType> = (
     setActiveDeleteModal(false);
   }
 
-  //фильтрация колод по типу (тип передаем в виде строки)
-  const sortCardsByTypeHandler = (sortType: ActiveSortType) => {
-    dispatch(setActiveSortAC(sortType));
-    if (currentFilter === "0" + sortType) {
-      dispatch(sortCardsPackThunk(`1${sortType}`))
-    } else {
-      dispatch(sortCardsPackThunk(`0${sortType}`))
-    }
-  }
-
   return (
     <div className={s.tableMainBlock}>
       {
         <table>
-          <thead className={s.theadStyle}>
-          <tr className={s.trStyle}>
-            <th>№</th>
-            <th onClick={() => !isLoading && sortCardsByTypeHandler('name')}>
-              Name
-              <SortButton isActive={activeSort === 'name'}
-                          direction={currentFilter && currentFilter[0]}
-                          isFetching={isLoading}/>
-            </th>
-            <th onClick={() => !isLoading && sortCardsByTypeHandler('cardsCount')}>
-              Cards
-              <SortButton isActive={activeSort === 'cardsCount'}
-                          direction={currentFilter && currentFilter[0]}
-                          isFetching={isLoading}/>
-            </th>
-            <th onClick={() => !isLoading && sortCardsByTypeHandler('updated')}>
-              Last Updated
-              <SortButton isActive={activeSort === 'updated'}
-                          direction={currentFilter && currentFilter[0]}
-                          isFetching={isLoading}/>
-            </th>
-            <th>Created by</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
+          <TableHeaders/>
           <tbody className={s.tbodyStyle}>
           {dataPack.map((el, index) => {
             return (
