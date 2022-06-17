@@ -51,7 +51,7 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
         <td>{card.question}</td>
         <td>{card.answer}</td>
         <td><BeautyDate date={card.updated}/></td>
-        <td>{card.grade}</td>
+        <td>{ Math.round(card.grade * 100) / 100}</td>
         <td>
           {card.user_id === userId &&
             <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
