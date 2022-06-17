@@ -24,7 +24,7 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
   const roundedCardGrade = Math.round(card.grade * 100) / 100;
 
   const cancelHandler = () => {
-    navigate(PATH.PACKS_LIST);
+    navigate(- 1);
   };
 
   const showAnswerHandler = () => {
@@ -72,7 +72,7 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
           </div>
           }
           <div className={s.buttonsBlock}>
-            <ButtonLoad onClick={cancelHandler}>Chancel</ButtonLoad>
+            <ButtonLoad onClick={cancelHandler}>Cancel</ButtonLoad>
             {isAnswered ?
               <Button onClick={nextHandler}>Next</Button>
               :
