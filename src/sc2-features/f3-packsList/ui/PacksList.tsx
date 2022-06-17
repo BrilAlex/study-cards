@@ -10,7 +10,7 @@ import {
   getMyCardsPackThunk,
   setViewPacksAC,
   setSearchResultAC,
-  filterCardsCountAC
+  filterCardsCountAC, setCurrentFilterAC
 } from "../bll/packsListReducer";
 import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner/MiniSpinner";
 import {Navigate} from "react-router-dom";
@@ -77,6 +77,7 @@ export const PacksList = () => {
   }
   const getAllPackHandler = () => {
     dispatch(setViewPacksAC(false));
+    dispatch(setCurrentFilterAC('0updated'));
     dispatch(getCardsPackThunk());
   }
 

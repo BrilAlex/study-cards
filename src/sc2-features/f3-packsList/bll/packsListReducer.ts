@@ -12,14 +12,11 @@ type GetCardsPackActionType =
   ReturnType<typeof setCurrentPageCardPacksAC> |
   ReturnType<typeof setMaxMinCardsCountAC> |
   ReturnType<typeof setCurrentFilterAC> |
-  ReturnType<typeof setActiveSortAC> |
   ReturnType<typeof setViewPacksAC> |
   ReturnType<typeof setSearchResultAC> |
   ReturnType<typeof filterCardsCountAC>
 
 export type PacksListActionsType = GetCardsPackActionType
-
-export type ActiveSortType = 'updated' | 'name' | 'cardsCount'
 
 // Initial state
 const initState = {
@@ -35,7 +32,6 @@ const initState = {
   page: 1,
   isLoading: false,
   filter: '0updated' as string,
-  activeSort: 'updated' as ActiveSortType,
   isMyPacks: false,
   searchResult: '',
 };
@@ -54,8 +50,6 @@ export const packsListReducer = (state: InitStateType = initState, action: Packs
       return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
     case "packsList/SET-CURRENT-FILTER":
       return {...state, filter: action.sortPacks}
-    case "packsList/SET-ACTIVE-SORT":
-      return {...state, activeSort: action.filter}
     case "packsList/SET-VIEW-PACKS":
       return {...state, isMyPacks: action.value}
     case "packsList/SET-SEARCH-RESULT":
@@ -80,8 +74,6 @@ export const loadingCardsPackAC = (value: boolean) =>
   ({type: "packsList/LOADING-STATUS", value} as const);
 export const setCurrentFilterAC = (sortPacks: string) =>
   ({type: "packsList/SET-CURRENT-FILTER", sortPacks} as const);
-export const setActiveSortAC = (filter: ActiveSortType) =>
-  ({type: "packsList/SET-ACTIVE-SORT", filter} as const);
 export const setViewPacksAC = (value: boolean) =>
   ({type: "packsList/SET-VIEW-PACKS", value} as const);
 export const setSearchResultAC = (value: string) =>
@@ -123,6 +115,7 @@ export const getMyCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
   const {pageCount} = getState().packsList;
   dispatch(setAppIsLoadingAC(true));
   dispatch(setSearchResultAC(''));
+  dispatch(setCurrentFilterAC('0updated'));
   packCardsApi.getCardsPack({user_id: _id, pageCount})
     .then(res => {
       dispatch(setCardsPackAC(res.cardPacks));
