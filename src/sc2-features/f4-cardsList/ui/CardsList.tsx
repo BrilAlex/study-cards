@@ -92,23 +92,25 @@ export const CardsList = () => {
         cards.length === 0 ?
           <div>No cards found. Press "Add card" to create new card in this pack</div>
           :
-          <>
-            <div className={s.cardsListTable}>
-              <div className={s.tableHeader}>
-                <div style={{width: "30%"}}>Question</div>
-                <div style={{width: "30%"}}>Answer</div>
-                <div style={{width: "10%"}}>Last Updated</div>
-                <div style={{width: "15%"}}>Grade</div>
-                <div style={{width: "15%"}}>Actions</div>
-              </div>
+          <div className={s.tableMainBlock}>
+            <table>
+              <thead className={s.theadStyle}>
+              <tr className={s.trStyle}>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Last Updated</th>
+                <th>Grade</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody className={s.tbodyStyle}>
               {cards.map(c => {
                 return (
-                  <div key={c._id} className={s.tableString}>
-                    <CardsListItem card={c}/>
-                  </div>
+                  <CardsListItem key={c._id} card={c}/>
                 );
               })}
-            </div>
+              </tbody>
+            </table>
             <Paginator
               siblingCount={3}
               totalCount={cardsTotalCount}
@@ -116,7 +118,7 @@ export const CardsList = () => {
               pageSize={pageSize}
               onPageChange={changePageHandler}
             />
-          </>
+          </div>
       }
     </div>
   );

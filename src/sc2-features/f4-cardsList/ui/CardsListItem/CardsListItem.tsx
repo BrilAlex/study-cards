@@ -56,17 +56,20 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
         setActive={setActiveModal}
         setCard={editCardHandler}
       />
-      <div style={{width: "30%"}}>{card.question}</div>
-      <div style={{width: "30%"}}>{card.answer}</div>
-      <div style={{width: "10%"}}><BeautyDate date={card.updated}/></div>
-      <div style={{width: "15%"}}>{card.grade}</div>
-      <div style={{width: "15%"}}>
-        {card.user_id === userId &&
-          <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
-        {card.user_id === userId &&
-          <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
-        <Button onClick={() => learnHandler(card.cardsPack_id)}>Learn</Button>
-      </div>
+
+      <tr>
+        <td>{card.question}</td>
+        <td>{card.answer}</td>
+        <td><BeautyDate date={card.updated}/></td>
+        <td>{card.grade}</td>
+        <td>
+          {card.user_id === userId &&
+            <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
+          {card.user_id === userId &&
+            <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
+          <Button onClick={() => learnHandler(card.cardsPack_id)}>Learn</Button>
+        </td>
+      </tr>
 
       <DeleteModal
         active={activeDeleteModal}

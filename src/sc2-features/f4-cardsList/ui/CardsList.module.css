@@ -8,35 +8,101 @@
     margin: 0;
 }
 
-.cardsListTable {
-    margin-top: 24px;
-    filter: drop-shadow(0px 4px 14px rgba(45, 46, 70, 0.15));
-}
+/*.cardsListTable {*/
+/*    margin-top: 24px;*/
+/*    filter: drop-shadow(0px 4px 14px rgba(45, 46, 70, 0.15));*/
+/*}*/
 
-.tableHeader {
-    background: #ECECF9;
-    color: #2D2E46;
+/*.tableHeader {*/
+/*    background: #ECECF9;*/
+/*    color: #2D2E46;*/
+/*    display: flex;*/
+/*    font-size: 13px;*/
+/*    font-weight: 700;*/
+/*    line-height: 16px;*/
+/*    margin: 24px 0 0;*/
+/*    padding: 16px 24px;*/
+/*}*/
+
+/*.tableString {*/
+/*    background: #FFFFFF;*/
+/*    color: #000000;*/
+/*    display: flex;*/
+/*    font-size: 13px;*/
+/*    line-height: 16px;*/
+/*    padding: 16px 24px;*/
+/*}*/
+
+/*.tableString div {*/
+/*    padding: 0 10px;*/
+/*}*/
+
+/*.tableString:nth-of-type(2n+1) {*/
+/*    background: #F8F7FD;*/
+/*}*/
+
+
+.tableMainBlock {
     display: flex;
-    font-size: 13px;
+    justify-content: center;
+    word-wrap: break-word;
+    text-align: center;
+    color: #2D2E46;
+    font-size: 16px;
     font-weight: 700;
     line-height: 16px;
-    margin: 24px 0 0;
-    padding: 16px 24px;
+    padding: 5px;
 }
 
-.tableString {
-    background: #FFFFFF;
-    color: #000000;
+.tableMainBlock th, td {
+    padding: 5px 10px;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: separate;
+    width: 100%;
+}
+
+.trStyle {
+    border-radius: 10px;
+    color: #ECECF9;
+    background-color: #847bc4;
+}
+
+.buttonBlock {
     display: flex;
-    font-size: 13px;
-    line-height: 16px;
-    padding: 16px 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
-.tableString div {
-    padding: 0 10px;
+.buttonBlock button {
+    padding: 5px 12px;
+    margin: 5px 5px;
 }
 
-.tableString:nth-of-type(2n+1) {
-    background: #F8F7FD;
+.tbodyStyle {
+
+}
+
+tr:nth-child(2n) {
+    background: #e8edff;
+}
+
+.tbodyStyle td {
+    max-width: 190px;
+}
+
+.nameStyle:hover {
+    transition: transform .5s;
+    transform: scale(1.1);
+}
+
+.nameStyle a {
+    color: #2D2E46;
+}
+
+.nameStyle a:hover {
+    color: #0241b7;
 }
