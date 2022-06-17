@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './../../../f3-packsList/ui/ModalWindows/EditPackModal/EditPackModal.module.css';
+import s from './EditAddModal.module.css';
 import {InputText} from "../../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
 
