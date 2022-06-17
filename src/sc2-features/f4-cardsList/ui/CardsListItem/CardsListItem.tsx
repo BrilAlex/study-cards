@@ -6,7 +6,6 @@ import {deleteCardTC, updateCardTC} from "../../bll/cardsListReducer";
 import {BeautyDate} from "../../../../sc1-main/m1-ui/common/components/BeautyDate/BeautyDate";
 import {DeleteModal} from "../DeleteModal/DeleteModal";
 import {EditAddModal} from "../EditAddModal/EditAddModal";
-import {setLearnPackNameAC} from "../../../f5-learn/bll/learnReducer";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {useNavigate} from "react-router-dom";
 
@@ -66,7 +65,7 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
           <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
         {card.user_id === userId &&
           <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
-        <Button onClick={() => learnHandler(card._id)}>Learn</Button>
+        <Button onClick={() => learnHandler(card.cardsPack_id)}>Learn</Button>
       </div>
 
       <DeleteModal
