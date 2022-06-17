@@ -48,7 +48,7 @@ export const packsListReducer = (state: InitStateType = initState, action: Packs
       return {...state, isLoading: action.value}
     case "packsList/SET-CARD-PACKS-TOTAL-COUNT":
       return {...state, cardPacksTotalCount: action.totalCount}
-    case "packsList/SET_CURRENT_PAGE":
+    case "packsList/SET-CURRENT-PAGE":
       return {...state, page: action.page}
     case "packsList/SET-MAX-MIN-CARDS-COUNT":
       return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
@@ -60,7 +60,7 @@ export const packsListReducer = (state: InitStateType = initState, action: Packs
       return {...state, isMyPacks: action.value}
     case "packsList/SET-SEARCH-RESULT":
       return {...state, searchResult: action.value}
-    case "packsList/FILTER_CARDS_COUNT":
+    case "packsList/FILTER-CARDS-COUNT":
       return {...state, ...action.cardsCount};
     default:
       return state;
@@ -73,7 +73,7 @@ export const setCardsPackAC = (data: PacksType[]) =>
 export const setCardPacksTotalCountAC = (totalCount: number) =>
   ({type: "packsList/SET-CARD-PACKS-TOTAL-COUNT", totalCount} as const);
 export const setCurrentPageCardPacksAC = (page: number) =>
-  ({type: "packsList/SET_CURRENT_PAGE", page} as const);
+  ({type: "packsList/SET-CURRENT-PAGE", page} as const);
 export const setMaxMinCardsCountAC = (max: number, min: number) =>
   ({type: "packsList/SET-MAX-MIN-CARDS-COUNT", max, min} as const);
 export const loadingCardsPackAC = (value: boolean) =>
@@ -87,7 +87,7 @@ export const setViewPacksAC = (value: boolean) =>
 export const setSearchResultAC = (value: string) =>
   ({type: "packsList/SET-SEARCH-RESULT", value} as const);
 export const filterCardsCountAC = (min: number, max: number) =>
-  ({type: "packsList/FILTER_CARDS_COUNT", cardsCount: {min, max}} as const);
+  ({type: "packsList/FILTER-CARDS-COUNT", cardsCount: {min, max}} as const);
 
 // Thunk creators
 export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {

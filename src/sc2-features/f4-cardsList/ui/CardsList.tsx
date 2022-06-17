@@ -83,6 +83,9 @@ export const CardsList = () => {
         />
         <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Add card</Button>
       </div>
+      <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
+                    setInputQuestion={setQuestion} active={activeModal}
+                    setActive={setActiveModal} setCard={addCardHandler}/>
       {isFetchingCards ?
         <MiniSpinner/>
         :
@@ -113,9 +116,6 @@ export const CardsList = () => {
               pageSize={pageSize}
               onPageChange={changePageHandler}
             />
-            <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
-                          setInputQuestion={setQuestion} active={activeModal}
-                          setActive={setActiveModal} setCard={addCardHandler}/>
           </>
       }
     </div>
