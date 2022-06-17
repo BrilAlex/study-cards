@@ -33,10 +33,10 @@
   background-color: #0241b7;
   color: white;
   border-radius: 50%;
-  height: 40px;
+  height: 45px;
   text-align: center;
-  width: 40px;
-  padding: 5px;
+  width: 45px;
+  padding: 7px 1px;
   font-size: larger;
   font-weight: bold;
 }
