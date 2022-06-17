@@ -130,11 +130,11 @@ export const PacksListTable: React.FC<PacksListTableType> = (
                     <Button onClick={() => learnHandler(el._id, el.name)}
                     >Learn</Button>
                     {el.user_id === userId &&
-											<Button onClick={() => editHandler(el._id, el.name)}
-											>Edit</Button>}
+                      <Button onClick={() => editHandler(el._id, el.name)}
+                      >Edit</Button>}
                     {el.user_id === userId &&
-											<Button onClick={() => deletePackCardsHandler(el._id, el.name)}
-															red>Delete</Button>}
+                      <Button onClick={() => deletePackCardsHandler(el._id, el.name)}
+                              red>Delete</Button>}
                   </div>
                 </td>
               </tr>
