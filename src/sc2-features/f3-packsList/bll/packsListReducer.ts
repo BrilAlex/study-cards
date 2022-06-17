@@ -26,8 +26,8 @@ const initState = {
   cardPacks: [] as PacksType[],
   pageCount: 10,
   cardPacksTotalCount: 0,
-  min: 0,
-  max: 100,
+  min: undefined as number | undefined,
+  max: undefined as number | undefined,
   cardsCount: {
     maxCardsCount: 0,
     minCardsCount: 0,
@@ -110,6 +110,9 @@ export const getCardsPackThunk = (): AppThunkType => (dispatch, getState) => {
       dispatch(setCardsPackAC(res.cardPacks));
       dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
       dispatch(setMaxMinCardsCountAC(res.maxCardsCount, res.minCardsCount));
+      if (!min && !max) {
+        dispatch(filterCardsCountAC(res.minCardsCount, res.maxCardsCount));
+      }
     })
     .catch(error => handleAppRequestError(error, dispatch))
     .finally(() => {
