@@ -17,8 +17,8 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
 
   const [activeDeleteModal, setActiveDeleteModal] = useState(false);
   const [answer, setAnswer] = useState<string>(card.answer)
-  const [activeModal, setActiveModal] = useState<boolean>(false)
   const [question, setQuestion] = useState<string>(card.question)
+  const [activeModal, setActiveModal] = useState<boolean>(false)
 
   const editCardHandler = () => {
     const cardUpdateModel: UpdateCardModelType = {
@@ -56,8 +56,6 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
       </div>
 
       <DeleteModal
-        cardsPack_id={card.cardsPack_id}
-        card_id={card._id}
         active={activeDeleteModal}
         setActive={setActiveDeleteModal}
         deletePack={deleteCardHandler}

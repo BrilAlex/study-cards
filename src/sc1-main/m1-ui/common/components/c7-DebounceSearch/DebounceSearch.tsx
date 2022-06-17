@@ -4,9 +4,12 @@ import {InputText} from "../c1-InputText/InputText";
 type DebounceSearchPropsType = {
   searchValue: string
   setSearchValue: (value: string) => void
+  placeholder?: string
 };
 
-export const DebounceSearch: FC<DebounceSearchPropsType> = ({searchValue, setSearchValue}) => {
+export const DebounceSearch: FC<DebounceSearchPropsType> = (
+  {searchValue, setSearchValue, placeholder}
+) => {
   const [inputValue, setInputValue] = useState<string>(searchValue);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ export const DebounceSearch: FC<DebounceSearchPropsType> = ({searchValue, setSea
 
   return (
     <InputText
-      placeholder={"Search by pack name..."}
+      placeholder={placeholder}
       value={inputValue}
       onChangeText={onChangeValue}
     />

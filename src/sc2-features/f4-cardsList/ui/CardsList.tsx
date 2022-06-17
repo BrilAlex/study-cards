@@ -71,8 +71,16 @@ export const CardsList = () => {
         Back to Packs List
       </NavLink>
       <div>
-        <DebounceSearch searchValue={cardQuestion as string} setSearchValue={searchCardsByQuestion}/>
-        <DebounceSearch searchValue={cardAnswer as string} setSearchValue={searchCardsByAnswer}/>
+        <DebounceSearch
+          searchValue={cardQuestion as string}
+          setSearchValue={searchCardsByQuestion}
+          placeholder={"Search by question..."}
+        />
+        <DebounceSearch
+          searchValue={cardAnswer as string}
+          setSearchValue={searchCardsByAnswer}
+          placeholder={"Search by answer..."}
+        />
         <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Add card</Button>
       </div>
       {isFetchingCards ?
