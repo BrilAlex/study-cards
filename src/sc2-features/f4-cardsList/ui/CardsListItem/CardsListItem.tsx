@@ -47,16 +47,6 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
 
   return (
     <>
-      <EditAddModal
-        inputAnswer={answer}
-        setInputAnswer={setAnswer}
-        inputQuestion={question}
-        setInputQuestion={setQuestion}
-        active={activeModal}
-        setActive={setActiveModal}
-        setCard={editCardHandler}
-      />
-
       <tr>
         <td>{card.question}</td>
         <td>{card.answer}</td>
@@ -68,14 +58,22 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
           {card.user_id === userId &&
             <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
           <Button onClick={() => learnHandler(card.cardsPack_id)}>Learn</Button>
+          <EditAddModal
+            inputAnswer={answer}
+            setInputAnswer={setAnswer}
+            inputQuestion={question}
+            setInputQuestion={setQuestion}
+            active={activeModal}
+            setActive={setActiveModal}
+            setCard={editCardHandler}
+          />
+          <DeleteModal
+            active={activeDeleteModal}
+            setActive={setActiveDeleteModal}
+            deletePack={deleteCardHandler}
+          />
         </td>
       </tr>
-
-      <DeleteModal
-        active={activeDeleteModal}
-        setActive={setActiveDeleteModal}
-        deletePack={deleteCardHandler}
-      />
     </>
   );
 };

@@ -45,6 +45,7 @@
 .tableMainBlock {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     word-wrap: break-word;
     text-align: center;
     color: #2D2E46;
@@ -105,4 +106,9 @@ tr:nth-child(2n) {
 
 .nameStyle a:hover {
     color: #0241b7;
+}
+
+.paginator {
+    display: flex;
+    justify-content: center;
 }

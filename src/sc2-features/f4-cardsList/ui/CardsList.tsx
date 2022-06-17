@@ -111,13 +111,15 @@ export const CardsList = () => {
               })}
               </tbody>
             </table>
-            <Paginator
-              siblingCount={3}
-              totalCount={cardsTotalCount}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              onPageChange={changePageHandler}
-            />
+            <div className={s.paginator}>
+              <Paginator
+                siblingCount={3}
+                totalCount={cardsTotalCount}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                onPageChange={changePageHandler}
+              />
+            </div>
           </div>
       }
     </div>
