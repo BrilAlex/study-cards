@@ -1,68 +1,96 @@
 .mainBlock {
-    max-width: 500px;
-    margin: auto;
-}
-
-.editBlock {
-    display: flex;
-    /*width: 30%;*/
-    flex-direction: column;
-}
-
-.profileAva {
-
-}
-
-.profileAva img {
-    border: 1px solid #070101;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-}
-
-.profileInfo {
-
-}
-
-.profileInfo h3 {
-    font-weight: bold;
-    margin-top: 15px;
-    margin-bottom: 15px;
+  display: flex;
+  max-width: 415px;
+  margin: 20px auto;
 }
 
 .edit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 15px;
-    height: 40%;
-    border: 1px solid #070101;
-    border-radius: 15px;
-    background-color: #b5b9f3;
+  display: flex;
+  min-height: 540px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  padding: 15px;
+  height: 40%;
+  border-radius: 15px;
+  background-color: #F9F9FE;
 }
 
-.numberCards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    height: 60%;
-    border: 1px solid #070101;
-    /*border-radius: 15px;*/
-    background-color: #e1e2f3;
-}
-.numberCards h2 {
-    color: red;
-    font-weight: 600;
+.editBlock {
+  display: flex;
+  flex-direction: column;
 }
 
-.packs {
-    width: 70%;
-    height: 100%;
-    border: 1px solid #070101;
-    text-align: center;
-    /*border-radius: 15px;*/
+.buttonBlock {
+  gap: 70px;
+  display: flex;
 }
 
+.profileAva {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  padding-left: 33px;
+}
+
+.defaultAva {
+  box-shadow: 0 0 10px #9f9f9f;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.editPhoto {
+  background-color: #9f9f9f;
+  opacity: 0.5;
+  padding: 0 5px;
+  border: 1px solid black;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  position: relative;
+  right: 23px;
+  top: 3px;
+  cursor: pointer;
+}
+.profileInput {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: transparent;
+  margin: 10px auto;
+  padding: 5px;
+  outline: none;
+  border: 0;
+  border-bottom: 2px solid #21268F;
+  border-radius: 0;
+}
+
+.profileInput:focus {
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.infoSpan {
+  font-size: 12px;
+  opacity: 50%;
+}
+
+.profileError {
+  margin-top: 10px;
+  height: 20px;
+  color: #c22b2b;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 410px) {
+  .buttonBlock {
+    gap: initial;
+  }
+}
