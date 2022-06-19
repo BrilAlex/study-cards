@@ -17,11 +17,6 @@
   background-color: #F9F9FE;
 }
 
-.editBlock {
-  display: flex;
-  flex-direction: column;
-}
-
 .buttonBlock {
   gap: 70px;
   display: flex;
@@ -92,5 +87,13 @@
 @media (max-width: 410px) {
   .buttonBlock {
     gap: initial;
+  }
+  .edit {
+    margin: 0 auto;
+  }
+}
+@media (max-width: 350px) {
+  .buttonBlock {
+    flex-direction: column;
   }
 }
