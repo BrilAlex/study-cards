@@ -39,7 +39,6 @@ export const PacksList = () => {
   const minNumberOfCards = useAppSelector<number>(store => store.packsList.cardsCount.minCardsCount);
   const minCardsCount = useAppSelector<number | undefined>(state => state.packsList.min);
   const maxCardsCount = useAppSelector<number | undefined>(state => state.packsList.max);
-  // const searchQuery = useAppSelector<string>(state => state.packsList.searchResult);
 
   useEffect(() => {
     dispatch(getCardsPackThunk());
@@ -49,10 +48,6 @@ export const PacksList = () => {
     const [min, max] = value;
     dispatch(filterCardsCountAC(min, max));
   };
-
-  // const searchCardPacksByName = (value: string) => {
-  //   dispatch(setSearchResultAC(value));
-  // };
 
   const changePageHandler = (page: number) => {
     dispatch(setCurrentPageCardPacksAC(page))
