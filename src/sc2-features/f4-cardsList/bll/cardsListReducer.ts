@@ -123,11 +123,18 @@ export const addNewCardTC = (newCard: NewCardDataType): AppThunkType => (dispatc
       dispatch(setAppIsLoadingAC(false));
     });
 };
-export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkType => (dispatch) => {
+export const deleteCardTC = (cardsPack_ID: string, card_ID: string): AppThunkType => (dispatch, getState: () => AppStateType) => {
+  const cardsArrLength = getState().cardsList.cards.length;
+  let currentPage = getState().cardsList.page;
+
+  if (cardsArrLength === 1 && currentPage !== 1) {
+    currentPage -= 1;
+  }
+
   dispatch(setAppIsLoadingAC(true));
   cardsAPI.deleteCard(card_ID)
     .then(() => {
-      dispatch(getCardsTC({cardsPack_id: cardsPack_ID, page: 1}));
+      dispatch(getCardsTC({cardsPack_id: cardsPack_ID, page: currentPage}));
     })
     .catch(error => {
       handleAppRequestError(error, dispatch);
