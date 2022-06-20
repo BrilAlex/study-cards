@@ -10,7 +10,6 @@ import {getRandomCard} from "../../../sc3-utils/getRandomCard";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
 
 export const LearnPageContainer = () => {
-  console.log("LearnPage Container");
   const urlParams = useParams<"cardPackID">();
   const cardPack_ID = urlParams.cardPackID;
 
@@ -34,17 +33,14 @@ export const LearnPageContainer = () => {
   });
 
   useEffect(() => {
-    console.log("UseEffect in LearnPage Container");
     if (cardPack_ID && isFirstLoad) {
       dispatch(getCardsTC({cardsPack_id: cardPack_ID, pageCount: 1000000}));
       setIsFirstLoad(false);
     }
 
-    console.log("Cards in useEffect: ", cards);
     if (cards.length > 0) setRandomCard(getRandomCard(cards));
 
     return () => {
-      console.log("UseEffect cleanup in LearnPage Container");
       dispatch(setPageCountAC(5));
     };
   }, [dispatch, cardPack_ID, cards, isFirstLoad]);
