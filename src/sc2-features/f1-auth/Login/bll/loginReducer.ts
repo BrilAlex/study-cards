@@ -51,6 +51,7 @@ export const loginThunkTC = (email: string, password: string, remember: boolean)
     })
 };
 export const logoutThunkTC = (): AppThunkType => (dispatch) => {
+  dispatch(setAppIsLoadingAC(true));
   authApi.logout()
     .then((res) => {
       dispatch(setAppErrorAC(res.info))
@@ -62,6 +63,9 @@ export const logoutThunkTC = (): AppThunkType => (dispatch) => {
         : (e.message + ', more details in the console');
 
       dispatch(setAppErrorAC(error));
+    })
+    .finally(() => {
+      dispatch(setAppIsLoadingAC(false));
     });
 };
 
