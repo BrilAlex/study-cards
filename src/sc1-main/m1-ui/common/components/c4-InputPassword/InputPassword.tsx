@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import s from "./InputPassword.module.css";
 import eyeIcon from "../../assets/Icons/eye.png";
+import blind from "../../assets/Icons/blind.png";
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
@@ -58,7 +59,9 @@ export const InputPassword: React.FC<SuperInputTextPropsType> = (
         {...restProps}
       />
       <div className={s.eyeButton} onClick={changeInputTypeHandler}>
-        <img src={eyeIcon} alt={"eye icon"}/>
+        {passwordType
+          ? <img src={blind} alt={"closed eye icon"}/>
+          : <img src={eyeIcon} alt={"eye icon"}/>}
       </div>
       {error && <span className={finalSpanClassName}>{error}</span>}
     </div>

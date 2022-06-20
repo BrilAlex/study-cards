@@ -32,6 +32,7 @@
 .rememberMe {
     align-items: center;
     color: #2D2E46;
+    cursor: pointer;
     display: flex;
     font-size: 14px;
     justify-content: start;
