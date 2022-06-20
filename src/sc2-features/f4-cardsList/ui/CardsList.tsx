@@ -34,8 +34,10 @@ export const CardsList = () => {
   const navigate = useNavigate();
 
   const [activeModal, setActiveModal] = useState<boolean>(false);
-  const [answer, setAnswer] = useState<string>('');
-  const [question, setQuestion] = useState<string>('');
+  const [answer, setAnswer] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
+  const questionSearchQuery = cardQuestion ? cardQuestion : "";
+  const answerSearchQuery = cardAnswer ? cardAnswer : "";
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
@@ -78,12 +80,12 @@ export const CardsList = () => {
       </div>
       <div>
         <DebounceSearch
-          searchValue={cardQuestion as string}
+          searchValue={questionSearchQuery}
           setSearchValue={searchCardsByQuestion}
           placeholder={"Search by question..."}
         />
         <DebounceSearch
-          searchValue={cardAnswer as string}
+          searchValue={answerSearchQuery}
           setSearchValue={searchCardsByAnswer}
           placeholder={"Search by answer..."}
         />
