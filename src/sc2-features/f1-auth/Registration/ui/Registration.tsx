@@ -7,6 +7,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import s from "../../../../sc1-main/m1-ui/App.module.css";
 import {InputPassword} from "../../../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
+import slog from './../../Login/ui/login.module.css'
 
 export const Registration = () => {
   const [email, setEmail] = useState("");
@@ -40,22 +41,32 @@ export const Registration = () => {
 
   return (
     <div className={s.smallContainer}>
-      <p>Study Cards</p>
-      <h1>Registration</h1>
+      <h1>Study Cards</h1>
+      <h2>Sign Up</h2>
       <div>
-        <InputText value={email} onChangeText={setEmail} placeholder={"Email"}/>
-        <InputPassword
-          value={password}
-          onChangeText={setPassword}
-          placeholder={"Password"}
-        />
-        <InputPassword
-          value={passwordConfirm}
-          onChangeText={setPasswordConfirm}
-          placeholder={"Confirm password"}
-        />
-        <Button onClick={cancelHandler}>Cancel</Button>
-        <Button onClick={registerHandler} disabled={isLoading}>Register</Button>
+        <form className={slog.form}>
+          <span className={slog.inputLabel}>Email</span>
+          <InputText
+            className={slog.input}
+            value={email}
+            onChangeText={setEmail}
+          />
+          <span className={slog.inputLabel}>Password</span>
+          <InputPassword
+            className={slog.input}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <span className={slog.inputLabel}>Confirm password</span>
+          <InputPassword
+            className={slog.input}
+            value={passwordConfirm}
+            onChangeText={setPasswordConfirm}
+          /></form>
+        <div style={{marginTop: '84px'}}>
+          <Button onClick={cancelHandler} style={{backgroundColor: '#D7D8EF', color: '#21268F'}}>Cancel</Button>
+          <Button onClick={registerHandler} disabled={isLoading}>Sign Up</Button>
+        </div>
       </div>
       {error && <p style={{color: "red"}}>{error}</p>}
     </div>

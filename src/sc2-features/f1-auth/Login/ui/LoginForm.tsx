@@ -49,14 +49,14 @@ export const LoginForm = () => {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <span className={s.inputLabel}>Email</span>
+        <span className={s.inputLabel} style={{marginTop: '0px'}}>Email</span>
         <InputText
           className={s.input}
           type="email"
           {...formik.getFieldProps('email')}
         />
         {formik.errors.email && formik.touched.email && <div style={{color: "red"}}>{formik.errors.email}</div>}
-        <span className={s.inputLabel}>Password</span>
+        <span className={s.inputLabel} style={{marginTop: '10px'}}>Password</span>
         <InputPassword className={s.input}
                        {...formik.getFieldProps('password')}
         />
@@ -81,7 +81,7 @@ export const LoginForm = () => {
         className={s.signUpLabel}>Don’t have an account?</span>
       <NavLink
         to={PATH.REGISTRATION}
-        style={{color: "#21268F", fontSize: "16px", fontWeight: 600}}
+        className={s.signUpIn}
       >Sign Up</NavLink>
     </>
   )

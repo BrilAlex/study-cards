@@ -14,7 +14,7 @@ export const Login = () => {
 
   return (
     <div className={s.smallContainer}>
-      <h1>Card samurai</h1>
+      <h1>Study Cards</h1>
       <h2>Sign in</h2>
       <LoginForm/>
     </div>

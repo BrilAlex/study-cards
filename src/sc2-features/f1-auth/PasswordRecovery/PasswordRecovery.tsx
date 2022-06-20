@@ -6,6 +6,7 @@ import {Navigate, NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {recoveryPasswordTC, setPasswordErrorAC} from "./passwordRecoveryReducer";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
+import slog from './../Login/ui/login.module.css';
 
 export const PasswordRecovery = () => {
   const [email, setEmail] = useState<string>("");
@@ -35,14 +36,14 @@ export const PasswordRecovery = () => {
 
   return (
     <div className={s.smallContainer}>
-      <h1>It-incubator</h1>
+      <h1>Study Cards</h1>
       <h2>Forgot your password?</h2>
-      <InputText value={email} onChangeText={setEmail} placeholder={'Email'} type={'email'}/>
-      <div>Enter your email address and we will send you further instructions</div>
+      <InputText className={slog.input} value={email} onChangeText={setEmail} placeholder={'Email'} type={'email'}/>
+      <div className={slog.greyText}>Enter your email address and we will send you further instructions</div>
       <Button onClick={onClickHandler}>Send Instructions</Button>
       {error && <p style={{color: "red"}}>{error}</p>}
-      <div>Did you remember your password?</div>
-      <NavLink to={'/login'}>Try logging in</NavLink>
+      <div className={slog.greyUnderText}>Did you remember your password?</div>
+      <NavLink to={'/login'} className={slog.signUpIn}>Try logging in</NavLink>
     </div>
   );
 };

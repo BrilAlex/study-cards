@@ -60,8 +60,8 @@ export const InputPassword: React.FC<SuperInputTextPropsType> = (
       />
       <div className={s.eyeButton} onClick={changeInputTypeHandler}>
         {passwordType
-          ? <img src={blind} alt={"closed eye icon"}/>
-          : <img src={eyeIcon} alt={"eye icon"}/>}
+          ? <img src={eyeIcon} alt={"closed eye icon"}/>
+          : <img src={blind} alt={"eye icon"}/>}
       </div>
       {error && <span className={finalSpanClassName}>{error}</span>}
     </div>
