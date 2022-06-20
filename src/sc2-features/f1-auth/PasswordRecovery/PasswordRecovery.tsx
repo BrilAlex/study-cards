@@ -6,7 +6,7 @@ import {Navigate, NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {recoveryPasswordTC, setPasswordErrorAC} from "./passwordRecoveryReducer";
 import {PATH} from "../../../sc1-main/m1-ui/Main/Pages";
-import slog from './../Login/ui/login.module.css';
+import slog from '../Login/ui/auth.module.css';
 
 export const PasswordRecovery = () => {
   const [email, setEmail] = useState<string>("");

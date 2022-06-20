@@ -8,7 +8,7 @@ import {NavLink} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import {useAppDispatch} from "../../../../sc1-main/m2-bll/store";
 import {InputPassword} from "../../../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
-import s from './login.module.css';
+import s from './auth.module.css';
 
 type FormikErrorType = {
   email?: string

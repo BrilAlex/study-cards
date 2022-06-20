@@ -7,7 +7,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 import {PATH} from "../../../../sc1-main/m1-ui/Main/Pages";
 import s from "../../../../sc1-main/m1-ui/App.module.css";
 import {InputPassword} from "../../../../sc1-main/m1-ui/common/components/c4-InputPassword/InputPassword";
-import slog from './../../Login/ui/login.module.css'
+import slog from '../../Login/ui/auth.module.css'
 
 export const Registration = () => {
   const [email, setEmail] = useState("");
