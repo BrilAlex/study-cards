@@ -30,8 +30,8 @@ const initState = {
   minGrade: undefined as undefined | number,
   page: 1,
   pageCount: 5,
-  cardAnswer: undefined as undefined | string,
-  cardQuestion: undefined as undefined | string,
+  cardAnswer: "",
+  cardQuestion: "",
   sortCards: '0updated',
   isFetchingCards: false,
 };

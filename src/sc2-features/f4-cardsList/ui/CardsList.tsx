@@ -27,8 +27,8 @@ export const CardsList = () => {
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
   const currentPage = useAppSelector<number>(state => state.cardsList.page);
   const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
-  const cardQuestion = useAppSelector<undefined | string>(state => state.cardsList.cardQuestion);
-  const cardAnswer = useAppSelector<undefined | string>(state => state.cardsList.cardAnswer);
+  const cardQuestion = useAppSelector<string>(state => state.cardsList.cardQuestion);
+  const cardAnswer = useAppSelector<string>(state => state.cardsList.cardAnswer);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -36,8 +36,6 @@ export const CardsList = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
-  const questionSearchQuery = cardQuestion ? cardQuestion : "";
-  const answerSearchQuery = cardAnswer ? cardAnswer : "";
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
@@ -80,12 +78,12 @@ export const CardsList = () => {
       </div>
       <div>
         <DebounceSearch
-          searchValue={questionSearchQuery}
+          searchValue={cardQuestion}
           setSearchValue={searchCardsByQuestion}
           placeholder={"Search by question..."}
         />
         <DebounceSearch
-          searchValue={answerSearchQuery}
+          searchValue={cardAnswer}
           setSearchValue={searchCardsByAnswer}
           placeholder={"Search by answer..."}
         />
