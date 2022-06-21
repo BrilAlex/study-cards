@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {
   addNewCardTC,
-  getCardsTC,
+  getCardsTC, setCardsSortDirectionAC,
   setCurrentPageCardsListAC, setSearchQueryByAnswerAC,
   setSearchQueryByQuestionAC
 } from "../bll/cardsListReducer";
@@ -16,6 +16,7 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import {Paginator} from "../../f3-packsList/ui/Paginator/Paginator";
 import {DebounceSearch} from "../../../sc1-main/m1-ui/common/components/c7-DebounceSearch/DebounceSearch";
 import {EditAddModal} from "./EditAddModal/EditAddModal";
+import {SortButton} from "../../../sc1-main/m1-ui/common/components/SortButton/SortButton";
 
 export const CardsList = () => {
   const urlParams = useParams<'cardPackID'>();
@@ -29,6 +30,7 @@ export const CardsList = () => {
   const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
   const cardQuestion = useAppSelector<string>(state => state.cardsList.cardQuestion);
   const cardAnswer = useAppSelector<string>(state => state.cardsList.cardAnswer);
+  const sortCards = useAppSelector<string>(state => state.cardsList.sortCards);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ export const CardsList = () => {
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-  }, [dispatch, cardsPack_ID, currentPage, cardQuestion, cardAnswer]);
+  }, [dispatch, cardsPack_ID, currentPage, cardQuestion, cardAnswer, sortCards]);
 
   const addCardHandler = useCallback(() => {
     const newCard: NewCardDataType = {
@@ -61,6 +63,14 @@ export const CardsList = () => {
 
   const searchCardsByAnswer = (value: string) => {
     dispatch(setSearchQueryByAnswerAC(value));
+  };
+
+  const changeCardsSortDirection = (sortType: string) => {
+    if (sortCards === "0" + sortType) {
+      dispatch(setCardsSortDirectionAC(`1${sortType}`));
+    } else {
+      dispatch(setCardsSortDirectionAC(`0${sortType}`));
+    }
   };
 
   const backButtonHandler = () => {
@@ -102,10 +112,46 @@ export const CardsList = () => {
             <table>
               <thead className={s.theadStyle}>
               <tr className={s.trStyle}>
-                <th>Question</th>
-                <th>Answer</th>
-                <th>Last Updated</th>
-                <th>Grade</th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("question")}>
+                    Question
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "question"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("answer")}>
+                    Answer
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "answer"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("updated")}>
+                    Last Updated
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "updated"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("grade")}>
+                    Grade
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "grade"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
                 <th>Actions</th>
               </tr>
               </thead>

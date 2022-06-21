@@ -33,6 +33,10 @@ table {
     width: 100%;
 }
 
+.theadStyle th span {
+    cursor: pointer;
+}
+
 .trStyle {
     border-radius: 10px;
     color: #ECECF9;
