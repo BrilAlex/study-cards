@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/study-cards/static/css/main.b03cd028.css",
-    "main.js": "/study-cards/static/js/main.e20437f4.js",
+    "main.css": "/study-cards/static/css/main.c08804ab.css",
+    "main.js": "/study-cards/static/js/main.a2f56489.js",
     "static/js/787.64aed2aa.chunk.js": "/study-cards/static/js/787.64aed2aa.chunk.js",
     "static/media/Group 608.svg": "/study-cards/static/media/Group 608.e91d55baf4b5185d8949413e1db3e7d1.svg",
     "static/media/robot_ava.svg": "/study-cards/static/media/robot_ava.5cc63c0142e30e0208879302e9a850d8.svg",
@@ -9,12 +9,12 @@
     "static/media/logout-svgrepo-com.svg": "/study-cards/static/media/logout-svgrepo-com.6520d60b3ecffa29872a149c0f82e211.svg",
     "static/media/Group 607.svg": "/study-cards/static/media/Group 607.66b0220ca8aba08b602c1a6254aef0e3.svg",
     "index.html": "/study-cards/index.html",
-    "main.b03cd028.css.map": "/study-cards/static/css/main.b03cd028.css.map",
-    "main.e20437f4.js.map": "/study-cards/static/js/main.e20437f4.js.map",
+    "main.c08804ab.css.map": "/study-cards/static/css/main.c08804ab.css.map",
+    "main.a2f56489.js.map": "/study-cards/static/js/main.a2f56489.js.map",
     "787.64aed2aa.chunk.js.map": "/study-cards/static/js/787.64aed2aa.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b03cd028.css",
-    "static/js/main.e20437f4.js"
+    "static/css/main.c08804ab.css",
+    "static/js/main.a2f56489.js"
   ]
 }
