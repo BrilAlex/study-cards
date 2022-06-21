@@ -1,63 +1,71 @@
 .mainBlock {
-    align-items: center;
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    left: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    transition: 0.5s;
-    width: 100vw;
-    z-index: 10;
-    }
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  transition: 0.5s;
+  width: 100vw;
+  z-index: 10;
+}
 
 .mainBlock.active {
-    opacity: 1;
-    pointer-events: all;
-    }
+  opacity: 1;
+  pointer-events: all;
+}
 
 .modalContent {
-    background-color: white;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 30vh;
-    min-width: 70vh;
-    padding: 20px;
-    transform: scale(0.5);
-    transition: 0.4s all;
-    }
+  background-color: white;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 30vh;
+  min-width: 70vh;
+  padding: 20px;
+  transform: scale(0.5);
+  transition: 0.4s all;
+}
 
 .modalContent.active {
-    transform: scale(1);
-    }
+  transform: scale(1);
+}
 
 .description {
-    color: #9A91C8;
-    /*padding-top: 200px;*/
-    }
+  color: #9A91C8;
+  /*padding-top: 200px;*/
+}
 
 .modalInput {
-    background-color: #fff;
-    border: 0;
-    border-bottom: 2px solid #21268F;
-    border-radius: 0;
-    margin: 20px auto;
-    outline: none;
-    padding: 5px;
-    text-align: center;
-    width: 60%;
-    }
+  background-color: #fff;
+  border: 0;
+  border-bottom: 2px solid #21268F;
+  border-radius: 0;
+  margin: 20px auto;
+  outline: none;
+  padding: 5px;
+  text-align: center;
+  width: 60%;
+}
 
 
 .inputBlock {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    }
+  min-width: 360px;
+  margin: 0 auto;
+}
+
+.inputBlock label {
+  display: flex;
+  align-items: flex-start;
+}
+
+.inputBlock label span {
+  padding: 5px 0;
+}

@@ -41,13 +41,15 @@ export const EditAddModal: React.FC<EditModalType> = (
            onClick={e => e.stopPropagation()}>
         <h1>Card info</h1>
         <div className={s.inputBlock}>
-          <label>Question:
+          <label>
+            <span>Question:</span>
             <Textarea
               value={inputQuestion}
               onChangeValue={setInputQuestion}
             />
           </label>
-          <label>Answer:
+          <label>
+            <span>Answer:</span>
             <Textarea
               value={inputAnswer}
               onChangeValue={setInputAnswer}
