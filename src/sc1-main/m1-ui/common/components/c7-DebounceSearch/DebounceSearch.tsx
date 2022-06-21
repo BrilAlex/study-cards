@@ -5,10 +5,11 @@ type DebounceSearchPropsType = {
   searchValue: string
   setSearchValue: (value: string) => void
   placeholder?: string
+  disabled?: boolean
 };
 
 export const DebounceSearch: FC<DebounceSearchPropsType> = (
-  {searchValue, setSearchValue, placeholder}
+  {searchValue, setSearchValue, placeholder, disabled}
 ) => {
   const [inputValue, setInputValue] = useState<string>(searchValue);
 
@@ -31,6 +32,7 @@ export const DebounceSearch: FC<DebounceSearchPropsType> = (
       placeholder={placeholder}
       value={inputValue}
       onChangeText={onChangeValue}
+      disabled={disabled}
     />
   );
 };

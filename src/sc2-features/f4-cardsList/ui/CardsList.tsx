@@ -85,18 +85,22 @@ export const CardsList = () => {
   return (
     <div className={s.cardsPage}>
       <div>
-        <Button onClick={backButtonHandler}>&#10094; Back to Packs List</Button>
+        <Button onClick={backButtonHandler} disabled={isFetchingCards}>
+          &#10094; Back to Packs List
+        </Button>
       </div>
       <div>
         <DebounceSearch
           searchValue={cardQuestion}
           setSearchValue={searchCardsByQuestion}
           placeholder={"Search by question..."}
+          disabled={isFetchingCards}
         />
         <DebounceSearch
           searchValue={cardAnswer}
           setSearchValue={searchCardsByAnswer}
           placeholder={"Search by answer..."}
+          disabled={isFetchingCards}
         />
         {user_ID === packUser_ID &&
         <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Add card</Button>
@@ -115,8 +119,8 @@ export const CardsList = () => {
             <table>
               <thead className={s.theadStyle}>
               <tr className={s.trStyle}>
-                <th>
-                  <span onClick={() => changeCardsSortDirection("question")}>
+                <th onClick={() => changeCardsSortDirection("question")}>
+                  <span>
                     Question
                   </span>
                   <SortButton
@@ -125,8 +129,8 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th>
-                  <span onClick={() => changeCardsSortDirection("answer")}>
+                <th onClick={() => changeCardsSortDirection("answer")}>
+                  <span>
                     Answer
                   </span>
                   <SortButton
@@ -135,8 +139,8 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th>
-                  <span onClick={() => changeCardsSortDirection("updated")}>
+                <th onClick={() => changeCardsSortDirection("updated")}>
+                  <span>
                     Last Updated
                   </span>
                   <SortButton
@@ -145,8 +149,8 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th>
-                  <span onClick={() => changeCardsSortDirection("grade")}>
+                <th onClick={() => changeCardsSortDirection("grade")}>
+                  <span>
                     Grade
                   </span>
                   <SortButton
