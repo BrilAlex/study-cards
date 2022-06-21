@@ -1,0 +1,107 @@
+.input {
+    border: 0;
+    border-bottom: 1px solid rgba(36, 37, 74, 0.2);
+    border-radius: 0;
+    width: 347px;
+    }
+
+.input,
+.input:active,
+.input:focus,
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+    background-color: #F9F9FE;
+    -webkit-box-shadow: 0 0 0 3000px #F9F9FE inset;
+    box-shadow: 0 0 0 3000px #F9F9FE inset;
+    transition: background-color 5000s ease-in-out 0s;
+    }
+
+.inputLabel {
+    color: #24254A;
+    float: left;
+    font-family: 'SF UI Display', Serif, sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin-top: -10px;
+    opacity: 0.5;
+    position: relative;
+    top: 10px;
+    }
+
+.rememberMe {
+    align-items: center;
+    color: #2D2E46;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    justify-content: start;
+    opacity: 0.5;
+    }
+
+.forgotPass {
+    color: #2D2E46;
+    display: inline-block;
+    font-family: 'SF UI Display', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    margin-top: 22px;
+    opacity: 0.5;
+    padding-bottom: 20px;
+    text-align: right;
+    width: 100%;
+    }
+
+.submit {
+    margin: 86px auto 30px
+    }
+
+.signUpIn {
+    color: #21268F;
+    font-size: 16px;
+    font-weight: 600
+    }
+
+.signUpLabel {
+    color: #2D2E46;
+    display: block;
+    opacity: 0.5;
+    padding-bottom: 20px
+    }
+
+.form {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 192px;
+    justify-content: space-evenly;
+    margin-top: 39px;
+    }
+
+.greyText,
+.greyUnderText {
+    color: #2D2E46;
+    font-family: 'SF UI Display', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    opacity: 0.5;
+    }
+
+.greyText {
+    margin-bottom: 90px;
+    margin-top: 30px;
+    text-align: left;
+    }
+
+.greyUnderText {
+    margin-bottom: 11px;
+    margin-top: 30px;
+    text-align: center;
+    }
