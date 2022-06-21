@@ -23,6 +23,7 @@ export const CardsList = () => {
   const cardsPack_ID = urlParams.cardPackID;
 
   const user_ID = useAppSelector(state => state.profile.user._id);
+  const packUser_ID = useAppSelector(state => state.cardsList.packUserId);
   const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
   const cardsTotalCount = useAppSelector<number>(state => state.cardsList.cardsTotalCount);
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
@@ -97,7 +98,9 @@ export const CardsList = () => {
           setSearchValue={searchCardsByAnswer}
           placeholder={"Search by answer..."}
         />
+        {user_ID === packUser_ID &&
         <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Add card</Button>
+        }
       </div>
       <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
                     setInputQuestion={setQuestion} active={activeModal}
@@ -152,7 +155,7 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th>Actions</th>
+                {user_ID === packUser_ID && <th>Actions</th>}
               </tr>
               </thead>
               <tbody className={s.tbodyStyle}>

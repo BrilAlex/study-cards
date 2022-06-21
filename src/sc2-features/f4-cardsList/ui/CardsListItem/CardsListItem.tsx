@@ -44,11 +44,10 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
         <td>{card.answer}</td>
         <td><BeautyDate date={card.updated}/></td>
         <td>{Math.round(card.grade * 100) / 100}</td>
+        {card.user_id === userId &&
         <td>
-          {card.user_id === userId &&
-          <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>}
-          {card.user_id === userId &&
-          <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>}
+          <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Edit</Button>
+          <Button onClick={deleteButtonHandler} disabled={isFetchingCards} red>Delete</Button>
           <EditAddModal
             inputAnswer={answer}
             setInputAnswer={setAnswer}
@@ -64,6 +63,7 @@ export const CardsListItem: FC<CardsListItemPropsType> = ({card}) => {
             deletePack={deleteCardHandler}
           />
         </td>
+        }
       </tr>
     </>
   );
