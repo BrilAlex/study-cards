@@ -33,7 +33,7 @@ table {
     width: 100%;
 }
 
-.theadStyle th span {
+.theadStyle .sortBlock {
     cursor: pointer;
 }
 

@@ -85,7 +85,7 @@ export const CardsList = () => {
   return (
     <div className={s.cardsPage}>
       <div>
-        <Button onClick={backButtonHandler} disabled={isFetchingCards}>
+        <Button onClick={backButtonHandler}>
           &#10094; Back to Packs List
         </Button>
       </div>
@@ -119,7 +119,7 @@ export const CardsList = () => {
             <table>
               <thead className={s.theadStyle}>
               <tr className={s.trStyle}>
-                <th onClick={() => changeCardsSortDirection("question")}>
+                <th className={s.sortBlock} onClick={() => changeCardsSortDirection("question")}>
                   <span>
                     Question
                   </span>
@@ -129,7 +129,7 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th onClick={() => changeCardsSortDirection("answer")}>
+                <th className={s.sortBlock} onClick={() => changeCardsSortDirection("answer")}>
                   <span>
                     Answer
                   </span>
@@ -139,7 +139,7 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th onClick={() => changeCardsSortDirection("updated")}>
+                <th className={s.sortBlock} onClick={() => changeCardsSortDirection("updated")}>
                   <span>
                     Last Updated
                   </span>
@@ -149,7 +149,7 @@ export const CardsList = () => {
                     isFetching={isFetchingCards}
                   />
                 </th>
-                <th onClick={() => changeCardsSortDirection("grade")}>
+                <th className={s.sortBlock} onClick={() => changeCardsSortDirection("grade")}>
                   <span>
                     Grade
                   </span>
