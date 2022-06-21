@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../sc1-main/m2-bll/store";
 import {
   addNewCardTC,
-  getCardsTC,
+  getCardsTC, setCardsSortDirectionAC,
   setCurrentPageCardsListAC, setSearchQueryByAnswerAC,
   setSearchQueryByQuestionAC
 } from "../bll/cardsListReducer";
@@ -16,30 +16,33 @@ import {MiniSpinner} from "../../../sc1-main/m1-ui/common/components/MiniSpinner
 import {Paginator} from "../../f3-packsList/ui/Paginator/Paginator";
 import {DebounceSearch} from "../../../sc1-main/m1-ui/common/components/c7-DebounceSearch/DebounceSearch";
 import {EditAddModal} from "./EditAddModal/EditAddModal";
+import {SortButton} from "../../../sc1-main/m1-ui/common/components/SortButton/SortButton";
 
 export const CardsList = () => {
   const urlParams = useParams<'cardPackID'>();
   const cardsPack_ID = urlParams.cardPackID;
 
   const user_ID = useAppSelector(state => state.profile.user._id);
+  const packUser_ID = useAppSelector(state => state.cardsList.packUserId);
   const cards = useAppSelector<Array<CardType>>(state => state.cardsList.cards);
   const cardsTotalCount = useAppSelector<number>(state => state.cardsList.cardsTotalCount);
   const pageSize = useAppSelector<number>(store => store.cardsList.pageCount);
   const currentPage = useAppSelector<number>(state => state.cardsList.page);
   const isFetchingCards = useAppSelector<boolean>(state => state.cardsList.isFetchingCards);
-  const cardQuestion = useAppSelector<undefined | string>(state => state.cardsList.cardQuestion);
-  const cardAnswer = useAppSelector<undefined | string>(state => state.cardsList.cardAnswer);
+  const cardQuestion = useAppSelector<string>(state => state.cardsList.cardQuestion);
+  const cardAnswer = useAppSelector<string>(state => state.cardsList.cardAnswer);
+  const sortCards = useAppSelector<string>(state => state.cardsList.sortCards);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [activeModal, setActiveModal] = useState<boolean>(false);
-  const [answer, setAnswer] = useState<string>('');
-  const [question, setQuestion] = useState<string>('');
+  const [answer, setAnswer] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
 
   useEffect(() => {
     if (cardsPack_ID) dispatch(getCardsTC({cardsPack_id: cardsPack_ID}));
-  }, [dispatch, cardsPack_ID, currentPage, cardQuestion, cardAnswer]);
+  }, [dispatch, cardsPack_ID, currentPage, cardQuestion, cardAnswer, sortCards]);
 
   const addCardHandler = useCallback(() => {
     const newCard: NewCardDataType = {
@@ -63,6 +66,14 @@ export const CardsList = () => {
     dispatch(setSearchQueryByAnswerAC(value));
   };
 
+  const changeCardsSortDirection = (sortType: string) => {
+    if (sortCards === "0" + sortType) {
+      dispatch(setCardsSortDirectionAC(`1${sortType}`));
+    } else {
+      dispatch(setCardsSortDirectionAC(`0${sortType}`));
+    }
+  };
+
   const backButtonHandler = () => {
     navigate(PATH.PACKS_LIST);
   };
@@ -78,16 +89,18 @@ export const CardsList = () => {
       </div>
       <div>
         <DebounceSearch
-          searchValue={cardQuestion as string}
+          searchValue={cardQuestion}
           setSearchValue={searchCardsByQuestion}
           placeholder={"Search by question..."}
         />
         <DebounceSearch
-          searchValue={cardAnswer as string}
+          searchValue={cardAnswer}
           setSearchValue={searchCardsByAnswer}
           placeholder={"Search by answer..."}
         />
+        {user_ID === packUser_ID &&
         <Button onClick={() => setActiveModal(true)} disabled={isFetchingCards}>Add card</Button>
+        }
       </div>
       <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
                     setInputQuestion={setQuestion} active={activeModal}
@@ -102,11 +115,47 @@ export const CardsList = () => {
             <table>
               <thead className={s.theadStyle}>
               <tr className={s.trStyle}>
-                <th>Question</th>
-                <th>Answer</th>
-                <th>Last Updated</th>
-                <th>Grade</th>
-                <th>Actions</th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("question")}>
+                    Question
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "question"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("answer")}>
+                    Answer
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "answer"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("updated")}>
+                    Last Updated
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "updated"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                <th>
+                  <span onClick={() => changeCardsSortDirection("grade")}>
+                    Grade
+                  </span>
+                  <SortButton
+                    isActive={sortCards.slice(1) === "grade"}
+                    direction={sortCards && sortCards[0]}
+                    isFetching={isFetchingCards}
+                  />
+                </th>
+                {user_ID === packUser_ID && <th>Actions</th>}
               </tr>
               </thead>
               <tbody className={s.tbodyStyle}>

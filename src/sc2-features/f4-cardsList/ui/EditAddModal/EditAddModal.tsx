@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './EditAddModal.module.css';
-import {InputText} from "../../../../sc1-main/m1-ui/common/components/c1-InputText/InputText";
 import {Button} from "../../../../sc1-main/m1-ui/common/components/c2-Button/Button";
+import {Textarea} from "../../../../sc1-main/m1-ui/common/components/c8-Textarea/Textarea";
 
 type EditModalType = {
   inputAnswer: string
@@ -34,22 +34,25 @@ export const EditAddModal: React.FC<EditModalType> = (
   }
 
   return (
-    <div className={active ? `${s.mainBlock} ${s.active}` : s.mainBlock} onClick={() => setActive(false)}>
+    <div className={active ? `${s.mainBlock} ${s.active}` : s.mainBlock}
+         onClick={() => setActive(false)}>
 
       <div className={active ? `${s.modalContent} ${s.active}` : s.modalContent}
            onClick={e => e.stopPropagation()}>
         <h1>Card info</h1>
         <div className={s.inputBlock}>
           <label>Question:
-            <InputText className={s.modalInput}
-                       value={inputQuestion}
-                       onChangeText={setInputQuestion}
-            /> </label>
+            <Textarea
+              value={inputQuestion}
+              onChangeValue={setInputQuestion}
+            />
+          </label>
           <label>Answer:
-            <InputText className={s.modalInput}
-                       value={inputAnswer}
-                       onChangeText={setInputAnswer}
-            /></label>
+            <Textarea
+              value={inputAnswer}
+              onChangeValue={setInputAnswer}
+            />
+          </label>
         </div>
         <div>
           <Button onClick={cancelHandler}>Cancel</Button>

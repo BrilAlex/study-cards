@@ -14,7 +14,6 @@ type LearnPagePropsType = {
 };
 
 export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
-  console.log("LearnPage");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

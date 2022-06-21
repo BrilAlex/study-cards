@@ -26,7 +26,6 @@ export const gradeCardTC = (data: UpdateGradeDataType): AppThunkType => (dispatc
   dispatch(setIsFetchingCards(true));
   learnAPI.gradeCard(data)
     .then(data => {
-      console.log("Updated grade data: ", data);
       dispatch(updateCardGradeAC(data.updatedGrade));
     })
     .catch(error => {

@@ -11,7 +11,5 @@ export const getRandomCard = (cards: Array<CardType>): CardType => {
     i++;
   }
 
-  console.log("random data:", sum, randomNumber, s ,i);
-  console.log("random card:", cards[i - 1]);
   return cards[i - 1];
 };
